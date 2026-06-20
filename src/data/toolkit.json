@@ -1,0 +1,152 @@
+{
+  "title": "Everything We Use",
+  "tagline": "The free toolkit two high schoolers actually used to land internships, build a network, and get ahead — no paywalls, no trials that charge you in two weeks.",
+  "intro": "We built this from the inside. Every tool here is genuinely free, checked June 2026. Where \"free\" has a catch (like a library card) we say so. At the bottom: the \"free\" tools that are actually traps.",
+  "sections": [
+    {
+      "n": 1,
+      "title": "Get real experience (when you have none yet)",
+      "shortLabel": "Real experience",
+      "items": [
+        {
+          "name": "Forage",
+          "body": "free virtual job simulations from real companies; do real intern tasks in a few hours, earn a resume/LinkedIn certificate; no application, 16+.",
+          "url": "https://www.theforage.com",
+          "urlText": "theforage.com"
+        },
+        {
+          "name": "Start your own thing",
+          "body": "a club, project, or event at your school; \"founder\" beats \"member\" on every application; free, ungatekeepable."
+        },
+        {
+          "name": "Your city's Summer Youth Employment Program",
+          "body": "many cities run paid teen summer jobs; search \"[your city] summer youth employment\"; free to apply, usually paid."
+        }
+      ]
+    },
+    {
+      "n": 2,
+      "title": "Get certified (free certs you can actually list)",
+      "shortLabel": "Free certs",
+      "items": [
+        {
+          "name": "HubSpot Academy",
+          "body": "free marketing/sales/content certs, a few hours each, employer-recognized; certs + exams 100% free.",
+          "url": "https://academy.hubspot.com",
+          "urlText": "academy.hubspot.com"
+        },
+        {
+          "name": "freeCodeCamp",
+          "body": "free no-paywall coding certs (web design, JavaScript, Python), real projects, shareable cert; nonprofit, no card.",
+          "url": "https://www.freecodecamp.org",
+          "urlText": "freecodecamp.org"
+        },
+        {
+          "name": "Google Skillshop",
+          "body": "free Google Ads & Analytics certs straight from Google.",
+          "urlPlaceholder": "[CONFIRM EXACT URL]"
+        }
+      ]
+    },
+    {
+      "n": 3,
+      "title": "Learn any skill (free libraries)",
+      "shortLabel": "Learn any skill",
+      "items": [
+        {
+          "name": "LinkedIn Learning",
+          "body": "16,000+ courses, free with a public library card (free digital card available online in minutes), completion certs.",
+          "url": "https://www.linkedin.com/learning",
+          "urlText": "linkedin.com/learning"
+        },
+        {
+          "name": "Khan Academy",
+          "body": "free academics + a careers section; nonprofit.",
+          "url": "https://www.khanacademy.org",
+          "urlText": "khanacademy.org"
+        },
+        {
+          "name": "Coursera",
+          "body": "audit almost any university course free; cert costs money unless you apply for financial aid.",
+          "url": "https://www.coursera.org",
+          "urlText": "coursera.org"
+        }
+      ]
+    },
+    {
+      "n": 4,
+      "title": "Build your resume and portfolio",
+      "shortLabel": "Resume & portfolio",
+      "items": [
+        {
+          "name": "FlowCV",
+          "body": "clean ATS-friendly resumes, unlimited watermark-free PDF downloads, no trial/card/paywall; first resume free forever.",
+          "url": "https://flowcv.com",
+          "urlText": "flowcv.com"
+        },
+        {
+          "name": "Google Docs",
+          "body": "simplest free option; free resume templates → PDF.",
+          "url": "https://docs.google.com",
+          "urlText": "docs.google.com"
+        },
+        {
+          "name": "Canva",
+          "body": "free for visual portfolios/mockups/graphics; for the actual resume use FlowCV or Docs (Canva's fancy templates can confuse application scanners).",
+          "url": "https://www.canva.com",
+          "urlText": "canva.com"
+        }
+      ]
+    },
+    {
+      "n": 5,
+      "title": "Find the actual jobs and internships",
+      "shortLabel": "Find jobs",
+      "items": [
+        {
+          "name": "Indeed",
+          "body": "biggest job board; filter part-time/entry-level for teen-friendly roles.",
+          "url": "https://www.indeed.com",
+          "urlText": "indeed.com"
+        },
+        {
+          "name": "Named programs worth knowing",
+          "body": "NASA High School Internships (16+), Microsoft High School Discovery Program (paid), and similar run every summer; competitive but real; search the program name + \"high school.\""
+        },
+        {
+          "name": "Forage (again)",
+          "body": "when you can't land a formal internship yet, a finished simulation is the next best resume line."
+        }
+      ]
+    },
+    {
+      "n": 6,
+      "title": "Network and LinkedIn (our whole thing)",
+      "shortLabel": "Network & LinkedIn",
+      "items": [
+        {
+          "name": "LinkedIn",
+          "body": "free, and the highest-leverage account a high schooler can make; opportunities come through people, and this is where they are.",
+          "url": "https://www.linkedin.com",
+          "urlText": "linkedin.com"
+        },
+        {
+          "body": "Pair with LinkedIn Learning above, and follow us — we post how to set up a profile that isn't empty, how to message strangers without being awkward, and how to get replies."
+        }
+      ]
+    }
+  ],
+  "traps": {
+    "title": "⚠️ \"Free\" tools that are actually traps",
+    "items": [
+      {
+        "body": "Zety, Resume Genius, Resume.io — cheap trial that auto-renews to ~$24–26 every four weeks; use FlowCV instead."
+      },
+      {
+        "body": "Rule: if a \"free\" tool wants a credit card before you've made anything, close the tab."
+      }
+    ]
+  },
+  "outroLead": "This is the short list — the full thing lives in our community.",
+  "outroDiscord": "New free tool every week in the SkillBridge Discord."
+}

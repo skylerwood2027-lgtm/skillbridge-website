@@ -1,0 +1,76 @@
+---
+interface Props {
+  name?: string;
+  body: string;
+  url?: string;
+  urlText?: string;
+  urlPlaceholder?: string;
+}
+const { name, body, url, urlText, urlPlaceholder } = Astro.props;
+---
+
+<li class="r-item">
+  <p class="r-item__text">
+    {name && <strong class="r-item__name">{name}</strong>}{name && <span class="r-item__dash"> — </span>}<span>{body}</span>
+  </p>
+  {
+    url && urlText && (
+      <a class="r-item__link" href={url} target="_blank" rel="noopener noreferrer">
+        {urlText}
+        <span class="r-item__ext" aria-hidden="true">↗</span>
+      </a>
+    )
+  }
+  {
+    urlPlaceholder && (
+      <span class="r-item__placeholder" title="Confirm the exact URL before launch">
+        {urlPlaceholder}
+      </span>
+    )
+  }
+</li>
+
+<style>
+  .r-item {
+    padding: 0.95rem 0;
+    border-top: 1px solid var(--line);
+  }
+  .r-item:first-child { border-top: none; }
+  .r-item__text { margin: 0; line-height: 1.55; }
+  .r-item__name {
+    font-family: var(--font-head);
+    font-weight: 700;
+    color: var(--navy);
+  }
+  .r-item__dash { color: var(--ink-soft); }
+  .r-item__link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    margin-top: 0.35rem;
+    font-size: 0.92rem;
+    font-weight: 600;
+    color: var(--blue-ink);
+    text-decoration: none;
+    background: var(--surface-tint);
+    padding: 0.2rem 0.6rem;
+    border-radius: var(--radius-pill);
+    border: 1px solid var(--line);
+  }
+  .r-item__link:hover {
+    border-color: var(--blue);
+    color: var(--navy);
+  }
+  .r-item__ext { font-size: 0.78em; }
+  .r-item__placeholder {
+    display: inline-block;
+    margin-top: 0.35rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #7a5800;
+    background: #fff6e3;
+    border: 1px dashed #e0b865;
+    padding: 0.18rem 0.55rem;
+    border-radius: 8px;
+  }
+</style>

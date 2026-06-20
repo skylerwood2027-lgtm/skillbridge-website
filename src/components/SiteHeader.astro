@@ -1,0 +1,85 @@
+---
+import Logo from './Logo.astro';
+import Button from './Button.astro';
+import siteConfig from '../config.json';
+
+const path = Astro.url.pathname;
+const isActive = (href: string) => (href === '/' ? path === '/' : path.startsWith(href));
+const links = [
+  { href: '/', label: 'Home' },
+  { href: '/resources', label: 'Resources' },
+  { href: '/our-story', label: 'Our Story' },
+];
+---
+
+<header class="site-header">
+  <div class="container site-header__inner">
+    <Logo variant="light" />
+    <nav class="site-nav" aria-label="Primary">
+      {
+        links.map((l) => (
+          <a
+            href={l.href}
+            class:list={['site-nav__link', { 'is-active': isActive(l.href) }]}
+            aria-current={isActive(l.href) ? 'page' : undefined}
+          >
+            {l.label}
+          </a>
+        ))
+      }
+    </nav>
+    <Button href={siteConfig.discordUrl} variant="discord" external class="site-header__cta">Join the Discord</Button>
+  </div>
+</header>
+
+<style>
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: rgba(255, 255, 255, 0.86);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--line);
+  }
+  .site-header__inner {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    min-height: 68px;
+    flex-wrap: wrap;
+  }
+  .site-nav {
+    display: flex;
+    gap: clamp(0.6rem, 2vw, 1.6rem);
+    margin-left: auto;
+  }
+  .site-nav__link {
+    font-family: var(--font-head);
+    font-weight: 600;
+    font-size: 0.97rem;
+    text-decoration: none;
+    color: var(--ink-soft);
+    padding: 0.35rem 0.2rem;
+    border-bottom: 2px solid transparent;
+  }
+  .site-nav__link:hover { color: var(--navy); }
+  .site-nav__link.is-active {
+    color: var(--navy);
+    border-bottom-color: var(--blue);
+  }
+
+  @media (max-width: 640px) {
+    .site-header__inner { min-height: 58px; row-gap: 0; }
+    .site-header__cta { margin-left: auto; }
+    .site-nav {
+      order: 3;
+      width: 100%;
+      margin-left: 0;
+      justify-content: center;
+      gap: 1.3rem;
+      padding: 0.5rem 0;
+      border-top: 1px solid var(--line);
+    }
+  }
+</style>

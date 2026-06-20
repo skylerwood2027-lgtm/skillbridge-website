@@ -1,0 +1,12 @@
+{
+  "name": "SkillBridge",
+  "handle": "@realskillbridge",
+  "_fillIn": "FILL IN BEFORE LAUNCH: (1) set discordUrl to the real Discord invite — it powers every Discord button, the footer, the guide outro, and the PDF. (2) Confirm the three social URLs resolve. (3) Update siteUrl when the domain is purchased (canonical + Open Graph tags).",
+  "discordUrl": "https://discord.gg/REPLACE-WITH-REAL-INVITE",
+  "instagramUrl": "https://instagram.com/realskillbridge",
+  "tiktokUrl": "https://www.tiktok.com/@realskillbridge",
+  "youtubeUrl": "https://youtube.com/@realskillbridge",
+  "siteUrl": "https://skillbridge-website.vercel.app",
+  "pdfPath": "/everything-we-use.pdf",
+  "description": "Two high schoolers teaching the professional skills school skips — LinkedIn, resumes, interviewing, networking, and college prep. Free toolkit, no paywalls."
+}

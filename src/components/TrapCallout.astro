@@ -1,0 +1,51 @@
+---
+interface Props {
+  title: string;
+  items: { body: string }[];
+}
+const { title, items } = Astro.props;
+---
+
+<section class="traps" aria-labelledby="traps-title">
+  <h2 id="traps-title" class="traps__title">{title}</h2>
+  <ul class="traps__items">
+    {items.map((item) => <li class="traps__item">{item.body}</li>)}
+  </ul>
+</section>
+
+<style>
+  .traps {
+    background: #fff6f4;
+    border: 1px solid #f3cfc6;
+    border-left: 5px solid #d9543b;
+    border-radius: var(--radius-lg);
+    padding: clamp(1.25rem, 1rem + 1.5vw, 1.9rem);
+    margin-top: 1.25rem;
+  }
+  .traps__title {
+    font-size: var(--step-1);
+    font-weight: 800;
+    color: #a8341d;
+    margin: 0 0 0.6rem;
+  }
+  .traps__items {
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+  }
+  .traps__item {
+    line-height: 1.55;
+    padding-left: 1.1rem;
+    position: relative;
+  }
+  .traps__item::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.62em;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #d9543b;
+  }
+</style>

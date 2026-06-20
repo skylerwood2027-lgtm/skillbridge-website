@@ -1,0 +1,97 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Button from '../components/Button.astro';
+import siteConfig from '../config.json';
+import story from '../data/ourStory.json';
+---
+
+<BaseLayout title="Our Story · SkillBridge">
+  <!-- Remove this bar to ship the page as final copy. -->
+  <div class="story__draftbar" role="note">
+    DRAFT — pending review. Drafted in the SkillBridge voice from the approved beats. Edit or approve before launch.
+  </div>
+
+  <article class="story">
+    <header class="story__hero">
+      <div class="container container-narrow">
+        <p class="eyebrow">Our Story</p>
+        <h1 class="story__headline">{story.headline}</h1>
+        <p class="story__deck lead">{story.deck}</p>
+      </div>
+    </header>
+
+    <div class="container container-narrow story__body">
+      {story.pullQuote && <blockquote class="story__pull">{story.pullQuote}</blockquote>}
+
+      {
+        story.sections.map((s: any) => (
+          <section class="story__section">
+            <h2 class="story__heading">{s.heading}</h2>
+            {s.paragraphs.map((p: string) => (
+              <p>{p}</p>
+            ))}
+          </section>
+        ))
+      }
+
+      <p class="story__closing">{story.closingLine}</p>
+
+      <div class="story__cta">
+        <Button href={siteConfig.discordUrl} variant="discord" size="lg" external>Join the Discord</Button>
+        <Button href="/resources" variant="outline">Get the free toolkit</Button>
+      </div>
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+  .story__draftbar {
+    background: #fff6e3;
+    color: #7a5800;
+    border-bottom: 1px solid #e7c879;
+    text-align: center;
+    font-size: 0.9rem;
+    font-weight: 600;
+    padding: 0.6rem 1rem;
+  }
+  .story__hero {
+    background: radial-gradient(120% 90% at 82% -10%, var(--light) 0%, #fff 58%);
+    border-bottom: 1px solid var(--line);
+    padding-block: clamp(2.5rem, 2rem + 4vw, 4.5rem) clamp(2rem, 1.5rem + 3vw, 3rem);
+  }
+  .story__headline { margin-top: 0.4rem; }
+  .story__deck { margin-top: 1rem; max-width: 58ch; }
+
+  .story__body { padding-block: clamp(2rem, 1.5rem + 3vw, 3.5rem); }
+  .story__pull {
+    font-family: var(--font-head);
+    font-weight: 700;
+    font-size: var(--step-2);
+    color: var(--navy);
+    line-height: 1.25;
+    border-left: 4px solid var(--blue);
+    padding-left: 1.1rem;
+    margin: 0 0 2.2rem;
+  }
+  .story__section { margin-bottom: 1.9rem; }
+  .story__heading { font-size: var(--step-1); margin-bottom: 0.55rem; }
+  .story__section p {
+    margin-bottom: 0.8rem;
+    max-width: 64ch;
+  }
+  .story__closing {
+    font-family: var(--font-head);
+    font-weight: 700;
+    font-size: var(--step-1);
+    color: var(--navy);
+    line-height: 1.35;
+    max-width: 60ch;
+    margin-top: 0.5rem;
+  }
+  .story__cta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.8rem;
+    margin-top: 2.2rem;
+  }
+</style>

@@ -1,0 +1,109 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Button from '../components/Button.astro';
+import ResourceSection from '../components/ResourceSection.astro';
+import ResourceItem from '../components/ResourceItem.astro';
+import TrapCallout from '../components/TrapCallout.astro';
+import siteConfig from '../config.json';
+import toolkit from '../data/toolkit.json';
+---
+
+<BaseLayout title="Everything We Use · SkillBridge" description={toolkit.tagline}>
+  <article class="guide">
+    <header class="guide__hero">
+      <div class="container container-narrow">
+        <p class="eyebrow">The free toolkit</p>
+        <h1 class="guide__title">{toolkit.title}</h1>
+        <p class="guide__tagline lead">{toolkit.tagline}</p>
+        <div class="guide__actions">
+          <Button href={siteConfig.pdfPath} variant="primary" size="lg" download>Download PDF</Button>
+          <Button href={siteConfig.discordUrl} variant="discord" external>Join the Discord</Button>
+        </div>
+        <p class="guide__intro">{toolkit.intro}</p>
+      </div>
+    </header>
+
+    <div class="container container-narrow guide__body">
+      {
+        toolkit.sections.map((section: any) => (
+          <ResourceSection n={section.n} title={section.title}>
+            {section.items.map((item: any) => (
+              <ResourceItem
+                name={item.name}
+                body={item.body}
+                url={item.url}
+                urlText={item.urlText}
+                urlPlaceholder={item.urlPlaceholder}
+              />
+            ))}
+          </ResourceSection>
+        ))
+      }
+
+      <TrapCallout title={toolkit.traps.title} items={toolkit.traps.items} />
+
+      <section class="guide__outro">
+        <p>{toolkit.outroLead} {toolkit.outroDiscord}</p>
+        <div class="guide__outro-actions">
+          <Button href={siteConfig.discordUrl} variant="light" external>Join the SkillBridge Discord</Button>
+          <a class="guide__handle" href={siteConfig.instagramUrl} target="_blank" rel="noopener noreferrer">
+            {siteConfig.handle}
+          </a>
+        </div>
+      </section>
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+  .guide__hero {
+    background: radial-gradient(120% 90% at 82% -10%, var(--light) 0%, #fff 58%);
+    border-bottom: 1px solid var(--line);
+    padding-block: clamp(2.5rem, 2rem + 4vw, 4.5rem) clamp(2rem, 1.5rem + 3vw, 3rem);
+  }
+  .guide__title { margin-top: 0.4rem; }
+  .guide__tagline { margin-top: 1rem; max-width: 60ch; }
+  .guide__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.8rem;
+    margin-top: 1.5rem;
+  }
+  .guide__intro {
+    margin-top: 1.5rem;
+    color: var(--ink-soft);
+    max-width: 64ch;
+    line-height: 1.6;
+  }
+  .guide__body { padding-block: clamp(2rem, 1.5rem + 3vw, 3.5rem); }
+
+  .guide__outro {
+    margin-top: 1.4rem;
+    background: linear-gradient(135deg, var(--navy), var(--dark));
+    color: #fff;
+    border-radius: var(--radius-lg);
+    padding: clamp(1.6rem, 1rem + 3vw, 2.6rem);
+    text-align: center;
+  }
+  .guide__outro p {
+    color: rgba(235, 244, 252, 0.92);
+    max-width: 52ch;
+    margin-inline: auto;
+    font-size: 1.05rem;
+  }
+  .guide__outro-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.9rem 1.2rem;
+    justify-content: center;
+    align-items: center;
+    margin-top: 1.3rem;
+  }
+  .guide__handle {
+    color: var(--blue);
+    font-family: var(--font-head);
+    font-weight: 700;
+    text-decoration: none;
+  }
+  .guide__handle:hover { color: #fff; }
+</style>

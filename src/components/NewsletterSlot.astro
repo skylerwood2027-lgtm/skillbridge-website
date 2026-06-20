@@ -1,0 +1,88 @@
+---
+// Phase-2 affordance ONLY. This reserves the layout slot for a newsletter
+// signup. It does NOT capture email — the form is inert and disabled by design.
+// When email capture is built, wire the form action here and remove `inert`.
+import siteConfig from '../config.json';
+---
+
+<section class="newsletter" aria-labelledby="newsletter-heading">
+  <div class="newsletter__card">
+    <p class="eyebrow">Coming soon</p>
+    <h2 id="newsletter-heading" class="newsletter__title">A free tool in your inbox, every week</h2>
+    <p class="newsletter__sub">
+      We're setting up a newsletter. Until it's live, the weekly drops happen in the Discord.
+    </p>
+
+    <form class="newsletter__form" aria-hidden="true" inert>
+      <input
+        class="newsletter__input"
+        type="email"
+        placeholder="you@email.com"
+        autocomplete="off"
+        disabled
+        tabindex="-1"
+        aria-label="Email address — signup coming soon"
+      />
+      <button class="newsletter__btn" type="button" disabled tabindex="-1">Notify me</button>
+    </form>
+
+    <p class="newsletter__note">
+      Signup isn't live yet —
+      <a href={siteConfig.discordUrl} target="_blank" rel="noopener noreferrer">join the Discord</a>
+      to get the weekly tools now.
+    </p>
+  </div>
+</section>
+
+<style>
+  .newsletter { padding-block: clamp(1rem, 0.5rem + 2vw, 2rem); }
+  .newsletter__card {
+    background: var(--surface-tint);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    padding: clamp(1.5rem, 1rem + 3vw, 2.75rem);
+    text-align: center;
+    max-width: 640px;
+    margin-inline: auto;
+  }
+  .newsletter__title { margin-top: 0.4rem; font-size: var(--step-2); }
+  .newsletter__sub {
+    margin-top: 0.6rem;
+    color: var(--ink-soft);
+    max-width: 42ch;
+    margin-inline: auto;
+  }
+  .newsletter__form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    justify-content: center;
+    margin-top: 1.3rem;
+    opacity: 0.55;
+  }
+  .newsletter__input {
+    flex: 1 1 16rem;
+    max-width: 22rem;
+    padding: 0.72rem 1rem;
+    border-radius: var(--radius-pill);
+    border: 1.5px solid var(--line-strong);
+    background: #fff;
+    font: inherit;
+    color: var(--ink);
+  }
+  .newsletter__btn {
+    padding: 0.72rem 1.4rem;
+    border-radius: var(--radius-pill);
+    border: none;
+    background: var(--navy);
+    color: #fff;
+    font-family: var(--font-head);
+    font-weight: 700;
+    cursor: not-allowed;
+  }
+  .newsletter__note {
+    margin-top: 1rem;
+    font-size: 0.92rem;
+    color: var(--ink-soft);
+  }
+</style>
