@@ -32,11 +32,27 @@ const categories = toolkit.sections.map((s) => ({ n: s.n, title: s.title }));
       </div>
 
       <div class="hero__media reveal" data-delay="2">
-        <!-- PLACEHOLDER: replace with a real founder photo (Skyler + David). -->
-        <div class="founder-ph" role="img" aria-label="Founder photo placeholder — add a photo of Skyler and David">
-          <div class="founder-ph__icon"><img src="/brand/icon.png" alt="" /></div>
-          <p class="founder-ph__label">Founder photo</p>
-          <p class="founder-ph__hint">Skyler + David — drop a portrait here</p>
+        <div class="hero__portraits">
+          <figure class="portrait">
+            <div class="portrait__frame">
+              <img
+                class="portrait__img"
+                src="/brand/skyler.webp"
+                alt="Skyler, co-founder of SkillBridge"
+                width="800"
+                height="1000"
+                loading="eager"
+                decoding="async"
+                onerror="this.remove()"
+              />
+            </div>
+            <figcaption class="portrait__cap">Skyler, co-founder — David coming soon</figcaption>
+          </figure>
+          <!--
+            DAVID (drop-in later, minimal change): duplicate the <figure class="portrait"> above as
+            <figure class="portrait portrait--b">, set src="/brand/david.webp" + alt, and update the
+            caption. The row auto-balances to a side-by-side pair via .hero__portraits:has() in the CSS.
+          -->
         </div>
       </div>
     </div>
@@ -137,37 +153,45 @@ const categories = toolkit.sections.map((s) => ({ n: s.n, title: s.title }));
   }
 
   .hero__media { display: flex; justify-content: center; }
-  .founder-ph {
-    position: relative;
+  .hero__portraits {
+    display: flex;
+    justify-content: center;
+    gap: clamp(0.8rem, 2vw, 1.4rem);
     width: 100%;
-    max-width: 370px;
+  }
+  .portrait { position: relative; width: 100%; max-width: 360px; margin: 0; }
+  .portrait__frame {
+    position: relative;
     aspect-ratio: 4 / 5;
     border-radius: var(--radius-xl);
-    background: linear-gradient(160deg, var(--surface-tint), #fff 70%);
-    border: 1.5px dashed var(--line-strong);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 0.55rem;
+    overflow: hidden;
+    background: linear-gradient(160deg, var(--surface-tint), #fff 72%);
+    border: 1px solid var(--line);
+    box-shadow: var(--shadow-lg);
+  }
+  .portrait__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 50% 18%;
+    display: block;
+  }
+  .portrait__cap {
+    margin-top: 0.85rem;
     text-align: center;
-    padding: 1.5rem;
-    box-shadow: var(--shadow-md);
-  }
-  .founder-ph__icon { width: 80px; height: 80px; opacity: 0.85; }
-  .founder-ph__label {
     font-family: var(--font-head);
-    font-weight: 800;
-    color: var(--navy);
-    font-size: 1.05rem;
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: var(--ink-soft);
   }
-  .founder-ph__hint { font-size: 0.85rem; color: var(--ink-faint); max-width: 22ch; }
+  /* when David's portrait is added, the pair auto-sizes to sit side by side */
+  .hero__portraits:has(.portrait + .portrait) .portrait { max-width: 255px; }
 
   @media (max-width: 860px) {
-    .hero__inner { grid-template-columns: 1fr; gap: 2rem; }
-    .hero__media { justify-content: flex-start; }
-    .founder-ph { max-width: 100%; aspect-ratio: 16 / 9; }
-    .founder-ph__icon { width: 64px; height: 64px; }
+    .hero__inner { grid-template-columns: 1fr; gap: 2.25rem; }
+    .hero__media { justify-content: center; }
+    .portrait { max-width: 300px; }
+    .hero__portraits:has(.portrait + .portrait) .portrait { max-width: 48%; }
   }
 
   /* ---------------- FIND ---------------- */
