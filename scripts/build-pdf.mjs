@@ -49,7 +49,7 @@ const fonts = (
   ])
 ).join('');
 
-const bridgeMark = `<svg viewBox="0 0 40 28" width="24" height="17" fill="none" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle"><path d="M4 21 Q20 3 36 21" stroke="#5BB8F5" stroke-width="3"/><line x1="3" y1="21.5" x2="37" y2="21.5" stroke="#EBF4FC" stroke-width="3"/><line x1="13" y1="14" x2="13" y2="21.5" stroke="#EBF4FC" stroke-width="2.3"/><line x1="20" y1="10.5" x2="20" y2="21.5" stroke="#EBF4FC" stroke-width="2.3"/><line x1="27" y1="14" x2="27" y2="21.5" stroke="#EBF4FC" stroke-width="2.3"/></svg>`;
+const wordmarkB64 = (await readFile(join(root, 'public', 'brand', 'wordmark-white.png'))).toString('base64');
 
 const sectionsHtml = toolkit.sections
   .map(
@@ -79,8 +79,8 @@ html,body{margin:0;padding:0}
 body{font-family:'Inter',system-ui,sans-serif;color:#0D1B2A;font-size:11px;line-height:1.5}
 h1,h2{font-family:'Manrope',system-ui,sans-serif;color:#1B3A6B;letter-spacing:-.02em}
 .cover{background:linear-gradient(135deg,#1B3A6B,#0D1B2A);color:#fff;border-radius:14px;padding:22px 24px;margin-bottom:16px}
-.cover .brand{font-family:'Manrope';font-weight:800;font-size:13px;color:#5BB8F5;margin-bottom:10px}
-.cover .brand span{vertical-align:middle;margin-left:5px}
+.cover .brand{margin-bottom:12px}
+.cover .brand img{height:26px;width:auto;display:block}
 .cover h1{color:#fff;font-size:26px;margin:0 0 8px;font-weight:800}
 .cover .tag{color:rgba(235,244,252,.92);font-size:11px;margin:0;max-width:64ch}
 .intro{color:#475a78;font-size:11px;margin:0 0 14px;max-width:70ch}
@@ -102,7 +102,7 @@ h1,h2{font-family:'Manrope',system-ui,sans-serif;color:#1B3A6B;letter-spacing:-.
 .outro a{color:#5BB8F5;text-decoration:none}
 </style></head><body>
   <div class="cover">
-    <div class="brand">${bridgeMark}<span>SkillBridge</span></div>
+    <div class="brand"><img src="data:image/png;base64,${wordmarkB64}" alt="SkillBridge" /></div>
     <h1>${esc(toolkit.title)}</h1>
     <p class="tag">${esc(toolkit.tagline)}</p>
   </div>

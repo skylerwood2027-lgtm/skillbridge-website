@@ -14,18 +14,18 @@ import story from '../data/ourStory.json';
   <article class="story">
     <header class="story__hero">
       <div class="container container-narrow">
-        <p class="eyebrow">Our Story</p>
-        <h1 class="story__headline">{story.headline}</h1>
-        <p class="story__deck lead">{story.deck}</p>
+        <p class="eyebrow reveal">Our Story</p>
+        <h1 class="story__headline reveal" data-delay="1">{story.headline}</h1>
+        <p class="story__deck lead reveal" data-delay="2">{story.deck}</p>
       </div>
     </header>
 
     <div class="container container-narrow story__body">
-      {story.pullQuote && <blockquote class="story__pull">{story.pullQuote}</blockquote>}
+      {story.pullQuote && <blockquote class="story__pull reveal">{story.pullQuote}</blockquote>}
 
       {
         story.sections.map((s: any) => (
-          <section class="story__section">
+          <section class="story__section reveal">
             <h2 class="story__heading">{s.heading}</h2>
             {s.paragraphs.map((p: string) => (
               <p>{p}</p>
@@ -34,9 +34,9 @@ import story from '../data/ourStory.json';
         ))
       }
 
-      <p class="story__closing">{story.closingLine}</p>
+      <p class="story__closing reveal">{story.closingLine}</p>
 
-      <div class="story__cta">
+      <div class="story__cta reveal">
         <Button href={siteConfig.discordUrl} variant="discord" size="lg" external>Join the Discord</Button>
         <Button href="/resources" variant="outline">Get the free toolkit</Button>
       </div>

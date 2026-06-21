@@ -6,7 +6,7 @@ interface Props {
 const { title, items } = Astro.props;
 ---
 
-<section class="traps" aria-labelledby="traps-title">
+<section class="traps reveal" aria-labelledby="traps-title">
   <h2 id="traps-title" class="traps__title">{title}</h2>
   <ul class="traps__items">
     {items.map((item) => <li class="traps__item">{item.body}</li>)}

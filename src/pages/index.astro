@@ -11,18 +11,34 @@ const categories = toolkit.sections.map((s) => ({ n: s.n, title: s.title }));
 <BaseLayout title="SkillBridge — the professional skills school skips">
   <!-- HERO -->
   <section class="hero">
+    <div class="hero__motif motif" aria-hidden="true"><img src="/brand/icon.png" alt="" /></div>
     <div class="container hero__inner">
-      <p class="eyebrow">By two high schoolers · {siteConfig.handle}</p>
-      <h1 class="hero__title">The professional skills school skips.</h1>
-      <p class="hero__sub lead">
-        Two high schoolers teaching the stuff that actually moves you forward — LinkedIn, resumes,
-        interviewing, networking, and college prep. Free, no paywalls.
-      </p>
-      <div class="hero__cta">
-        <Button href="/resources" variant="primary" size="lg">Get the free toolkit</Button>
-        <Button href={siteConfig.discordUrl} variant="discord" size="lg" external>Join the Discord</Button>
+      <div class="hero__copy">
+        <p class="eyebrow reveal">By two high schoolers · {siteConfig.handle}</p>
+        <h1 class="hero__title reveal" data-delay="1">The professional skills school skips.</h1>
+        <p class="hero__sub lead reveal" data-delay="2">
+          Two high schoolers teaching the stuff that actually moves you forward — LinkedIn, resumes,
+          interviewing, networking, and college prep. Free, no paywalls.
+        </p>
+        <div class="hero__cta reveal" data-delay="3">
+          <Button href="/resources" variant="primary" size="lg">Get the free toolkit</Button>
+          <Button href={siteConfig.discordUrl} variant="discord" size="lg" external>Join the Discord</Button>
+        </div>
+        <ul class="hero__chips reveal" data-delay="4">
+          <li>100% free</li>
+          <li>No credit card</li>
+          <li>Checked June 2026</li>
+        </ul>
       </div>
-      <p class="hero__note">Genuinely free tools, checked June 2026 — no trials that charge you in two weeks.</p>
+
+      <div class="hero__media reveal" data-delay="2">
+        <!-- PLACEHOLDER: replace with a real founder photo (Skyler + David). -->
+        <div class="founder-ph" role="img" aria-label="Founder photo placeholder — add a photo of Skyler and David">
+          <div class="founder-ph__icon"><img src="/brand/icon.png" alt="" /></div>
+          <p class="founder-ph__label">Founder photo</p>
+          <p class="founder-ph__hint">Skyler + David — drop a portrait here</p>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -30,38 +46,39 @@ const categories = toolkit.sections.map((s) => ({ n: s.n, title: s.title }));
   <section class="section find">
     <div class="container">
       <div class="find__head">
-        <p class="eyebrow">What you'll find here</p>
-        <h2>A short, honest list of what actually works.</h2>
-        <p class="lead">
+        <p class="eyebrow reveal">What you'll find here</p>
+        <h2 class="reveal" data-delay="1">A short, honest list of what actually works.</h2>
+        <p class="lead reveal" data-delay="2">
           No fluff, no gatekeeping. The same free tools and moves we used to land internships and
           build a network, sorted so you can start today.
         </p>
       </div>
       <ul class="find__grid">
         {
-          categories.map((c) => (
-            <li class="find__card">
+          categories.map((c, i) => (
+            <li class="find__card reveal" data-delay={String((i % 3) + 1)}>
               <span class="find__num" aria-hidden="true">{c.n}</span>
               <span class="find__label">{c.title}</span>
             </li>
           ))
         }
       </ul>
-      <div class="find__more">
+      <div class="find__more reveal">
         <Button href="/resources" variant="outline">See everything we use →</Button>
       </div>
     </div>
   </section>
 
   <!-- NEWSLETTER SLOT (phase-2 affordance, no capture) -->
-  <div class="container"><NewsletterSlot /></div>
+  <div class="container reveal"><NewsletterSlot /></div>
 
   <!-- CLOSING CTA BAND -->
   <section class="cta-band">
+    <div class="cta-band__motif motif" aria-hidden="true"><img src="/brand/icon.png" alt="" /></div>
     <div class="container cta-band__inner">
-      <h2 class="cta-band__title">Start with the free toolkit.</h2>
-      <p class="cta-band__sub">Then come hang out in the Discord, where a new free tool drops every week.</p>
-      <div class="cta-band__btns">
+      <h2 class="cta-band__title reveal">Start with the free toolkit.</h2>
+      <p class="cta-band__sub reveal" data-delay="1">Then come hang out in the Discord, where a new free tool drops every week.</p>
+      <div class="cta-band__btns reveal" data-delay="2">
         <Button href="/resources" variant="light" size="lg">Get the free toolkit</Button>
         <Button href={siteConfig.discordUrl} variant="discord" size="lg" external>Join the Discord</Button>
       </div>
@@ -70,35 +87,98 @@ const categories = toolkit.sections.map((s) => ({ n: s.n, title: s.title }));
 </BaseLayout>
 
 <style>
+  /* ---------------- HERO ---------------- */
   .hero {
     position: relative;
-    background: radial-gradient(120% 90% at 82% -10%, var(--light) 0%, #fff 58%);
+    overflow: hidden;
+    background: radial-gradient(120% 95% at 88% -20%, var(--light) 0%, #fff 62%);
     border-bottom: 1px solid var(--line);
-    padding-block: clamp(3rem, 2rem + 6vw, 6rem) clamp(2.5rem, 2rem + 4vw, 4.5rem);
+    padding-block: clamp(2.75rem, 2rem + 5vw, 5.5rem) clamp(2.5rem, 2rem + 4vw, 4.5rem);
   }
-  .hero__inner { max-width: 820px; }
-  .hero__title { margin-top: 0.6rem; }
-  .hero__sub { margin-top: 1.1rem; max-width: 48ch; }
-  .hero__cta {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.8rem;
-    margin-top: 1.8rem;
+  .hero__motif {
+    top: -8%;
+    right: -5%;
+    width: min(46vw, 540px);
+    aspect-ratio: 1;
+    opacity: 0.06;
+    transform: rotate(-6deg);
   }
-  .hero__note {
-    margin-top: 1.15rem;
-    font-size: 0.92rem;
-    color: var(--ink-soft);
+  .hero__inner {
+    display: grid;
+    grid-template-columns: 1.15fr 0.85fr;
+    gap: clamp(2rem, 4vw, 4rem);
+    align-items: center;
+  }
+  .hero__copy { max-width: 620px; }
+  .hero__title { margin-top: 0.7rem; font-size: var(--step-5); }
+  .hero__sub { margin-top: 1.2rem; max-width: 46ch; }
+  .hero__cta { display: flex; flex-wrap: wrap; gap: 0.8rem; margin-top: 1.9rem; }
+  .hero__chips { display: flex; flex-wrap: wrap; gap: 0.5rem 0.6rem; margin-top: 1.5rem; }
+  .hero__chips li {
+    font-family: var(--font-head);
+    font-weight: 600;
+    font-size: 0.85rem;
+    color: var(--navy);
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-pill);
+    padding: 0.4rem 0.85rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    box-shadow: var(--shadow-sm);
+  }
+  .hero__chips li::before {
+    content: '';
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--blue);
   }
 
-  .find__head { max-width: 640px; }
+  .hero__media { display: flex; justify-content: center; }
+  .founder-ph {
+    position: relative;
+    width: 100%;
+    max-width: 370px;
+    aspect-ratio: 4 / 5;
+    border-radius: var(--radius-xl);
+    background: linear-gradient(160deg, var(--surface-tint), #fff 70%);
+    border: 1.5px dashed var(--line-strong);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.55rem;
+    text-align: center;
+    padding: 1.5rem;
+    box-shadow: var(--shadow-md);
+  }
+  .founder-ph__icon { width: 80px; height: 80px; opacity: 0.85; }
+  .founder-ph__label {
+    font-family: var(--font-head);
+    font-weight: 800;
+    color: var(--navy);
+    font-size: 1.05rem;
+  }
+  .founder-ph__hint { font-size: 0.85rem; color: var(--ink-faint); max-width: 22ch; }
+
+  @media (max-width: 860px) {
+    .hero__inner { grid-template-columns: 1fr; gap: 2rem; }
+    .hero__media { justify-content: flex-start; }
+    .founder-ph { max-width: 100%; aspect-ratio: 16 / 9; }
+    .founder-ph__icon { width: 64px; height: 64px; }
+  }
+
+  /* ---------------- FIND ---------------- */
+  .find__head { max-width: 660px; }
   .find__head h2 { margin-top: 0.4rem; }
-  .find__head .lead { margin-top: 0.8rem; }
+  .find__head .lead { margin-top: 0.85rem; }
   .find__grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(225px, 1fr));
     gap: 1rem;
-    margin-top: 2.1rem;
+    margin-top: 2.2rem;
   }
   .find__card {
     display: flex;
@@ -107,50 +187,63 @@ const categories = toolkit.sections.map((s) => ({ n: s.n, title: s.title }));
     background: #fff;
     border: 1px solid var(--line);
     border-radius: var(--radius);
-    padding: 1rem 1.15rem;
+    padding: 1.05rem 1.2rem;
     box-shadow: var(--shadow-sm);
-    transition:
-      transform 0.14s ease,
-      box-shadow 0.15s ease,
-      border-color 0.15s ease;
+    transition: transform 0.16s var(--ease), box-shadow 0.16s ease, border-color 0.16s ease;
   }
   .find__card:hover {
-    transform: translateY(-2px);
+    transform: translateY(-3px);
     box-shadow: var(--shadow-md);
-    border-color: var(--line-strong);
+    border-color: var(--blue);
   }
   .find__num {
     flex: none;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 34px;
-    height: 34px;
-    border-radius: 9px;
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
     background: var(--surface-tint);
     color: var(--blue-ink);
     font-family: var(--font-head);
     font-weight: 800;
+    transition: background 0.16s ease, color 0.16s ease;
   }
+  .find__card:hover .find__num { background: var(--navy); color: #fff; }
   .find__label {
     font-family: var(--font-head);
     font-weight: 700;
     color: var(--navy);
     line-height: 1.22;
   }
-  .find__more { margin-top: 1.7rem; }
+  .find__more { margin-top: 1.8rem; }
 
+  /* ---------------- CTA BAND ---------------- */
   .cta-band {
+    position: relative;
+    overflow: hidden;
     background: linear-gradient(135deg, var(--navy), var(--dark));
     color: #fff;
   }
+  .cta-band__motif {
+    top: 50%;
+    right: -4%;
+    width: min(40vw, 420px);
+    aspect-ratio: 1;
+    transform: translateY(-50%) rotate(-6deg);
+    opacity: 0.08;
+    filter: brightness(0) invert(1);
+  }
   .cta-band__inner {
-    padding-block: clamp(3rem, 2rem + 5vw, 5rem);
+    padding-block: clamp(3rem, 2rem + 5vw, 5.5rem);
     text-align: center;
+    position: relative;
+    z-index: 1;
   }
   .cta-band__title { color: #fff; }
   .cta-band__sub {
-    margin-top: 0.8rem;
+    margin-top: 0.85rem;
     color: rgba(235, 244, 252, 0.82);
     max-width: 48ch;
     margin-inline: auto;
@@ -160,6 +253,6 @@ const categories = toolkit.sections.map((s) => ({ n: s.n, title: s.title }));
     flex-wrap: wrap;
     gap: 0.8rem;
     justify-content: center;
-    margin-top: 1.8rem;
+    margin-top: 1.9rem;
   }
 </style>

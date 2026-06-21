@@ -39,7 +39,7 @@ const fonts = (
   ])
 ).join('');
 
-const bridge = `<svg viewBox="0 0 40 28" width="40" height="28" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M4 21 Q20 3 36 21" stroke="#5BB8F5" stroke-width="3"/><line x1="3" y1="21.5" x2="37" y2="21.5" stroke="#fff" stroke-width="3"/><line x1="13" y1="14" x2="13" y2="21.5" stroke="#fff" stroke-width="2.3"/><line x1="20" y1="10.5" x2="20" y2="21.5" stroke="#fff" stroke-width="2.3"/><line x1="27" y1="14" x2="27" y2="21.5" stroke="#fff" stroke-width="2.3"/></svg>`;
+const wordmarkB64 = (await readFile(join(root, 'public', 'brand', 'wordmark-white.png'))).toString('base64');
 
 const topics = ['LinkedIn', 'Resumes', 'Interviewing', 'Networking', 'College prep'];
 
@@ -49,7 +49,8 @@ ${fonts}
 html,body{width:1200px;height:630px}
 body{font-family:'Inter',system-ui,sans-serif;background:radial-gradient(125% 130% at 86% -12%, #1B3A6B 0%, #0D1B2A 62%);color:#fff;padding:72px;display:flex;flex-direction:column;justify-content:space-between;position:relative;overflow:hidden}
 .glow{position:absolute;top:-180px;right:-140px;width:560px;height:560px;border-radius:50%;background:radial-gradient(circle,rgba(91,184,245,.32),transparent 70%)}
-.brand{display:flex;align-items:center;gap:14px;font-family:'Manrope';font-weight:800;font-size:32px;z-index:1}
+.brand{display:flex;align-items:center;z-index:1}
+.brand img{height:50px;width:auto;display:block}
 h1{font-family:'Manrope';font-weight:800;font-size:76px;line-height:1.03;letter-spacing:-.02em;max-width:17ch;z-index:1}
 .sub{font-size:27px;color:rgba(235,244,252,.85);margin-top:20px;z-index:1}
 .row{display:flex;align-items:center;justify-content:space-between;z-index:1;gap:20px}
@@ -58,7 +59,7 @@ h1{font-family:'Manrope';font-weight:800;font-size:76px;line-height:1.03;letter-
 .handle{font-family:'Manrope';font-weight:800;font-size:27px;color:#5BB8F5;white-space:nowrap}
 </style></head><body>
   <div class="glow"></div>
-  <div class="brand">${bridge}<span>SkillBridge</span></div>
+  <div class="brand"><img src="data:image/png;base64,${wordmarkB64}" alt="SkillBridge" /></div>
   <div>
     <h1>The professional skills school skips.</h1>
     <p class="sub">Two high schoolers · free toolkit, no paywalls</p>

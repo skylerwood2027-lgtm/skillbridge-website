@@ -1,7 +1,7 @@
 /* ===========================================================================
    SkillBridge — design tokens + base styles
-   Brand (locked): navy #1B3A6B · blue #5BB8F5 · light #EBF4FC · dark #0D1B2A
-   Fonts: Manrope (headings) · Inter (body)
+   Brand (LOCKED): navy #1B3A6B · blue #5BB8F5 · light #EBF4FC · dark #0D1B2A
+   Fonts (LOCKED): Manrope (headings) · Inter (body)
    =========================================================================== */
 :root {
   /* brand */
@@ -14,6 +14,7 @@
   /* derived / functional */
   --ink: #0d1b2a;          /* primary body text */
   --ink-soft: #475a78;     /* secondary text, AA on white */
+  --ink-faint: #6b7d97;    /* tertiary / captions */
   --line: #d9e8f8;         /* hairline borders */
   --line-strong: #c3dcf3;
   --surface: #ffffff;
@@ -24,23 +25,28 @@
   --font-head: 'Manrope', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
   --font-body: 'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
 
-  /* fluid type scale */
+  /* fluid type scale — widened for stronger hierarchy */
+  --step--2: clamp(0.74rem, 0.72rem + 0.1vw, 0.8rem);
   --step--1: clamp(0.83rem, 0.8rem + 0.15vw, 0.9rem);
-  --step-0: clamp(1rem, 0.96rem + 0.2vw, 1.075rem);
-  --step-1: clamp(1.2rem, 1.1rem + 0.5vw, 1.4rem);
-  --step-2: clamp(1.45rem, 1.3rem + 0.8vw, 1.8rem);
-  --step-3: clamp(1.8rem, 1.5rem + 1.6vw, 2.55rem);
-  --step-4: clamp(2.25rem, 1.7rem + 2.8vw, 3.5rem);
+  --step-0: clamp(1rem, 0.96rem + 0.2vw, 1.07rem);
+  --step-1: clamp(1.16rem, 1.08rem + 0.4vw, 1.35rem);
+  --step-2: clamp(1.45rem, 1.28rem + 0.85vw, 1.85rem);
+  --step-3: clamp(1.85rem, 1.45rem + 1.9vw, 2.85rem);
+  --step-4: clamp(2.3rem, 1.7rem + 3vw, 3.6rem);
+  --step-5: clamp(2.7rem, 1.5rem + 5.4vw, 5.2rem);
 
   /* layout */
-  --container: 1080px;
+  --container: 1120px;
   --container-narrow: 760px;
   --radius: 14px;
   --radius-lg: 22px;
+  --radius-xl: 30px;
   --radius-pill: 999px;
   --shadow-sm: 0 1px 2px rgba(13, 27, 42, 0.06), 0 4px 12px rgba(27, 58, 107, 0.06);
   --shadow-md: 0 2px 6px rgba(13, 27, 42, 0.07), 0 14px 40px rgba(27, 58, 107, 0.1);
-  --space-section: clamp(3.5rem, 2rem + 6vw, 6.5rem);
+  --shadow-lg: 0 8px 24px rgba(13, 27, 42, 0.1), 0 30px 70px rgba(27, 58, 107, 0.14);
+  --space-section: clamp(3.75rem, 2rem + 7vw, 7rem);
+  --ease: cubic-bezier(0.22, 0.7, 0.2, 1);
 }
 
 *, *::before, *::after { box-sizing: border-box; }
@@ -59,19 +65,20 @@ body {
   min-height: 100dvh;
   display: flex;
   flex-direction: column;
+  overflow-x: hidden;
 }
 
 h1, h2, h3, h4 {
   font-family: var(--font-head);
-  line-height: 1.12;
-  letter-spacing: -0.02em;
+  line-height: 1.08;
+  letter-spacing: -0.025em;
   color: var(--navy);
   font-weight: 800;
   text-wrap: balance;
 }
 h1 { font-size: var(--step-4); }
 h2 { font-size: var(--step-3); }
-h3 { font-size: var(--step-1); font-weight: 700; }
+h3 { font-size: var(--step-1); font-weight: 700; letter-spacing: -0.02em; }
 
 p { text-wrap: pretty; }
 
@@ -95,6 +102,7 @@ strong, b { font-weight: 700; }
   max-width: var(--container);
   margin-inline: auto;
   padding-inline: clamp(1.1rem, 0.5rem + 3vw, 2rem);
+  position: relative;
 }
 .container-narrow { max-width: var(--container-narrow); }
 .section { padding-block: var(--space-section); }
@@ -102,7 +110,7 @@ strong, b { font-weight: 700; }
   font-family: var(--font-head);
   font-weight: 700;
   font-size: var(--step--1);
-  letter-spacing: 0.09em;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--blue-ink);
 }
@@ -119,10 +127,29 @@ strong, b { font-weight: 700; }
 }
 .skip-link:focus { top: 1rem; }
 
+/* brand motif (decorative bridge/book icon used as a faint graphic element) */
+.motif { position: absolute; pointer-events: none; user-select: none; z-index: 0; }
+.motif img { width: 100%; height: 100%; object-fit: contain; }
+
+/* -------- motion: scroll-reveal (progressive enhancement) ----------------- */
+/* only applies when JS is present, so no-JS users always see content */
+html.js .reveal {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.7s var(--ease), transform 0.7s var(--ease);
+}
+html.js .reveal.is-visible { opacity: 1; transform: none; }
+html.js .reveal[data-delay='1'] { transition-delay: 0.07s; }
+html.js .reveal[data-delay='2'] { transition-delay: 0.14s; }
+html.js .reveal[data-delay='3'] { transition-delay: 0.21s; }
+html.js .reveal[data-delay='4'] { transition-delay: 0.28s; }
+html.js .reveal[data-delay='5'] { transition-delay: 0.35s; }
+
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *, *::before, *::after {
     animation-duration: 0.001ms !important;
     transition-duration: 0.001ms !important;
   }
+  html.js .reveal { opacity: 1 !important; transform: none !important; }
 }

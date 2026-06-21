@@ -11,15 +11,16 @@ import toolkit from '../data/toolkit.json';
 <BaseLayout title="Everything We Use · SkillBridge" description={toolkit.tagline}>
   <article class="guide">
     <header class="guide__hero">
+      <div class="guide__hero-motif motif" aria-hidden="true"><img src="/brand/icon.png" alt="" /></div>
       <div class="container container-narrow">
-        <p class="eyebrow">The free toolkit</p>
-        <h1 class="guide__title">{toolkit.title}</h1>
-        <p class="guide__tagline lead">{toolkit.tagline}</p>
-        <div class="guide__actions">
+        <p class="eyebrow reveal">The free toolkit</p>
+        <h1 class="guide__title reveal" data-delay="1">{toolkit.title}</h1>
+        <p class="guide__tagline lead reveal" data-delay="2">{toolkit.tagline}</p>
+        <div class="guide__actions reveal" data-delay="3">
           <Button href={siteConfig.pdfPath} variant="primary" size="lg" download>Download PDF</Button>
           <Button href={siteConfig.discordUrl} variant="discord" external>Join the Discord</Button>
         </div>
-        <p class="guide__intro">{toolkit.intro}</p>
+        <p class="guide__intro reveal" data-delay="4">{toolkit.intro}</p>
       </div>
     </header>
 
@@ -42,7 +43,7 @@ import toolkit from '../data/toolkit.json';
 
       <TrapCallout title={toolkit.traps.title} items={toolkit.traps.items} />
 
-      <section class="guide__outro">
+      <section class="guide__outro reveal">
         <p>{toolkit.outroLead} {toolkit.outroDiscord}</p>
         <div class="guide__outro-actions">
           <Button href={siteConfig.discordUrl} variant="light" external>Join the SkillBridge Discord</Button>
@@ -57,11 +58,21 @@ import toolkit from '../data/toolkit.json';
 
 <style>
   .guide__hero {
+    position: relative;
+    overflow: hidden;
     background: radial-gradient(120% 90% at 82% -10%, var(--light) 0%, #fff 58%);
     border-bottom: 1px solid var(--line);
     padding-block: clamp(2.5rem, 2rem + 4vw, 4.5rem) clamp(2rem, 1.5rem + 3vw, 3rem);
   }
-  .guide__title { margin-top: 0.4rem; }
+  .guide__hero-motif {
+    top: -14%;
+    right: -3%;
+    width: min(40vw, 340px);
+    aspect-ratio: 1;
+    opacity: 0.06;
+    transform: rotate(-6deg);
+  }
+  .guide__title { margin-top: 0.4rem; font-size: var(--step-5); }
   .guide__tagline { margin-top: 1rem; max-width: 60ch; }
   .guide__actions {
     display: flex;

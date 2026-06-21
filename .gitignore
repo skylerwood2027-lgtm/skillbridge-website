@@ -25,3 +25,9 @@ pnpm-debug.log*
 
 # vercel
 .vercel/
+
+# screenshot-review temp output
+.screens/
+
+# brand logo SOURCE files — the generated assets in public/brand/ are what ship
+brand-src/
