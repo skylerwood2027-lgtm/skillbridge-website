@@ -1,8 +1,8 @@
 {
   "name": "SkillBridge",
   "handle": "@realskillbridge",
-  "_fillIn": "FILL IN BEFORE LAUNCH: (1) set discordUrl to the real Discord invite — it powers every Discord button, the footer, the guide outro, and the PDF. (2) Confirm the three social URLs resolve. (3) Update siteUrl when the domain is purchased (canonical + Open Graph tags).",
-  "discordUrl": "https://discord.gg/REPLACE-WITH-REAL-INVITE",
+  "_fillIn": "FILL IN BEFORE LAUNCH: (1) Confirm the three social URLs resolve. (2) Update siteUrl when the domain is purchased (canonical + Open Graph tags). Discord invite is set.",
+  "discordUrl": "https://discord.gg/ERykuTr6nv",
   "instagramUrl": "https://instagram.com/realskillbridge",
   "tiktokUrl": "https://www.tiktok.com/@realskillbridge",
   "youtubeUrl": "https://youtube.com/@realskillbridge",
