@@ -16,16 +16,13 @@ prep). Built with **Astro** (fully static), styled for **Vercel's free tier**.
 Everything lives in **`src/config.json`** — edit once, it updates every page, button,
 the footer, and the PDF:
 
-- `discordUrl` — the real Discord invite (currently a placeholder).
+- `discordUrl` — set to the live invite.
 - `instagramUrl` · `tiktokUrl` · `youtubeUrl` — confirm each resolves.
 - `siteUrl` — set when the domain is purchased (canonical + Open Graph tags).
 
-Other placeholders:
+Still to do before launch:
 
-- **Google Skillshop** in the guide shows `[CONFIRM EXACT URL]` — kept verbatim on
-  purpose. Confirm and replace it in `src/data/toolkit.json`, then run `npm run pdf`.
-- **Our Story draft bar** — `src/pages/our-story.astro` shows a yellow "DRAFT" bar.
-  Delete the `<div class="story__draftbar">…</div>` once the copy is approved.
+- **Confirm the social URLs** above resolve to the real profiles.
 - **Cross-link** — add this site's URL inside the Discord (server description or a
   channel) so the link goes both ways.
 

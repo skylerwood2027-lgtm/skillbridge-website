@@ -44,7 +44,8 @@
         {
           "name": "Google Skillshop",
           "body": "free Google Ads & Analytics certs straight from Google.",
-          "urlPlaceholder": "[CONFIRM EXACT URL]"
+          "url": "https://skillshop.withgoogle.com",
+          "urlText": "skillshop.withgoogle.com"
         }
       ]
     },
