@@ -21,6 +21,7 @@ const BASE = process.env.BASE || 'http://localhost:4321';
 const pages = [
   { name: 'index', path: '/' },
   { name: 'resources', path: '/resources' },
+  { name: 'starter-toolkit', path: '/resources/skillbridge-starter-toolkit' },
   { name: 'our-story', path: '/our-story' },
 ];
 const viewports = [

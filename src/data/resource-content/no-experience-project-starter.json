@@ -1,0 +1,68 @@
+{
+  "slug": "no-experience-project-starter",
+  "title": "The No-Experience Project Starter",
+  "subtitle": "One real project you can choose this week, finish, prove, and put on your resume — without calling yourself an intern.",
+  "fromVideo": "From the video: three real ways to create experience",
+  "intro": "Nobody will hire you for experience you do not have yet. So make the experience instead. Pick ONE of the three routes below, finish it, and write it down honestly. One finished project beats four half-started ones.",
+  "entries": [
+    {
+      "n": "1",
+      "title": "Choose one route",
+      "lead": "Pick the one you can actually finish in the next two weeks. Not all three.",
+      "items": [
+        "A job simulation. Forage runs free simulations where you do tasks modeled on real company work and earn a certificate at the end. Their terms require you to be 16 or older.",
+        "A project inside a club or volunteer group you are already in. Run an event, build a sign-up system, or manage a campaign — something with a start, an end, and a result.",
+        "One portfolio piece for the field you want: a website, a design set, a data analysis, or a research brief."
+      ],
+      "note": "Not sure which? Take the club route. You already have the group, so the only thing you have to supply is the finishing.",
+      "action": {
+        "label": "Open Forage job simulations",
+        "url": "https://www.theforage.com/simulations",
+        "note": "Free simulations built with real companies. Their terms require you to be 16 or older — Section 2, Eligibility, at theforage.com/terms"
+      }
+    },
+    {
+      "n": "2",
+      "title": "Make it small enough to finish",
+      "lead": "Write one sentence before you start: what will exist at the end that does not exist now?",
+      "items": [
+        "Name the finished thing: a signup form, a five-page site, a two-page brief, a chart with a conclusion, a certificate.",
+        "Give it a deadline you would be embarrassed to miss. Two weeks is usually right.",
+        "Cut the scope until you believe the deadline. A finished small thing is worth more than an unfinished big one."
+      ]
+    },
+    {
+      "n": "3",
+      "title": "Prove it",
+      "lead": "Proof is anything someone else can open. Save it the day you finish, not later.",
+      "items": [
+        "A link — the live page, the public doc, the form, the folder, the repo.",
+        "A file — the certificate PDF, the exported design, the brief.",
+        "A number you actually know — people signed up, items sold, hours run, dollars raised, weeks it ran. If you do not know the number, leave it out."
+      ],
+      "note": "Screenshot it too. Links break, clubs graduate, and pages get taken down."
+    },
+    {
+      "n": "4",
+      "title": "Describe it without lying",
+      "lead": "Do not call yourself an intern. Call it a project and explain exactly what you did.",
+      "items": [
+        "Line 1 — what it was: \"Sign-up system for the club's spring fundraiser.\"",
+        "Line 2 — what you did: start with a verb. Built, ran, organized, analyzed, wrote, repaired, taught, sold.",
+        "Line 3 — what happened: the number or the result, then the link.",
+        "Put it under Experience and projects on your resume, with the month and year."
+      ],
+      "note": "\"Project\" is not a downgrade. A specific project you can explain beats a vague title you cannot."
+    }
+  ],
+  "rule": {
+    "title": "Do this today",
+    "items": [
+      "Write the one-sentence version of your project.",
+      "Put the deadline in your phone.",
+      "Decide now what the proof will be — the link, the file, or the number."
+    ]
+  },
+  "verified": "2026-07-28",
+  "verifyNote": "Programs and age rules change — open the official page before you sign up for anything. On how universities define project experience: career.berkeley.edu/find-opportunities/experiential-learning and careerservices.fas.harvard.edu/resources/portfolio-tools"
+}

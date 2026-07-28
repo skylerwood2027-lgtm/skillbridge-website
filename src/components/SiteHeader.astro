@@ -1,6 +1,5 @@
 ---
 import Logo from './Logo.astro';
-import Button from './Button.astro';
 import siteConfig from '../config.json';
 
 const path = Astro.url.pathname;
@@ -34,8 +33,12 @@ const links = [
           ))
         }
       </nav>
-      <Button href={siteConfig.discordUrl} variant="discord" external class="site-header__cta">Join the Discord</Button>
+      {/* The newsletter is the site's primary action. It stays visible at every
+          width — on mobile it sits beside the logo, outside the collapsing menu,
+          so it never disappears behind the hamburger. */}
+      <a class="site-header__cta" href="#newsletter">Join the Brief</a>
     </div>
+    <a class="site-header__cta site-header__cta--mobile" href="#newsletter">Join the Brief</a>
   </div>
 </header>
 
@@ -104,6 +107,30 @@ const links = [
     border-bottom-color: var(--blue);
   }
 
+  /* The one filled control in the header. Navy so it reads as primary without
+     competing with the blue used for state elsewhere. */
+  .site-header__cta {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-head);
+    font-weight: 700;
+    font-size: 0.95rem;
+    line-height: 1;
+    white-space: nowrap;
+    color: #fff;
+    background: var(--navy);
+    border-radius: var(--radius-pill);
+    min-height: 44px;
+    padding: 0 1.15rem;
+    text-decoration: none;
+    transition: background-color 0.16s var(--ease), transform 0.14s var(--ease);
+  }
+  .site-header__cta:hover { background: var(--dark); color: #fff; }
+  .site-header__cta:active { transform: translateY(1px); }
+  /* The mobile twin only exists below the breakpoint. */
+  .site-header__cta--mobile { display: none; }
+
   /* hamburger — hidden on desktop */
   .nav-toggle {
     display: none;
@@ -134,6 +161,20 @@ const links = [
   .site-header.is-open .nav-toggle__bars::after { transform: translateY(-6px) rotate(-45deg); }
 
   @media (max-width: 760px) {
+    .nav-toggle { display: inline-flex; order: 3; }
+    /* Compact but unmistakable, and it does not crowd the logo: the header row is
+       logo → CTA → hamburger, with the CTA allowed to shrink its label padding. */
+    .site-header__cta--mobile {
+      display: inline-flex;
+      order: 2;
+      margin-left: auto;
+      margin-right: 0.55rem;
+      font-size: 0.88rem;
+      padding: 0 0.85rem;
+    }
+    .site-header__inner { gap: 0.5rem; }
+    /* The in-menu copy would be a duplicate of the one now beside the logo. */
+    .site-menu .site-header__cta { display: none; }
     .nav-toggle { display: inline-flex; }
     .site-menu {
       position: absolute;
@@ -163,6 +204,5 @@ const links = [
       border-bottom: 1px solid var(--line);
     }
     .site-nav__link.is-active { border-bottom-color: var(--line); color: var(--navy); }
-    .site-header__cta { margin-top: 0.7rem; width: 100%; }
   }
 </style>

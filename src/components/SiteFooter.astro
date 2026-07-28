@@ -1,6 +1,5 @@
 ---
 import Logo from './Logo.astro';
-import Button from './Button.astro';
 import siteConfig from '../config.json';
 
 const year = new Date().getFullYear();
@@ -53,8 +52,15 @@ const socials = [
     </div>
 
     <div class="site-footer__cta">
-      <p class="site-footer__cta-line">A new free tool every week.</p>
-      <Button href={siteConfig.discordUrl} variant="discord" external>Join the Discord</Button>
+      <p class="site-footer__cta-line">New guides go out in The SkillBridge Brief.</p>
+      {/* A text link, not a second button — the newsletter band sits directly above
+          this footer on every page, and two buttons would compete. */}
+      <p class="site-footer__community">
+        <a class="site-footer__brief" href="#newsletter">Sign up for The Brief</a>
+      </p>
+      <p class="site-footer__community">
+        Or come talk to us in the <a href={siteConfig.discordUrl} target="_blank" rel="noopener noreferrer">SkillBridge Discord</a>.
+      </p>
     </div>
   </div>
 
@@ -62,6 +68,7 @@ const socials = [
     <nav class="site-footer__nav" aria-label="Footer">
       <a href="/">Home</a>
       <a href="/resources">Resources</a>
+      <a href="#newsletter">Newsletter</a>
       <a href="/our-story">Our Story</a>
     </nav>
     <p class="site-footer__copy">© {year} SkillBridge</p>
@@ -150,4 +157,23 @@ const socials = [
     color: rgba(235, 244, 252, 0.6);
     font-size: 0.9rem;
   }
+  .site-footer__brief {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    font-family: var(--font-head);
+    font-weight: 700;
+    font-size: 0.97rem;
+    color: var(--blue);
+    text-decoration-color: rgba(91, 184, 245, 0.5);
+  }
+  .site-footer__brief:hover { color: #fff; }
+  /* Discord stays available, as one line of text rather than a second button. */
+  .site-footer__community {
+    margin-top: 0.85rem;
+    font-size: 0.9rem;
+    color: rgba(235, 244, 252, 0.72);
+  }
+  .site-footer__community a { color: var(--blue); text-decoration-color: rgba(91, 184, 245, 0.5); }
+  .site-footer__community a:hover { color: #fff; }
 </style>

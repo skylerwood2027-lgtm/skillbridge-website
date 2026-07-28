@@ -1,0 +1,119 @@
+---
+// The SkillBridge Starter Toolkit. Its content is VERIFIED and rendered verbatim
+// from src/data/toolkit.json — the same source the PDF is built from, so the two
+// can never drift. Do not paraphrase here. Edit toolkit.json, then `npm run pdf`.
+//
+// Renamed from "Everything We Use" on 2026-07-28: that title claimed
+// exhaustiveness the list does not have. /resources/everything-we-use redirects
+// here (see astro.config.mjs) so existing links keep working.
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Button from '../../components/Button.astro';
+import ResourceSection from '../../components/ResourceSection.astro';
+import ResourceItem from '../../components/ResourceItem.astro';
+import TrapCallout from '../../components/TrapCallout.astro';
+import siteConfig from '../../config.json';
+import toolkit from '../../data/toolkit.json';
+---
+
+<BaseLayout title={`${toolkit.title} · SkillBridge`} description={toolkit.tagline}>
+  <article class="guide">
+    <header class="guide__hero">
+      <div class="guide__hero-motif motif" aria-hidden="true"><img src="/brand/icon.png" alt="" /></div>
+      <div class="container container-narrow">
+        <a class="guide__back" href="/resources">← All free resources</a>
+        <p class="eyebrow reveal">The free toolkit</p>
+        <h1 class="guide__title reveal" data-delay="1">{toolkit.title}</h1>
+        <p class="guide__tagline lead reveal" data-delay="2">{toolkit.tagline}</p>
+        <div class="guide__actions reveal" data-delay="3">
+          <Button href={siteConfig.pdfPath} variant="primary" size="lg" download>Download PDF</Button>
+        </div>
+        <p class="guide__intro reveal" data-delay="4">{toolkit.intro}</p>
+      </div>
+    </header>
+
+    <div class="container container-narrow guide__body">
+      {
+        toolkit.sections.map((section: any) => (
+          <ResourceSection n={section.n} title={section.title}>
+            {section.items.map((item: any) => (
+              <ResourceItem
+                name={item.name}
+                body={item.body}
+                url={item.url}
+                urlText={item.urlText}
+                urlPlaceholder={item.urlPlaceholder}
+              />
+            ))}
+          </ResourceSection>
+        ))
+      }
+
+      <TrapCallout title={toolkit.traps.title} items={toolkit.traps.items} />
+
+      <p class="guide__outro reveal">
+        {toolkit.outroLead} {toolkit.outroDiscord}
+        <a href="/resources">See the other free guides →</a>
+      </p>
+    </div>
+  </article>
+
+</BaseLayout>
+
+<style>
+  .guide__hero {
+    position: relative;
+    overflow: hidden;
+    background: radial-gradient(120% 90% at 82% -10%, var(--light) 0%, #fff 58%);
+    border-bottom: 1px solid var(--line);
+    padding-block: clamp(2rem, 1.6rem + 3vw, 3.25rem) clamp(1.8rem, 1.4rem + 2.5vw, 2.75rem);
+  }
+  .guide__hero-motif {
+    top: -14%;
+    right: -3%;
+    width: min(40vw, 340px);
+    aspect-ratio: 1;
+    opacity: 0.06;
+    transform: rotate(-6deg);
+  }
+  .guide__back {
+    display: inline-block;
+    margin-bottom: 1.1rem;
+    font-family: var(--font-head);
+    font-weight: 700;
+    font-size: 0.88rem;
+    color: var(--blue-ink);
+    text-decoration-color: var(--line-strong);
+  }
+  .guide__back:hover { color: var(--navy); text-decoration-color: var(--blue); }
+  .guide__title { margin-top: 0.4rem; font-size: var(--step-4); }
+  .guide__tagline { margin-top: 1rem; max-width: 60ch; }
+  .guide__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.8rem;
+    margin-top: 1.4rem;
+  }
+  .guide__intro {
+    margin-top: 1.4rem;
+    color: var(--ink-soft);
+    max-width: 64ch;
+    line-height: 1.6;
+  }
+  .guide__body { padding-block: clamp(2rem, 1.5rem + 3vw, 3.25rem); }
+
+  /* A closing line, not another band — the newsletter band below is the one
+     conversion endpoint on this page. */
+  .guide__outro {
+    margin-top: 1.6rem;
+    padding-top: 1.4rem;
+    border-top: 1px solid var(--line);
+    color: var(--ink-soft);
+    font-size: 1rem;
+  }
+  .guide__outro a {
+    font-family: var(--font-head);
+    font-weight: 700;
+    color: var(--blue-ink);
+    white-space: nowrap;
+  }
+</style>

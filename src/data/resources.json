@@ -1,0 +1,472 @@
+{
+  "_readme": "CANONICAL SkillBridge resource catalog — the single source of truth. The website renders it, `npm run resources:check` validates it, and `npm run resources:sync` writes a verified snapshot into the content repo for Creator Flow CTA validation. Never hand-edit the snapshot. Only `status: published` items render in production.",
+  "updated": "2026-07-28",
+  "formats": {
+    "pdf": {
+      "label": "PDF",
+      "action": "Download PDF"
+    },
+    "docx": {
+      "label": "Word template",
+      "action": "Download template"
+    },
+    "google-doc": {
+      "label": "Google Doc",
+      "action": "Open the guide"
+    },
+    "google-slides": {
+      "label": "Google Slides",
+      "action": "Open the slides"
+    }
+  },
+  "friction": {
+    "no-account": "No account needed",
+    "account-required": "Free account required",
+    "google-account": "Needs a Google account",
+    "external": "Opens on another site",
+    "editable": "You can edit your copy",
+    "age-16": "Some steps need you to be 16+"
+  },
+  "categories": [
+    {
+      "id": "toolkit",
+      "label": "The toolkit"
+    },
+    {
+      "id": "experience",
+      "label": "Experience"
+    },
+    {
+      "id": "resume",
+      "label": "Resume"
+    },
+    {
+      "id": "applying",
+      "label": "Applying"
+    },
+    {
+      "id": "networking",
+      "label": "Networking"
+    },
+    {
+      "id": "credentials",
+      "label": "Credentials"
+    },
+    {
+      "id": "ai",
+      "label": "AI"
+    }
+  ],
+  "resources": [
+    {
+      "id": "skillbridge-starter-toolkit",
+      "slug": "skillbridge-starter-toolkit",
+      "status": "published",
+      "title": "SkillBridge Starter Toolkit",
+      "description": "A curated list of the free tools, sites, and opportunities we currently recommend — and the traps that charge you in two weeks.",
+      "outcome": "You get the shortlist we actually use, in one file.",
+      "category": "toolkit",
+      "format": "pdf",
+      "action": {
+        "label": "Download PDF",
+        "url": "/skillbridge-starter-toolkit.pdf",
+        "download": true
+      },
+      "readOnline": {
+        "label": "Read it on the site",
+        "url": "/resources/skillbridge-starter-toolkit"
+      },
+      "friction": [
+        "no-account"
+      ],
+      "source": {
+        "kind": "verified-site-content",
+        "content": "src/data/toolkit.json",
+        "generator": "scripts/build-pdf.mjs",
+        "note": "Verified copy, rendered verbatim. Renamed from \"Everything We Use\" on 2026-07-28 — that title overclaimed. Do not paraphrase the body: edit toolkit.json, then run npm run pdf."
+      },
+      "lastVerified": "2026-07-28",
+      "cta": null,
+      "featured": true,
+      "latest": false,
+      "group": "skills",
+      "bestFor": "Not sure where to start"
+    },
+    {
+      "id": "no-experience-project-starter",
+      "slug": "no-experience-project-starter",
+      "status": "published",
+      "title": "The No-Experience Project Starter",
+      "description": "Choose one project you can finish in two weeks, prove it with a link or a number, and write the resume line — without calling yourself an intern.",
+      "outcome": "You leave with one project chosen, scoped, and written down.",
+      "category": "experience",
+      "format": "pdf",
+      "action": {
+        "label": "Download PDF",
+        "url": "/resources/no-experience-project-starter.pdf",
+        "download": true
+      },
+      "friction": [
+        "no-account",
+        "age-16"
+      ],
+      "source": {
+        "kind": "creator-flow-job",
+        "job": "creator-flow/01 DROP RECORDINGS HERE/20260724-create-experience/job.json",
+        "content": "src/data/resource-content/no-experience-project-starter.json",
+        "generator": "scripts/build-resource-pdfs.mjs"
+      },
+      "lastVerified": "2026-07-28",
+      "cta": {
+        "keyword": "PROJECT",
+        "videoJobId": "20260724-create-experience"
+      },
+      "featured": false,
+      "latest": true,
+      "group": "experience",
+      "bestFor": "No job yet"
+    },
+    {
+      "id": "first-internship-application-kit",
+      "slug": "first-internship-application-kit",
+      "status": "published",
+      "title": "First Internship Application Kit",
+      "description": "The three things to check before you submit, the message to send after, and when to let it go — none of it asking you to invent experience.",
+      "outcome": "You leave with a checked application and one message ready to send.",
+      "category": "applying",
+      "format": "pdf",
+      "action": {
+        "label": "Download PDF",
+        "url": "/resources/first-internship-application-kit.pdf",
+        "download": true
+      },
+      "friction": [
+        "no-account"
+      ],
+      "source": {
+        "kind": "creator-flow-job",
+        "job": "creator-flow/01 DROP RECORDINGS HERE/20260724-internship-application/job.json",
+        "content": "src/data/resource-content/first-internship-application-kit.json",
+        "generator": "scripts/build-resource-pdfs.mjs"
+      },
+      "lastVerified": "2026-07-28",
+      "cta": {
+        "keyword": "INTERNSHIP",
+        "videoJobId": "20260724-internship-application"
+      },
+      "featured": false,
+      "latest": true,
+      "group": "apply",
+      "bestFor": "About to apply"
+    },
+    {
+      "id": "three-better-networking-questions",
+      "slug": "three-better-networking-questions",
+      "status": "published",
+      "title": "3 Better Networking Questions",
+      "description": "The three questions to ask at a career fair instead of the ones you could have Googled — plus the one thing to do with the answers that night.",
+      "outcome": "You leave with three questions on your phone and a next move.",
+      "category": "networking",
+      "format": "pdf",
+      "action": {
+        "label": "Download PDF",
+        "url": "/resources/three-better-networking-questions.pdf",
+        "download": true
+      },
+      "friction": [
+        "no-account"
+      ],
+      "source": {
+        "kind": "creator-flow-job",
+        "job": "creator-flow/01 DROP RECORDINGS HERE/20260724-networking-questions/job.json",
+        "content": "src/data/resource-content/three-better-networking-questions.json",
+        "generator": "scripts/build-resource-pdfs.mjs"
+      },
+      "lastVerified": "2026-07-28",
+      "cta": {
+        "keyword": "NETWORK",
+        "videoJobId": "20260724-networking-questions"
+      },
+      "featured": false,
+      "latest": true,
+      "group": "apply",
+      "bestFor": "A career fair this week"
+    },
+    {
+      "id": "five-free-credentials-before-graduation",
+      "slug": "five-free-credentials-before-graduation",
+      "status": "published",
+      "title": "5 Free Credentials Before Graduation",
+      "description": "Five official programs offering free credentials, badges, or certificates — and the reason you should only finish one of them.",
+      "outcome": "You leave having picked one credential that matches a project.",
+      "category": "credentials",
+      "format": "pdf",
+      "action": {
+        "label": "Download PDF",
+        "url": "/resources/five-free-credentials-before-graduation.pdf",
+        "download": true
+      },
+      "friction": [
+        "no-account",
+        "account-required"
+      ],
+      "source": {
+        "kind": "creator-flow-job",
+        "job": "creator-flow/CAPCUT HANDOFF/ARCHIVE/20260722-in-before-graduation-5-free-crede/job.json",
+        "content": "src/data/resource-content/five-free-credentials-before-graduation.json",
+        "generator": "scripts/build-resource-pdfs.mjs",
+        "note": "All five provider pages re-opened and confirmed live 2026-07-28. Cisco's skillsforall.com now redirects to netacad.com — the catalog and PDF use the current URL."
+      },
+      "lastVerified": "2026-07-28",
+      "cta": {
+        "keyword": "SKILLS",
+        "videoJobId": "20260722-in-before-graduation-5-free-crede"
+      },
+      "featured": false,
+      "latest": true,
+      "group": "experience",
+      "bestFor": "A resume with no proof"
+    },
+    {
+      "id": "high-school-resume-starter",
+      "slug": "high-school-resume-starter",
+      "status": "published",
+      "title": "The High-School Resume Starter",
+      "description": "A one-page template built for someone with no formal job yet. Every line is a prompt you replace. City and state only, no street address, no objective.",
+      "outcome": "You leave with a resume you can fill in and export today.",
+      "category": "resume",
+      "format": "docx",
+      "action": {
+        "label": "Download template",
+        "url": "/resources/skillbridge-high-school-resume-starter.docx",
+        "download": true
+      },
+      "friction": [
+        "no-account",
+        "editable"
+      ],
+      "source": {
+        "kind": "generated-template",
+        "generator": "scripts/build-resume-template.py",
+        "note": "Opens in Word, Google Docs, or Pages. Written to the corrected editorial rules: city/state only, no street address, ZIP, age, photo, or generic objective."
+      },
+      "lastVerified": "2026-07-28",
+      "cta": null,
+      "featured": false,
+      "latest": false,
+      "group": "apply",
+      "bestFor": "Your first resume"
+    },
+    {
+      "id": "ai-tools-guide",
+      "slug": "ai-tools-guide",
+      "status": "published",
+      "title": "The AI Tools Guide",
+      "description": "Which AI to use for which job, what each one is actually best at, and prompts you can adapt for resumes, mock interviews, outreach, and studying.",
+      "outcome": "You stop guessing which tool to open.",
+      "category": "ai",
+      "format": "google-doc",
+      "action": {
+        "label": "Open the guide",
+        "url": "https://docs.google.com/document/d/11LiRU32S09jeHYkVuENUWtJ7-YzAVyTis3rflA8Yli0/preview",
+        "external": true
+      },
+      "friction": [
+        "no-account",
+        "external"
+      ],
+      "source": {
+        "kind": "skillbridge-google-doc",
+        "note": "Skyler's AI Tools Guide, updated June 2026. Read-only /preview link — the owner ouid parameter from the original share URL is stripped. Anonymous access confirmed 2026-07-28. Contains its own privacy rule: never paste your full name plus address, passwords, school logins, or family financial info into an AI tool."
+      },
+      "lastVerified": "2026-07-28",
+      "cta": null,
+      "featured": false,
+      "latest": false,
+      "group": "skills",
+      "bestFor": "Using AI for schoolwork"
+    },
+    {
+      "id": "linkedin-best-practices",
+      "slug": "linkedin-best-practices",
+      "status": "published",
+      "title": "LinkedIn Best Practices",
+      "description": "How to set up the profile: the photo, the headline, the About section, and the parts most students leave blank.",
+      "outcome": "You leave with a profile someone would actually reply to.",
+      "category": "networking",
+      "format": "google-slides",
+      "action": {
+        "label": "Open the slides",
+        "url": "https://docs.google.com/presentation/d/1IRFFT3mo2X0hogjRSFL-C8ZOmQxmdR3caSF7p1h724c/preview",
+        "external": true
+      },
+      "friction": [
+        "no-account",
+        "external"
+      ],
+      "source": {
+        "kind": "skillbridge-google-slides",
+        "note": "SkillBridge's own LinkedIn deck. Read-only /preview link. Anonymous access confirmed 2026-07-28. NOTE FOR SKYLER: one headline example on the deck names your club and school. Fine if intentional — say the word and it can be swapped for a neutral example."
+      },
+      "lastVerified": "2026-07-28",
+      "cta": null,
+      "featured": false,
+      "latest": false,
+      "group": "apply",
+      "bestFor": "An empty profile"
+    },
+    {
+      "id": "blank-resume-google-doc",
+      "slug": "blank-resume-google-doc",
+      "status": "blocked",
+      "title": "Blank resume template (Google Doc)",
+      "description": "The editable Google Doc version of the resume template from the Discord resume drop.",
+      "outcome": "An editable copy students can make in one click.",
+      "category": "resume",
+      "format": "google-doc",
+      "action": {
+        "label": "Make a copy",
+        "url": "https://docs.google.com/document/d/1V7qo8XNZ0ZqYmGtRA-sBylA5PZOO_PKA/copy",
+        "external": true
+      },
+      "friction": [
+        "google-account",
+        "external",
+        "editable"
+      ],
+      "source": {
+        "kind": "skillbridge-google-doc",
+        "note": "Anonymous access confirmed 2026-07-28 and the OBJECTIVE section has already been removed from the live doc."
+      },
+      "lastVerified": "2026-07-28",
+      "blockedReason": "The contact line still reads 'City, State Zipcode', which prompts students to publish a ZIP code. The approved editorial rule is city and state only. One edit to that line in the Doc clears this and the item can flip to published — no code change needed.",
+      "cta": null,
+      "featured": false,
+      "latest": false,
+      "group": "apply",
+      "bestFor": "Editing in Google Docs"
+    },
+    {
+      "id": "example-resume-google-doc",
+      "slug": "example-resume-google-doc",
+      "status": "blocked",
+      "title": "Filled-in example resume (Google Doc)",
+      "description": "A completed sample resume showing what each section looks like when it is filled in.",
+      "outcome": "A worked example to compare your own draft against.",
+      "category": "resume",
+      "format": "google-doc",
+      "action": {
+        "label": "Open the example",
+        "url": "https://docs.google.com/document/d/1KtsxBYsZRcVUBTL5-o-zxckuby4CZrti/preview",
+        "external": true
+      },
+      "friction": [
+        "external"
+      ],
+      "source": {
+        "kind": "skillbridge-google-doc",
+        "note": "Anonymous access confirmed 2026-07-28. The person in it is fictional, so there is no real-privacy problem."
+      },
+      "lastVerified": "2026-07-28",
+      "blockedReason": "The example prints a ZIP code ('Los Angeles, California 90024') and leads with a generic objective — the two things the approved editorial rule tells students not to do. Publishing it would teach the opposite of the template. Two edits to the Doc clear it.",
+      "cta": null,
+      "featured": false,
+      "latest": false,
+      "group": "apply",
+      "bestFor": "Seeing a finished example"
+    },
+    {
+      "id": "interviewing-pack",
+      "slug": "interviewing-pack",
+      "status": "blocked",
+      "title": "The Interviewing Pack",
+      "description": "The interviewing slides, the quick-reference sheet, and the mock-interview prep and scenario from the Discord interviewing drop.",
+      "outcome": "A full interview-prep set students can work through alone.",
+      "category": "applying",
+      "format": "pdf",
+      "action": null,
+      "friction": [
+        "no-account"
+      ],
+      "source": {
+        "kind": "discord-attachment",
+        "note": "Source files live under C:/Users/bnark/OneDrive/Downloads/ (SkillBridge Interviewing Slides.pdf, SkillBridge Interview_Tips_Quick_Reference (1).pdf, SkillBridge Mock Interview Prep.pdf, SkillBridge Mock Interview Scenario.pdf). Sizes match across duplicates — 3 copies of the slides at 289,291 bytes and 3 of the quick reference at 53,285 bytes — but the bytes could not be hashed or read."
+      },
+      "lastVerified": null,
+      "blockedReason": "The source files are OneDrive cloud-only placeholders and the OneDrive cloud file provider is not running on this machine, so every read fails with 'The cloud file provider is not running.' Contents could not be audited, deduplicated by hash, or checked for privacy. Start OneDrive (or mark the folder Always keep on this device) and this can be built.",
+      "cta": null,
+      "featured": false,
+      "latest": false,
+      "group": "apply",
+      "bestFor": "An interview coming up"
+    },
+    {
+      "id": "resume-slides",
+      "slug": "resume-slides",
+      "status": "blocked",
+      "title": "Resume Slides",
+      "description": "The walkthrough deck explaining how each resume section gets reviewed.",
+      "outcome": "Context for why the template is shaped the way it is.",
+      "category": "resume",
+      "format": "pdf",
+      "action": null,
+      "friction": [
+        "no-account"
+      ],
+      "source": {
+        "kind": "discord-attachment",
+        "note": "C:/Users/bnark/OneDrive/Downloads/SkillBridge Resume Slides.pdf and '... (1).pdf', both 87,977 bytes."
+      },
+      "lastVerified": null,
+      "blockedReason": "Same OneDrive cloud-placeholder problem — the bytes are not on this machine, so the deck could not be read, deduplicated, or checked.",
+      "cta": null,
+      "featured": false,
+      "latest": false,
+      "group": "apply",
+      "bestFor": "Understanding the template"
+    },
+    {
+      "id": "ai-slides",
+      "slug": "ai-slides",
+      "status": "blocked",
+      "title": "AI Slides",
+      "description": "The prompting-fundamentals deck that pairs with the AI Tools Guide.",
+      "outcome": "The teaching version of the AI guide.",
+      "category": "ai",
+      "format": "pdf",
+      "action": null,
+      "friction": [
+        "no-account"
+      ],
+      "source": {
+        "kind": "discord-attachment",
+        "note": "C:/Users/bnark/OneDrive/Downloads/SkillBridge AI Slides.pdf, 345,373 bytes."
+      },
+      "lastVerified": null,
+      "blockedReason": "Same OneDrive cloud-placeholder problem. The published AI Tools Guide covers this ground in the meantime.",
+      "cta": null,
+      "featured": false,
+      "latest": false,
+      "group": "skills",
+      "bestFor": "Learning to prompt"
+    }
+  ],
+  "groups": [
+    {
+      "id": "all",
+      "label": "All"
+    },
+    {
+      "id": "experience",
+      "label": "Get experience"
+    },
+    {
+      "id": "apply",
+      "label": "Apply"
+    },
+    {
+      "id": "skills",
+      "label": "Build skills & tools"
+    }
+  ]
+}

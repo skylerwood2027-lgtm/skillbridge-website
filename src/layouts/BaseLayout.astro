@@ -9,14 +9,23 @@ import '@fontsource/inter/700.css';
 import '../styles/global.css';
 import SiteHeader from '../components/SiteHeader.astro';
 import SiteFooter from '../components/SiteFooter.astro';
+import NewsletterBand from '../components/NewsletterBand.astro';
 import siteConfig from '../config.json';
 
 interface Props {
   title: string;
   description?: string;
   ogType?: string;
+  /** Every page ends on the same newsletter band. Opt out only if a page
+      supplies its own conversion endpoint. */
+  newsletter?: boolean;
 }
-const { title, description = siteConfig.description, ogType = 'website' } = Astro.props;
+const {
+  title,
+  description = siteConfig.description,
+  ogType = 'website',
+  newsletter = true,
+} = Astro.props;
 const canonical = new URL(Astro.url.pathname, Astro.site ?? siteConfig.siteUrl).href;
 const ogImage = new URL('/og.png', Astro.site ?? siteConfig.siteUrl).href;
 ---
@@ -49,6 +58,7 @@ const ogImage = new URL('/og.png', Astro.site ?? siteConfig.siteUrl).href;
     <a href="#main" class="skip-link">Skip to content</a>
     <SiteHeader />
     <main id="main"><slot /></main>
+    {newsletter && <NewsletterBand />}
     <SiteFooter />
     <script is:inline>
       (function () {

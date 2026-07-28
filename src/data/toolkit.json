@@ -1,5 +1,5 @@
 {
-  "title": "Everything We Use",
+  "title": "SkillBridge Starter Toolkit",
   "tagline": "The free toolkit two high schoolers actually used to land internships, build a network, and get ahead — no paywalls, no trials that charge you in two weeks.",
   "intro": "We built this from the inside. Every tool here is genuinely free, checked June 2026. Where \"free\" has a catch (like a library card) we say so. At the bottom: the \"free\" tools that are actually traps.",
   "sections": [
@@ -148,6 +148,6 @@
       }
     ]
   },
-  "outroLead": "This is the short list — the full thing lives in our community.",
-  "outroDiscord": "New free tool every week in the SkillBridge Discord."
+  "outroLead": "This is the shortlist we actually recommend.",
+  "outroDiscord": "New guides go out in The SkillBridge Brief."
 }

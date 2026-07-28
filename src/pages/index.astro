@@ -1,11 +1,19 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Button from '../components/Button.astro';
-import NewsletterSlot from '../components/NewsletterSlot.astro';
 import siteConfig from '../config.json';
-import toolkit from '../data/toolkit.json';
+import catalog from '../data/resources.json';
 
-const categories = toolkit.sections.map((s) => ({ n: s.n, title: s.title }));
+// Only groups that actually contain a published resource become tiles, so every
+// tile has a real destination with real results behind it.
+const published = catalog.resources.filter((r: any) => r.status === 'published');
+const findGroups = catalog.groups
+  .filter((g: any) => g.id !== 'all')
+  .map((g: any) => ({
+    ...g,
+    count: published.filter((r: any) => r.group === g.id).length,
+  }))
+  .filter((g: any) => g.count > 0);
 ---
 
 <BaseLayout title="SkillBridge — the professional skills school skips">
@@ -21,8 +29,8 @@ const categories = toolkit.sections.map((s) => ({ n: s.n, title: s.title }));
           interviewing, networking, and college prep. Free, no paywalls.
         </p>
         <div class="hero__cta reveal" data-delay="3">
-          <Button href="/resources" variant="primary" size="lg">Get the free toolkit</Button>
-          <Button href={siteConfig.discordUrl} variant="discord" size="lg" external>Join the Discord</Button>
+          <Button href="#newsletter" variant="primary" size="lg">Join the Brief</Button>
+          <Button href="/resources" variant="outline" size="lg">Browse free resources</Button>
         </div>
         <ul class="hero__chips reveal" data-delay="4">
           <li>100% free</li>
@@ -79,32 +87,35 @@ const categories = toolkit.sections.map((s) => ({ n: s.n, title: s.title }));
       </div>
       <ul class="find__grid">
         {
-          categories.map((c, i) => (
-            <li class="find__card reveal" data-delay={String((i % 3) + 1)}>
-              <span class="find__num" aria-hidden="true">{c.n}</span>
-              <span class="find__label">{c.title}</span>
+          findGroups.map((g: any, i: number) => (
+            <li class="find__item reveal" data-delay={String((i % 3) + 1)}>
+              <a class="find__card" href={`/resources?group=${g.id}`}>
+                <span class="find__label">{g.label}</span>
+                <span class="find__count">
+                  {g.count} {g.count === 1 ? 'resource' : 'resources'}
+                </span>
+                <span class="find__go" aria-hidden="true">→</span>
+              </a>
             </li>
           ))
         }
       </ul>
       <div class="find__more reveal">
-        <Button href="/resources" variant="outline">See everything we use →</Button>
+        <Button href="/resources" variant="outline">Browse free resources →</Button>
       </div>
     </div>
   </section>
-
-  <!-- NEWSLETTER SLOT (phase-2 affordance, no capture) -->
-  <div class="container reveal"><NewsletterSlot /></div>
 
   <!-- CLOSING CTA BAND -->
   <section class="cta-band">
     <div class="cta-band__motif motif" aria-hidden="true"><img src="/brand/icon.png" alt="" /></div>
     <div class="container cta-band__inner">
-      <h2 class="cta-band__title reveal">Start with the free toolkit.</h2>
-      <p class="cta-band__sub reveal" data-delay="1">Then come hang out in the Discord, where a new free tool drops every week.</p>
+      <h2 class="cta-band__title reveal">Start with the free resources.</h2>
+      <p class="cta-band__sub reveal" data-delay="1">Eight guides and templates. Nothing costs money.</p>
+      {/* One action here. The newsletter band directly below is the page's
+          conversion endpoint, so a second CTA in this band would compete with it. */}
       <div class="cta-band__btns reveal" data-delay="2">
-        <Button href="/resources" variant="light" size="lg">Get the free toolkit</Button>
-        <Button href={siteConfig.discordUrl} variant="discord" size="lg" external>Join the Discord</Button>
+        <Button href="/resources" variant="primary" size="lg">Browse free resources</Button>
       </div>
     </div>
   </section>
@@ -212,15 +223,21 @@ const categories = toolkit.sections.map((s) => ({ n: s.n, title: s.title }));
     gap: 1rem;
     margin-top: 2.2rem;
   }
+  .find__item { display: flex; }
+  /* A real link into the filtered library, so the hover state is now describing
+     something that actually happens when you click. */
   .find__card {
     display: flex;
     align-items: center;
     gap: 0.9rem;
+    width: 100%;
+    min-height: 44px;
     background: #fff;
     border: 1px solid var(--line);
     border-radius: var(--radius);
     padding: 1.05rem 1.2rem;
     box-shadow: var(--shadow-sm);
+    text-decoration: none;
     transition: transform 0.16s var(--ease), box-shadow 0.16s ease, border-color 0.16s ease;
   }
   .find__card:hover {
@@ -228,35 +245,39 @@ const categories = toolkit.sections.map((s) => ({ n: s.n, title: s.title }));
     box-shadow: var(--shadow-md);
     border-color: var(--blue);
   }
-  .find__num {
-    flex: none;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 36px;
-    height: 36px;
-    border-radius: 10px;
-    background: var(--surface-tint);
-    color: var(--blue-ink);
-    font-family: var(--font-head);
-    font-weight: 800;
-    transition: background 0.16s ease, color 0.16s ease;
-  }
-  .find__card:hover .find__num { background: var(--navy); color: #fff; }
   .find__label {
     font-family: var(--font-head);
     font-weight: 700;
     color: var(--navy);
     line-height: 1.22;
   }
+  .find__count {
+    margin-left: auto;
+    font-family: var(--font-head);
+    font-weight: 700;
+    font-size: 0.76rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    white-space: nowrap;
+  }
+  .find__go {
+    flex: none;
+    font-family: var(--font-head);
+    font-weight: 800;
+    color: var(--blue-ink);
+    transition: transform 0.16s var(--ease);
+  }
+  .find__card:hover .find__go { transform: translateX(3px); }
   .find__more { margin-top: 1.8rem; }
 
   /* ---------------- CTA BAND ---------------- */
   .cta-band {
     position: relative;
     overflow: hidden;
-    background: linear-gradient(135deg, var(--navy), var(--dark));
-    color: #fff;
+    background: var(--surface-tint);
+    border-top: 1px solid var(--line);
+    color: var(--ink);
   }
   .cta-band__motif {
     top: 50%;
@@ -264,8 +285,7 @@ const categories = toolkit.sections.map((s) => ({ n: s.n, title: s.title }));
     width: min(40vw, 420px);
     aspect-ratio: 1;
     transform: translateY(-50%) rotate(-6deg);
-    opacity: 0.08;
-    filter: brightness(0) invert(1);
+    opacity: 0.07;
   }
   .cta-band__inner {
     padding-block: clamp(3rem, 2rem + 5vw, 5.5rem);
@@ -273,12 +293,11 @@ const categories = toolkit.sections.map((s) => ({ n: s.n, title: s.title }));
     position: relative;
     z-index: 1;
   }
-  .cta-band__title { color: #fff; }
+  .cta-band__title { color: var(--navy); }
   .cta-band__sub {
-    margin-top: 0.85rem;
-    color: rgba(235, 244, 252, 0.82);
-    max-width: 48ch;
-    margin-inline: auto;
+    margin-top: 0.7rem;
+    color: var(--ink-soft);
+    font-size: 1.05rem;
   }
   .cta-band__btns {
     display: flex;

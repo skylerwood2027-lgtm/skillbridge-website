@@ -1,0 +1,72 @@
+{
+  "slug": "first-internship-application-kit",
+  "title": "First Internship Application Kit",
+  "subtitle": "The three things to check before you submit, plus the message to send after — none of which require pretending you have experience you do not have.",
+  "fromVideo": "From the video: before your first internship application",
+  "intro": "The application puts your name in the pile. A project and a real conversation give them something to remember. Work through the checklist, then send the message. Nothing here asks you to invent a title or a job you did not have.",
+  "entries": [
+    {
+      "n": "1",
+      "title": "Your resume names a project, not just classes",
+      "lead": "Open your resume. Find one line that is a thing you finished, not a course you took.",
+      "items": [
+        "If it is there: make sure it has a verb, a result, and a link or a number.",
+        "If it is not there: you are not ready to submit yet. Pick one project and finish it first.",
+        "Do not write \"intern\" for something that was not an internship. Write \"project\" and say what you did."
+      ],
+      "note": "Classes show you attended. A project shows you finished something without being graded on it.",
+      "action": {
+        "label": "Get the project starter",
+        "url": "https://joinskillbridge.com/resources/no-experience-project-starter.pdf",
+        "note": "If this step stopped you, start there — it walks you through picking and finishing one project."
+      }
+    },
+    {
+      "n": "2",
+      "title": "Your LinkedIn headline says what you are building toward",
+      "lead": "Not only your school name. Someone reading it should know what you are into in under three seconds.",
+      "items": [
+        "Weak: \"Student at [High School]\" — true, but it says nothing.",
+        "Better: what you are building toward plus where you are. Example: \"High school student building skills in marketing and analytics.\"",
+        "Keep it honest. Do not claim a role, a company, or a title you do not hold."
+      ],
+      "action": {
+        "label": "Get the resume starter",
+        "url": "https://joinskillbridge.com/resources/skillbridge-high-school-resume-starter.docx",
+        "note": "An editable one-page template with the project section already laid out."
+      }
+    },
+    {
+      "n": "3",
+      "title": "After you apply, find one person and ask a specific question",
+      "lead": "One person. One question. Not a referral request.",
+      "items": [
+        "Do not open by asking for a referral, a job, or an internship. That ends the conversation before it starts.",
+        "Ask about their work. Example: \"What skill mattered most when you started in this role?\"",
+        "Keep it to three or four lines. Say who you are, say you applied, ask the one question, stop."
+      ],
+      "note": "You are starting a conversation, not submitting a second application."
+    },
+    {
+      "n": "4",
+      "title": "The follow-up",
+      "lead": "What to do with the answer, and when to let it go.",
+      "items": [
+        "If they reply: thank them, and say what you did with the answer. \"I looked into the tool you mentioned and built X with it\" is the strongest second message you can send.",
+        "If they do not reply within a week: leave it. One message, no chasing. People are busy and it is not about you.",
+        "Either way, write down the tool, skill, or problem they mentioned and go learn it."
+      ]
+    }
+  ],
+  "rule": {
+    "title": "Before you hit submit",
+    "items": [
+      "One project line on the resume, with a verb, a result, and a link or number.",
+      "A LinkedIn headline that says what you are building toward.",
+      "One person found, one specific question written and sent.",
+      "Nothing on the application you could not explain out loud."
+    ]
+  },
+  "verified": "2026-07-28",
+  "verifyNote": "The example wording here is an example, not a script to paste. Put it in your own words before you send it."
+}

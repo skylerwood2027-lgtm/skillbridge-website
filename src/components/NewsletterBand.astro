@@ -1,0 +1,206 @@
+---
+// The SkillBridge Brief — the site's primary conversion endpoint.
+//
+// Replaces the old centred 500px card, which read as a large isolated square.
+// This is a full-bleed dark band with a two-column desktop composition: the
+// promise on the left, the live Beehiiv form on the right. It stacks cleanly on
+// mobile with no dead space.
+//
+// The Beehiiv form itself is a cross-origin iframe whose type and padding are set
+// in the Beehiiv dashboard and cannot be restyled from here. Two things we own:
+// the frame around it, and its responsiveness. The form only lays out cleanly at
+// >=420px wide (below that its title wraps and the email placeholder clips), so
+// below that width we pin it to that design width and scale the whole frame down.
+// That measured behaviour is preserved exactly from the previous component.
+const FORM_ID = '1bfc13e5-f4f0-4ff4-a186-458a23a90916';
+
+interface Props {
+  /** Heading level so the band never breaks a page's heading order. */
+  as?: 'h2' | 'h3';
+}
+const { as: Tag = 'h2' } = Astro.props;
+---
+
+<section class="brief" id="newsletter" aria-labelledby="brief-heading">
+  <div class="container brief__inner">
+    <div class="brief__copy">
+      <p class="brief__kicker">The SkillBridge Brief</p>
+      <Tag class="brief__title" id="brief-heading">One email. One thing you can actually use.</Tag>
+      <p class="brief__line">
+        New guides land here first, with the short version of why they exist. Free, and you can
+        leave whenever you want.
+      </p>
+    </div>
+
+    <div class="brief__form">
+      <div class="brief__stage" data-embed-stage>
+        <div class="brief__embed" data-embed>
+          <script
+            is:inline
+            async
+            src="https://subscribe-forms.beehiiv.com/v3/loader.js"
+            data-beehiiv-form={FORM_ID}
+          ></script>
+          <noscript>
+            <p class="brief__noscript">
+              Turn on JavaScript to subscribe here, or find the signup form on
+              <a href="/">the homepage</a>.
+            </p>
+          </noscript>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  // Progressive enhancement for the cross-origin Beehiiv form. Unchanged logic
+  // from the previous newsletter component — only the surrounding composition
+  // changed, and the measured 420px floor still governs the embed.
+  const MIN_CLEAN = 420; // narrowest width at which the form stays uncramped
+  const MAX_WIDTH = 460; // don't let it grow so wide it looks sparse
+
+  const stage = document.querySelector<HTMLElement>('[data-embed-stage]');
+  const embed = stage?.querySelector<HTMLElement>('[data-embed]');
+  if (stage && embed) {
+    stage.classList.add('is-enhanced');
+
+    let lastH = -1;
+    let lastW = -1;
+    let lastS = -1;
+    const fit = () => {
+      const iframe = embed.querySelector('iframe');
+      const avail = stage.clientWidth;
+      const width = avail >= MIN_CLEAN ? Math.min(avail, MAX_WIDTH) : MIN_CLEAN;
+      const scale = avail >= MIN_CLEAN ? 1 : avail / MIN_CLEAN;
+      if (width !== lastW) {
+        stage.style.setProperty('--embed-w', width + 'px');
+        lastW = width;
+      }
+      if (scale !== lastS) {
+        stage.style.setProperty('--embed-s', scale.toFixed(4));
+        lastS = scale;
+      }
+      if (iframe) {
+        if (!iframe.getAttribute('title')) {
+          iframe.setAttribute('title', 'Subscribe to The SkillBridge Brief newsletter');
+        }
+        void iframe.offsetWidth; // force reflow so offsetHeight reflects the new width
+        const h = Math.ceil(iframe.offsetHeight * scale); // offsetHeight = untransformed
+        if (h > 0 && h !== lastH) {
+          stage.style.height = h + 'px';
+          lastH = h;
+        }
+      }
+    };
+
+    new ResizeObserver(fit).observe(stage);
+    const frameRO = new ResizeObserver(fit);
+    let watching: Element | null = null;
+    const mo = new MutationObserver(() => {
+      const iframe = embed.querySelector('iframe');
+      if (iframe && iframe !== watching) {
+        watching = iframe;
+        frameRO.observe(iframe);
+      }
+      fit();
+    });
+    mo.observe(embed, { childList: true, subtree: true, attributes: true, attributeFilter: ['style'] });
+    fit();
+  }
+</script>
+
+<style>
+  .brief {
+    background: var(--navy);
+    color: #fff;
+    position: relative;
+    scroll-margin-top: 5rem;
+  }
+  /* One bright rule across the top — the same span motif the resource list uses,
+     closing the page rather than decorating it. */
+  .brief::before {
+    content: '';
+    position: absolute;
+    inset: 0 0 auto;
+    height: 3px;
+    background: var(--blue);
+  }
+
+  .brief__inner {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(300px, 460px);
+    gap: 1.75rem 3.5rem;
+    align-items: center;
+    padding-block: clamp(1.75rem, 1.3rem + 2vw, 2.5rem);
+  }
+  @media (max-width: 60rem) {
+    .brief__inner {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 1.4rem;
+    }
+  }
+
+  .brief__kicker {
+    font-family: var(--font-head);
+    font-weight: 700;
+    font-size: 0.74rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--blue);
+  }
+  .brief__title {
+    color: #fff;
+    font-size: clamp(1.5rem, 1.1rem + 2vw, 2.35rem);
+    line-height: 1.12;
+    margin-top: 0.55rem;
+    max-width: 17ch;
+  }
+  .brief__line {
+    margin-top: 0.7rem;
+    color: rgba(235, 244, 252, 0.82);
+    font-size: 1.02rem;
+    line-height: 1.6;
+    max-width: 42ch;
+  }
+
+  /* The Beehiiv form ships its own white card and cannot be restyled across the
+     iframe boundary. Rather than let it sit on the dark band as a raw white
+     rectangle, it gets a deliberate panel: matched radius, even inset, one soft
+     edge. Intentional, instead of box-inside-a-box. */
+  .brief__form {
+    min-width: 0;
+    background: #fff;
+    border-radius: var(--radius-lg);
+    padding: 0.5rem 0.5rem 0.15rem;
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.22);
+  }
+  .brief__noscript {
+    color: rgba(235, 244, 252, 0.9);
+    font-size: 0.95rem;
+  }
+  .brief__noscript a { color: var(--blue); }
+
+  /* Default (no-JS) state: the embed flows naturally, degraded but never clipped. */
+  .brief__stage {
+    position: relative;
+    width: 100%;
+    min-height: 330px;
+  }
+  /* Enhanced state: pinned to the design width and scaled to fit. Absolute
+     positioning keeps the fixed-width box out of flow so it can never force a
+     horizontal scrollbar; the JS-set height reserves the scaled footprint, so
+     nothing on the page shifts when the iframe arrives. */
+  .brief__stage.is-enhanced { min-height: 0; }
+  .brief__stage.is-enhanced .brief__embed {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: var(--embed-w, 420px);
+    transform: translateX(-50%) scale(var(--embed-s, 1));
+    transform-origin: top center;
+  }
+  @media (min-width: 60rem) {
+    .brief__stage.is-enhanced .brief__embed { left: auto; right: 0; transform: scale(var(--embed-s, 1)); transform-origin: top right; }
+  }
+</style>

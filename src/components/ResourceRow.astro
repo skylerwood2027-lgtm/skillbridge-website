@@ -1,0 +1,304 @@
+---
+// One resource in the library, as a row rather than a card.
+//
+// Hairline dividers, no per-item box, no shadow — the measured density of a good
+// resource index. Each row states four things in a fixed order so eight of them
+// scan as one list: what it is for, what it is called, what it does, and what it
+// costs to open. A row with no public action is never rendered; see resources.astro.
+import catalog from '../data/resources.json';
+import stats from '../data/resource-stats.json';
+
+interface Props {
+  resource: any;
+  index?: number;
+}
+const { resource: r, index = 0 } = Astro.props;
+
+const category = catalog.categories.find((c: any) => c.id === r.category);
+const format = (catalog.formats as any)[r.format];
+const stat = (stats as any)[r.id] ?? {};
+
+// Facts, measured — never hand-typed per row, so they cannot drift from the file.
+const facts: string[] = [format.label];
+if (stat.pages) facts.push(stat.pages === 1 ? '1 page' : `${stat.pages} pages`);
+if (stat.sizeLabel) facts.push(stat.sizeLabel);
+
+// Only friction that costs the reader something. "No account needed" is true of
+// nearly everything here, so as a per-row pill it would be noise.
+const friction: string[] = (r.friction ?? [])
+  .filter((f: string) => f !== 'no-account')
+  .map((f: string) => (catalog.friction as any)[f]);
+
+const isExternal = Boolean(r.action.external);
+const descId = `outcome-${r.id}`;
+// A precise action label rather than a generic "Download": the honest name of
+// what arrives is part of the promise.
+const actionLabel = r.action.download ? `Download ${format.label}` : `Open ${format.label}`;
+---
+
+<article
+  class="rrow"
+  data-resource={r.id}
+  data-group={r.group}
+  data-category={r.category}
+  style={`--i:${index}`}
+  data-search={`${r.title} ${r.description} ${r.bestFor} ${category?.label ?? ''} ${format.label} ${r.cta?.keyword ?? ''}`.toLowerCase()}
+>
+  <div class="rrow__main">
+    <p class="rrow__eyebrow">
+      <span class="rrow__cat">{category?.label}</span>
+      {
+        r.cta?.keyword && (
+          <span class="rrow__kw">
+            <span class="visually-hidden">Sent when you comment </span>{r.cta.keyword}
+          </span>
+        )
+      }
+    </p>
+
+    <h3 class="rrow__title">
+      <a
+        class="rrow__link"
+        href={r.action.url}
+        aria-describedby={descId}
+        download={r.action.download ? '' : undefined}
+        target={isExternal ? '_blank' : undefined}
+        rel={isExternal ? 'noopener noreferrer' : undefined}
+      >
+        {r.title}{isExternal && <span class="visually-hidden"> (opens in a new tab)</span>}
+      </a>
+    </h3>
+
+    <p class="rrow__desc">{r.description}</p>
+    <span id={descId} class="visually-hidden">{r.outcome}</span>
+
+    {/* Label and value are separate elements with real spacing, so they never run
+        together at any width. */}
+    <p class="rrow__best">
+      <span class="rrow__best-k">Best for</span>
+      <span class="rrow__best-v">{r.bestFor}</span>
+    </p>
+
+    <p class="rrow__facts">
+      {facts.map((f, i) => (
+        <>
+          {i > 0 && <span class="rrow__dot" aria-hidden="true">·</span>}
+          <span>{f}</span>
+        </>
+      ))}
+      {friction.map((f) => <span class="rrow__friction">{f}</span>)}
+    </p>
+  </div>
+
+  <div class="rrow__actions">
+    <span class="rrow__go" aria-hidden="true">
+      {actionLabel}
+      <svg class="rrow__glyph" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true">
+        {isExternal
+          ? <><path d="M14 5h5v5" /><path d="M19 5 10 14" /><path d="M18 14v5H5V6h5" /></>
+          : <><path d="M12 4v11" /><path d="m7 11 5 5 5-5" /><path d="M5 20h14" /></>}
+      </svg>
+    </span>
+    {
+      r.readOnline && (
+        <a class="rrow__second" href={r.readOnline.url}>{r.readOnline.label}</a>
+      )
+    }
+  </div>
+</article>
+
+<style>
+  .rrow {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 0.6rem 2rem;
+    align-items: center;
+    padding: 1.35rem 0 1.45rem;
+    border-top: 1px solid var(--line);
+    position: relative;
+  }
+  /* The span motif: a deck line drawn under the row you are pointing at. It is
+     the only movement in the list, and it marks the row the click will follow. */
+  .rrow::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -1px;
+    height: 2px;
+    background: var(--navy);
+    transform: scaleX(0);
+    transform-origin: left center;
+    transition: transform 0.26s var(--ease);
+  }
+  .rrow:hover::after,
+  .rrow:focus-within::after { transform: scaleX(1); }
+
+  .rrow__main { min-width: 0; }
+
+  .rrow__eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    flex-wrap: wrap;
+  }
+  .rrow__cat {
+    font-family: var(--font-head);
+    font-weight: 700;
+    font-size: 0.69rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--blue-ink);
+  }
+  /* The comment keyword is the literal word that makes Instagram send this file. */
+  .rrow__kw {
+    font-family: var(--font-head);
+    font-weight: 700;
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    color: var(--navy);
+    background: var(--surface-tint);
+    border-radius: 3px;
+    padding: 0.14rem 0.4rem;
+  }
+
+  .rrow__title {
+    font-size: 1.28rem;
+    line-height: 1.22;
+    margin-top: 0.35rem;
+    font-weight: 800;
+  }
+  .rrow__link {
+    color: var(--navy);
+    text-decoration: none;
+  }
+  /* The whole row is the target; the title anchor owns it. */
+  .rrow__link::before { content: ''; position: absolute; inset: 0; }
+  .rrow:hover .rrow__link { color: var(--blue-ink); }
+
+  .rrow__desc {
+    margin-top: 0.35rem;
+    color: var(--ink-soft);
+    font-size: 0.96rem;
+    line-height: 1.5;
+    max-width: 58ch;
+  }
+
+  .rrow__best {
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 0.1rem 0.5rem;
+    margin-top: 0.55rem;
+  }
+  .rrow__best-k {
+    font-family: var(--font-head);
+    font-weight: 700;
+    font-size: 0.66rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+  }
+  .rrow__best-v {
+    font-family: var(--font-head);
+    font-weight: 700;
+    font-size: 0.92rem;
+    color: var(--navy);
+  }
+
+  .rrow__facts {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.25rem 0.4rem;
+    margin-top: 0.5rem;
+    font-family: var(--font-head);
+    font-weight: 700;
+    font-size: 0.66rem;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+  }
+  .rrow__dot { color: var(--line-strong); }
+  .rrow__friction {
+    color: #7a5800;
+    background: #fff6e3;
+    border-radius: 3px;
+    padding: 0.12rem 0.45rem;
+    letter-spacing: 0.05em;
+  }
+
+  .rrow__actions {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0.45rem;
+  }
+  /* Presentational: the row's own link already covers it. Sized to the 44px
+     minimum so the visible affordance matches the real target. */
+  .rrow__go {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.45rem;
+    min-height: 44px;
+    padding: 0 1.05rem;
+    font-family: var(--font-head);
+    font-weight: 700;
+    font-size: 0.9rem;
+    white-space: nowrap;
+    color: var(--navy);
+    background: var(--surface);
+    border: 1.5px solid var(--line-strong);
+    border-radius: var(--radius-pill);
+    transition:
+      background-color 0.18s var(--ease),
+      border-color 0.18s var(--ease),
+      color 0.18s var(--ease);
+  }
+  .rrow:hover .rrow__go,
+  .rrow:focus-within .rrow__go {
+    background: var(--navy);
+    border-color: var(--navy);
+    color: #fff;
+  }
+  .rrow__glyph { width: 14px; height: 14px; flex: none; }
+
+  .rrow__second {
+    position: relative;
+    z-index: 1;
+    font-family: var(--font-head);
+    font-weight: 700;
+    font-size: 0.85rem;
+    color: var(--blue-ink);
+    text-decoration-color: var(--line-strong);
+  }
+  .rrow__second:hover { color: var(--navy); text-decoration-color: var(--blue); }
+
+  /* Mobile: the action becomes a compact trailing chip on its own line, never a
+     full-width outlined pill repeated eight times down the page. */
+  @media (max-width: 40rem) {
+    .rrow {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 0;
+      padding: 1.2rem 0 1.3rem;
+    }
+    .rrow__title { font-size: 1.17rem; }
+    .rrow__actions {
+      flex-direction: row;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 0.9rem;
+      margin-top: 0.8rem;
+      flex-wrap: wrap;
+    }
+    .rrow__go {
+      min-height: 44px;
+      padding: 0 0.9rem;
+      font-size: 0.86rem;
+      background: var(--surface-tint);
+      border-color: transparent;
+      color: var(--navy);
+    }
+  }
+</style>

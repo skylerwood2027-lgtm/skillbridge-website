@@ -11,6 +11,9 @@
     "preview": "astro preview",
     "astro": "astro",
     "pdf": "node scripts/build-pdf.mjs",
+    "resources:pdf": "node scripts/build-resource-pdfs.mjs",
+    "resources:check": "node scripts/validate-resources.mjs",
+    "resources:sync": "node scripts/sync-resource-catalog.mjs",
     "og": "node scripts/build-og.mjs",
     "logos": "node scripts/process-logos.mjs",
     "shots": "node scripts/screenshots.mjs"

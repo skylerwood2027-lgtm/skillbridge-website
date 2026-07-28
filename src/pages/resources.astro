@@ -1,120 +1,394 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import Button from '../components/Button.astro';
-import ResourceSection from '../components/ResourceSection.astro';
-import ResourceItem from '../components/ResourceItem.astro';
-import TrapCallout from '../components/TrapCallout.astro';
+import ResourceRow from '../components/ResourceRow.astro';
 import siteConfig from '../config.json';
-import toolkit from '../data/toolkit.json';
+import catalog from '../data/resources.json';
+
+// One collection, each resource exactly once. Draft and blocked items stay in the
+// catalog so the gaps stay tracked, but never render — a row that cannot deliver a
+// file has no business looking like one.
+//
+// Order carries meaning: the toolkit first because it is the broadest starting
+// point, then the video guides newest-first, then the rest. `featured` and
+// `latest` survive as ordering and a keyword badge, not as separate shelves.
+const published = catalog.resources.filter((r: any) => r.status === 'published');
+const rank = (r: any) => (r.featured ? 0 : r.latest ? 1 : 2);
+const resources = [...published].sort((a: any, b: any) => rank(a) - rank(b));
+
+// Only offer a group that actually holds something.
+const groups = catalog.groups.filter(
+  (g: any) => g.id === 'all' || published.some((r: any) => r.group === g.id)
+);
+
+const count = published.length;
 ---
 
-<BaseLayout title="Everything We Use · SkillBridge" description={toolkit.tagline}>
-  <article class="guide">
-    <header class="guide__hero">
-      <div class="guide__hero-motif motif" aria-hidden="true"><img src="/brand/icon.png" alt="" /></div>
-      <div class="container container-narrow">
-        <p class="eyebrow reveal">The free toolkit</p>
-        <h1 class="guide__title reveal" data-delay="1">{toolkit.title}</h1>
-        <p class="guide__tagline lead reveal" data-delay="2">{toolkit.tagline}</p>
-        <div class="guide__actions reveal" data-delay="3">
-          <Button href={siteConfig.pdfPath} variant="primary" size="lg" download>Download PDF</Button>
-          <Button href={siteConfig.discordUrl} variant="discord" external>Join the Discord</Button>
+<BaseLayout
+  title="Free resources · SkillBridge"
+  description="Free guides and templates for resumes, projects, internships, networking, credentials, and AI — from two high schoolers. No paywalls, no sign-ups."
+>
+  <div class="lib">
+    <header class="lib__head">
+      <div class="lib__col">
+        <h1 class="lib__title">Free resources,<br /><em>ready to use today.</em></h1>
+        <p class="lib__sub">{count} guides and templates for the parts of getting hired that school skips.</p>
+
+        <div class="lib__tools">
+          <div class="lib__search">
+            <label class="lib__label" for="resource-search">Search resources</label>
+            <div class="lib__field">
+              <svg class="lib__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <circle cx="11" cy="11" r="7" /><path d="m20 20-3.5-3.5" />
+              </svg>
+              <input
+                id="resource-search"
+                type="search"
+                class="lib__input"
+                placeholder="Try resume, project, interview, AI…"
+                autocomplete="off"
+                data-search
+              />
+            </div>
+          </div>
+
+          {/* The span rule: its length is the share of the library showing. A state
+              readout, not decoration. */}
+          <div class="lib__span" aria-hidden="true"><span class="lib__deck" data-deck></span></div>
+
+          <div class="lib__filters" role="group" aria-label="Filter resources by what you are doing">
+            {
+              groups.map((g: any) => (
+                <button type="button" class="lib__chip" data-group={g.id} aria-pressed={g.id === 'all' ? 'true' : 'false'}>
+                  {g.label}
+                </button>
+              ))
+            }
+          </div>
+
+          <p class="lib__count" role="status" data-count>All {count} resources</p>
         </div>
-        <p class="guide__intro reveal" data-delay="4">{toolkit.intro}</p>
       </div>
     </header>
 
-    <div class="container container-narrow guide__body">
-      {
-        toolkit.sections.map((section: any) => (
-          <ResourceSection n={section.n} title={section.title}>
-            {section.items.map((item: any) => (
-              <ResourceItem
-                name={item.name}
-                body={item.body}
-                url={item.url}
-                urlText={item.urlText}
-                urlPlaceholder={item.urlPlaceholder}
-              />
-            ))}
-          </ResourceSection>
-        ))
-      }
+    <div class="lib__col">
+      <div class="lib__list" data-list>
+        {resources.map((r: any, i: number) => <ResourceRow resource={r} index={i} />)}
+      </div>
 
-      <TrapCallout title={toolkit.traps.title} items={toolkit.traps.items} />
-
-      <section class="guide__outro reveal">
-        <p>{toolkit.outroLead} {toolkit.outroDiscord}</p>
-        <div class="guide__outro-actions">
-          <Button href={siteConfig.discordUrl} variant="light" external>Join the SkillBridge Discord</Button>
-          <a class="guide__handle" href={siteConfig.instagramUrl} target="_blank" rel="noopener noreferrer">
-            {siteConfig.handle}
+      <div class="lib__empty" data-empty hidden>
+        <h2 class="lib__empty-title">Nothing matches that yet.</h2>
+        <p class="lib__empty-body">
+          {count} guides is the whole library today, and it grows with every video. Clear the search
+          to see all of them, or tell us what you needed.
+        </p>
+        <div class="lib__empty-actions">
+          <button type="button" class="lib__reset" data-reset>Clear the search</button>
+          <a class="lib__ask" href={siteConfig.discordUrl} target="_blank" rel="noopener noreferrer">
+            Ask in the Discord
           </a>
         </div>
-      </section>
+      </div>
     </div>
-  </article>
+  </div>
+
 </BaseLayout>
 
-<style>
-  .guide__hero {
-    position: relative;
-    overflow: hidden;
-    background: radial-gradient(120% 90% at 82% -10%, var(--light) 0%, #fff 58%);
-    border-bottom: 1px solid var(--line);
-    padding-block: clamp(2.5rem, 2rem + 4vw, 4.5rem) clamp(2rem, 1.5rem + 3vw, 3rem);
-  }
-  .guide__hero-motif {
-    top: -14%;
-    right: -3%;
-    width: min(40vw, 340px);
-    aspect-ratio: 1;
-    opacity: 0.06;
-    transform: rotate(-6deg);
-  }
-  .guide__title { margin-top: 0.4rem; font-size: var(--step-5); }
-  .guide__tagline { margin-top: 1rem; max-width: 60ch; }
-  .guide__actions {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.8rem;
-    margin-top: 1.5rem;
-  }
-  .guide__intro {
-    margin-top: 1.5rem;
-    color: var(--ink-soft);
-    max-width: 64ch;
-    line-height: 1.6;
-  }
-  .guide__body { padding-block: clamp(2rem, 1.5rem + 3vw, 3.5rem); }
+<script is:inline>
+  (function () {
+    var list = document.querySelector('[data-list]');
+    var tools = document.querySelector('.lib__tools');
+    if (!list || !tools) return;
 
-  .guide__outro {
-    margin-top: 1.4rem;
-    background: linear-gradient(135deg, var(--navy), var(--dark));
-    color: #fff;
-    border-radius: var(--radius-lg);
-    padding: clamp(1.6rem, 1rem + 3vw, 2.6rem);
-    text-align: center;
-  }
-  .guide__outro p {
-    color: rgba(235, 244, 252, 0.92);
-    max-width: 52ch;
+    var input = tools.querySelector('[data-search]');
+    var chips = Array.prototype.slice.call(tools.querySelectorAll('[data-group]'));
+    var countEl = tools.querySelector('[data-count]');
+    var deck = tools.querySelector('[data-deck]');
+    var empty = document.querySelector('[data-empty]');
+    var reset = document.querySelector('[data-reset]');
+    var rows = Array.prototype.slice.call(list.querySelectorAll('[data-resource]'));
+    var total = rows.length;
+    var group = 'all';
+
+    // Deep links: /resources?group=apply and/or ?q=resume, so a homepage tile has a
+    // real destination and a filtered view can be shared.
+    function readUrl() {
+      var p = new URLSearchParams(location.search);
+      var g = p.get('group');
+      var q = p.get('q');
+      if (g && chips.some(function (c) { return c.getAttribute('data-group') === g; })) group = g;
+      if (q) input.value = q;
+      chips.forEach(function (c) {
+        c.setAttribute('aria-pressed', String(c.getAttribute('data-group') === group));
+      });
+    }
+
+    function writeUrl() {
+      var p = new URLSearchParams();
+      if (group !== 'all') p.set('group', group);
+      var q = (input.value || '').trim();
+      if (q) p.set('q', q);
+      var s = p.toString();
+      history.replaceState(null, '', s ? '?' + s : location.pathname);
+    }
+
+    function apply() {
+      var term = (input.value || '').trim().toLowerCase();
+      var shown = 0;
+      rows.forEach(function (row) {
+        var ok =
+          (group === 'all' || row.getAttribute('data-group') === group) &&
+          (!term || row.getAttribute('data-search').indexOf(term) !== -1);
+        row.hidden = !ok;
+        if (ok) shown++;
+      });
+
+      if (empty) empty.hidden = shown !== 0;
+      list.hidden = shown === 0;
+      countEl.textContent =
+        shown === total
+          ? 'All ' + total + ' resources'
+          : shown + (shown === 1 ? ' resource' : ' resources') + ' match';
+
+      // Length = share of the library showing. Never fully collapses, so the rule
+      // still reads as a rule when nothing matches.
+      deck.style.transform = 'scaleX(' + Math.max(shown / total, 0.02) + ')';
+      deck.classList.toggle('is-none', shown === 0);
+      writeUrl();
+    }
+
+    input.addEventListener('input', apply);
+    chips.forEach(function (chip) {
+      chip.addEventListener('click', function () {
+        group = chip.getAttribute('data-group');
+        chips.forEach(function (c) { c.setAttribute('aria-pressed', String(c === chip)); });
+        apply();
+      });
+    });
+    if (reset) {
+      reset.addEventListener('click', function () {
+        input.value = '';
+        group = 'all';
+        chips.forEach(function (c) {
+          c.setAttribute('aria-pressed', String(c.getAttribute('data-group') === 'all'));
+        });
+        apply();
+        input.focus();
+      });
+    }
+
+    readUrl();
+    apply();
+    requestAnimationFrame(function () {
+      requestAnimationFrame(function () {
+        document.documentElement.classList.add('lib-ready');
+      });
+    });
+  })();
+</script>
+
+<style>
+  /* A narrow reading column, not the full container: eight rows scan far faster
+     at ~856px than spread across 1120px. */
+  .lib__col {
+    width: 100%;
+    max-width: 856px;
     margin-inline: auto;
+    padding-inline: clamp(1.1rem, 0.5rem + 3vw, 2rem);
+  }
+
+  .lib__head { padding-block: clamp(2.1rem, 1.6rem + 2.2vw, 3rem) 0; }
+  .lib__title {
+    font-size: clamp(2.1rem, 1.5rem + 2.6vw, 3rem);
+    line-height: 1.04;
+    letter-spacing: -0.03em;
+  }
+  .lib__title em { font-style: normal; color: var(--blue-ink); }
+  .lib__sub {
+    margin-top: 0.75rem;
+    color: var(--ink-soft);
     font-size: 1.05rem;
+    max-width: 46ch;
   }
-  .guide__outro-actions {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.9rem 1.2rem;
-    justify-content: center;
-    align-items: center;
-    margin-top: 1.3rem;
-  }
-  .guide__handle {
-    color: var(--blue);
+
+  .lib__tools { margin-top: clamp(1.4rem, 1.1rem + 1.2vw, 1.9rem); }
+  .lib__label {
+    display: block;
     font-family: var(--font-head);
     font-weight: 700;
-    text-decoration: none;
+    font-size: 0.7rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--blue-ink);
+    margin-bottom: 0.45rem;
   }
-  .guide__handle:hover { color: #fff; }
+  .lib__field { position: relative; }
+  .lib__icon {
+    position: absolute;
+    left: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 18px;
+    height: 18px;
+    color: var(--ink-faint);
+    pointer-events: none;
+  }
+  .lib__input {
+    width: 100%;
+    font-family: var(--font-body);
+    font-size: 1rem;
+    color: var(--ink);
+    background: var(--surface-tint);
+    border: 2px solid transparent;
+    border-radius: 12px;
+    padding: 0.85rem 1rem 0.85rem 2.9rem;
+    min-height: 52px;
+    transition: background-color 0.18s var(--ease), border-color 0.18s var(--ease);
+  }
+  .lib__input::placeholder { color: var(--ink-faint); }
+  .lib__input:hover { background: #e3f0fc; }
+  .lib__input:focus { outline: none; background: #fff; border-color: var(--blue); }
+
+  .lib__span {
+    height: 2px;
+    margin-top: 1.05rem;
+    background: #edf3fa;
+    border-radius: 2px;
+    overflow: hidden;
+  }
+  .lib__deck {
+    display: block;
+    height: 100%;
+    background: var(--navy);
+    border-radius: 2px;
+    transform-origin: left center;
+    transform: scaleX(1);
+    transition: transform 0.32s var(--ease), background-color 0.2s var(--ease);
+  }
+  .lib__deck.is-none { background: var(--line-strong); }
+
+  .lib__filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 0.95rem;
+  }
+  /* Filters read as filters: outlined, small, never a filled primary button. */
+  .lib__chip {
+    font-family: var(--font-head);
+    font-weight: 700;
+    font-size: 0.88rem;
+    line-height: 1;
+    color: var(--ink-soft);
+    background: transparent;
+    border: 1.5px solid var(--line-strong);
+    border-radius: var(--radius-pill);
+    padding: 0 0.95rem;
+    min-height: 44px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    transition: color 0.16s var(--ease), border-color 0.16s var(--ease), background-color 0.16s var(--ease);
+  }
+  .lib__chip:hover { color: var(--navy); border-color: var(--blue); }
+  .lib__chip[aria-pressed='true'] {
+    color: var(--navy);
+    border-color: var(--navy);
+    background: var(--surface-tint);
+  }
+
+  .lib__count {
+    margin-top: 1.05rem;
+    font-family: var(--font-head);
+    font-weight: 700;
+    font-size: 0.85rem;
+    color: var(--ink-soft);
+  }
+
+  .lib__list { margin-top: 0.3rem; }
+  /* `display` on a container outranks the hidden attribute's UA rule, so these
+     stay explicit — otherwise filtering would change nothing on screen. */
+  .lib__list[hidden] { display: none; }
+  .lib__list :global(.rrow[hidden]) { display: none; }
+
+  .lib__empty {
+    margin-top: 0.5rem;
+    padding: clamp(2rem, 1.5rem + 2vw, 2.75rem) 0 0.5rem;
+    border-top: 1px solid var(--line);
+  }
+  .lib__empty[hidden] { display: none; }
+  .lib__empty-title { font-size: 1.25rem; }
+  .lib__empty-body {
+    margin-top: 0.5rem;
+    color: var(--ink-soft);
+    max-width: 50ch;
+  }
+  .lib__empty-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.8rem 1.2rem;
+    margin-top: 1.1rem;
+  }
+  .lib__reset {
+    font-family: var(--font-head);
+    font-weight: 700;
+    font-size: 0.92rem;
+    color: #fff;
+    background: var(--navy);
+    border: 0;
+    border-radius: var(--radius-pill);
+    min-height: 44px;
+    padding: 0 1.1rem;
+    cursor: pointer;
+    transition: background-color 0.16s var(--ease);
+  }
+  .lib__reset:hover { background: var(--dark); }
+  .lib__ask {
+    font-family: var(--font-head);
+    font-weight: 700;
+    font-size: 0.9rem;
+    color: var(--blue-ink);
+  }
+
+  /* Bottom rule closes the list before the newsletter band takes over. */
+  .lib__col:last-of-type { padding-bottom: clamp(2.2rem, 1.8rem + 2vw, 3.2rem); }
+
+  /* One orchestrated load: search, then the span draws, then chips, then rows.
+     Everything is transform + opacity, and the rows keep their space, so nothing
+     shifts. */
+  @media (prefers-reduced-motion: no-preference) {
+    html.js .lib__title,
+    html.js .lib__sub,
+    html.js .lib__search,
+    html.js .lib__filters,
+    html.js .lib__count { opacity: 0; transform: translateY(8px); }
+    html.js .lib__deck { transform: scaleX(0); }
+    html.js :global(.rrow) { opacity: 0; transform: translateY(9px); }
+
+    html.lib-ready .lib__title,
+    html.lib-ready .lib__sub,
+    html.lib-ready .lib__search,
+    html.lib-ready .lib__filters,
+    html.lib-ready .lib__count,
+    html.lib-ready :global(.rrow) {
+      opacity: 1;
+      transform: none;
+      transition: opacity 0.34s var(--ease), transform 0.34s var(--ease);
+    }
+    html.lib-ready .lib__sub { transition-delay: 55ms; }
+    html.lib-ready .lib__search { transition-delay: 110ms; }
+    html.lib-ready .lib__deck { transition: transform 0.4s var(--ease) 170ms; }
+    html.lib-ready .lib__filters { transition-delay: 230ms; }
+    html.lib-ready .lib__count { transition-delay: 265ms; }
+    html.lib-ready :global(.rrow) { transition-delay: calc(300ms + var(--i) * 32ms); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html.js .lib__title,
+    html.js .lib__sub,
+    html.js .lib__search,
+    html.js .lib__filters,
+    html.js .lib__count,
+    html.js :global(.rrow) { opacity: 1 !important; transform: none !important; }
+    html.js .lib__deck { transform: scaleX(1) !important; }
+  }
 </style>
