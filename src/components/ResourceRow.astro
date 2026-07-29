@@ -31,9 +31,24 @@ const friction: string[] = (r.friction ?? [])
 
 const isExternal = Boolean(r.action.external);
 const descId = `outcome-${r.id}`;
-// A precise action label rather than a generic "Download": the honest name of
-// what arrives is part of the promise.
-const actionLabel = r.action.download ? `Download ${format.label}` : `Open ${format.label}`;
+// The catalog owns the action wording, so the label names the thing that arrives
+// ("Download checklist") instead of restating the file type the facts line
+// already shows.
+const actionLabel = r.action.label;
+
+// Synonyms are never displayed. They exist so a student who types the words they
+// actually use — "cv", "chatgpt", "career fair" — still lands on the right row.
+const searchIndex = [
+  r.title,
+  r.description,
+  r.bestFor,
+  category?.label ?? '',
+  format.label,
+  r.cta?.keyword ?? '',
+  ...(r.searchTerms ?? []),
+]
+  .join(' ')
+  .toLowerCase();
 ---
 
 <article
@@ -42,7 +57,7 @@ const actionLabel = r.action.download ? `Download ${format.label}` : `Open ${for
   data-group={r.group}
   data-category={r.category}
   style={`--i:${index}`}
-  data-search={`${r.title} ${r.description} ${r.bestFor} ${category?.label ?? ''} ${format.label} ${r.cta?.keyword ?? ''}`.toLowerCase()}
+  data-search={searchIndex}
 >
   <div class="rrow__main">
     <p class="rrow__eyebrow">
@@ -72,10 +87,11 @@ const actionLabel = r.action.download ? `Download ${format.label}` : `Open ${for
     <p class="rrow__desc">{r.description}</p>
     <span id={descId} class="visually-hidden">{r.outcome}</span>
 
-    {/* Label and value are separate elements with real spacing, so they never run
-        together at any width. */}
+    {/* "Use this when" names the moment a student needs this, which is easier to
+        match against than a category. Label and value are separate elements with
+        real spacing, so they never run together at any width. */}
     <p class="rrow__best">
-      <span class="rrow__best-k">Best for</span>
+      <span class="rrow__best-k">Use this when</span>
       <span class="rrow__best-v">{r.bestFor}</span>
     </p>
 
@@ -93,7 +109,10 @@ const actionLabel = r.action.download ? `Download ${format.label}` : `Open ${for
   <div class="rrow__actions">
     <span class="rrow__go" aria-hidden="true">
       {actionLabel}
-      <svg class="rrow__glyph" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true">
+      <svg
+        class:list={['rrow__glyph', isExternal ? 'rrow__glyph--out' : 'rrow__glyph--down']}
+        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"
+      >
         {isExternal
           ? <><path d="M14 5h5v5" /><path d="M19 5 10 14" /><path d="M18 14v5H5V6h5" /></>
           : <><path d="M12 4v11" /><path d="m7 11 5 5 5-5" /><path d="M5 20h14" /></>}
@@ -262,7 +281,25 @@ const actionLabel = r.action.download ? `Download ${format.label}` : `Open ${for
     border-color: var(--navy);
     color: #fff;
   }
-  .rrow__glyph { width: 14px; height: 14px; flex: none; }
+  .rrow__glyph {
+    width: 14px;
+    height: 14px;
+    flex: none;
+    transition: transform 0.18s var(--ease);
+  }
+  /* The glyph leans the way the action goes: down for a file that lands on your
+     device, out for a page that opens elsewhere. Transform only, 2px, so nothing
+     around it moves. */
+  .rrow:hover .rrow__glyph--down,
+  .rrow:focus-within .rrow__glyph--down { transform: translateY(2px); }
+  .rrow:hover .rrow__glyph--out,
+  .rrow:focus-within .rrow__glyph--out { transform: translate(2px, -2px); }
+
+  /* Right-aligned labels of eight different lengths read as a ragged edge, so on
+     wider screens they share one column width. */
+  @media (min-width: 40rem) {
+    .rrow__go { min-width: 14rem; }
+  }
 
   .rrow__second {
     position: relative;

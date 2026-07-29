@@ -31,11 +31,11 @@ const count = published.length;
     <header class="lib__head">
       <div class="lib__col">
         <h1 class="lib__title">Free resources,<br /><em>ready to use today.</em></h1>
-        <p class="lib__sub">{count} guides and templates for the parts of getting hired that school skips.</p>
+        <p class="lib__sub">{count} practical guides and templates for resumes, internships, networking, skills, and first jobs.</p>
 
         <div class="lib__tools">
           <div class="lib__search">
-            <label class="lib__label" for="resource-search">Search resources</label>
+            <label class="lib__label" for="resource-search">Search by what you need</label>
             <div class="lib__field">
               <svg class="lib__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
                 <circle cx="11" cy="11" r="7" /><path d="m20 20-3.5-3.5" />
@@ -44,7 +44,7 @@ const count = published.length;
                 id="resource-search"
                 type="search"
                 class="lib__input"
-                placeholder="Try resume, project, interview, AI…"
+                placeholder="resume, internship, career fair, AI…"
                 autocomplete="off"
                 data-search
               />
@@ -262,7 +262,7 @@ const count = published.length;
     border-radius: 2px;
     transform-origin: left center;
     transform: scaleX(1);
-    transition: transform 0.32s var(--ease), background-color 0.2s var(--ease);
+    transition: transform 0.24s var(--ease), background-color 0.2s var(--ease);
   }
   .lib__deck.is-none { background: var(--line-strong); }
 
@@ -287,9 +287,14 @@ const count = published.length;
     cursor: pointer;
     display: inline-flex;
     align-items: center;
-    transition: color 0.16s var(--ease), border-color 0.16s var(--ease), background-color 0.16s var(--ease);
+    transition:
+      color 0.16s var(--ease),
+      border-color 0.16s var(--ease),
+      background-color 0.16s var(--ease),
+      transform 0.12s var(--ease);
   }
   .lib__chip:hover { color: var(--navy); border-color: var(--blue); }
+  .lib__chip:active { transform: translateY(1px); }
   .lib__chip[aria-pressed='true'] {
     color: var(--navy);
     border-color: var(--navy);

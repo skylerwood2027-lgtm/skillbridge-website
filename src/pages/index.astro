@@ -240,7 +240,10 @@ const findGroups = catalog.groups
     text-decoration: none;
     transition: transform 0.16s var(--ease), box-shadow 0.16s ease, border-color 0.16s ease;
   }
-  .find__card:hover {
+  /* Focus gets the same response as hover — a keyboard user should see the tile
+     react, not just the ring. */
+  .find__card:hover,
+  .find__card:focus-visible {
     transform: translateY(-3px);
     box-shadow: var(--shadow-md);
     border-color: var(--blue);
@@ -268,7 +271,8 @@ const findGroups = catalog.groups
     color: var(--blue-ink);
     transition: transform 0.16s var(--ease);
   }
-  .find__card:hover .find__go { transform: translateX(3px); }
+  .find__card:hover .find__go,
+  .find__card:focus-visible .find__go { transform: translateX(3px); }
   .find__more { margin-top: 1.8rem; }
 
   /* ---------------- CTA BAND ---------------- */

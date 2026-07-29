@@ -30,7 +30,7 @@
   "categories": [
     {
       "id": "toolkit",
-      "label": "The toolkit"
+      "label": "Free tools"
     },
     {
       "id": "experience",
@@ -62,13 +62,13 @@
       "id": "skillbridge-starter-toolkit",
       "slug": "skillbridge-starter-toolkit",
       "status": "published",
-      "title": "SkillBridge Starter Toolkit",
-      "description": "A curated list of the free tools, sites, and opportunities we currently recommend — and the traps that charge you in two weeks.",
+      "title": "Free Career Tools We Recommend",
+      "description": "A short list of free websites and tools for getting experience, building skills, finding internships, and fixing your resume — plus the ones that look free and are not.",
       "outcome": "You get the shortlist we actually use, in one file.",
       "category": "toolkit",
       "format": "pdf",
       "action": {
-        "label": "Download PDF",
+        "label": "Download free tools",
         "url": "/skillbridge-starter-toolkit.pdf",
         "download": true
       },
@@ -90,19 +90,28 @@
       "featured": true,
       "latest": false,
       "group": "skills",
-      "bestFor": "Not sure where to start"
+      "bestFor": "You want one place to start",
+      "searchTerms": [
+        "career tools",
+        "free websites",
+        "resources",
+        "opportunities",
+        "internships",
+        "certificates",
+        "resume help"
+      ]
     },
     {
       "id": "no-experience-project-starter",
       "slug": "no-experience-project-starter",
       "status": "published",
-      "title": "The No-Experience Project Starter",
-      "description": "Choose one project you can finish in two weeks, prove it with a link or a number, and write the resume line — without calling yourself an intern.",
+      "title": "Build a Resume Project Without Job Experience",
+      "description": "Pick a small project you can finish in two weeks, prove what you did, and turn it into a resume bullet.",
       "outcome": "You leave with one project chosen, scoped, and written down.",
       "category": "experience",
       "format": "pdf",
       "action": {
-        "label": "Download PDF",
+        "label": "Download project guide",
         "url": "/resources/no-experience-project-starter.pdf",
         "download": true
       },
@@ -124,19 +133,27 @@
       "featured": false,
       "latest": true,
       "group": "experience",
-      "bestFor": "No job yet"
+      "bestFor": "You need resume experience",
+      "searchTerms": [
+        "no experience",
+        "project ideas",
+        "resume project",
+        "portfolio",
+        "extracurricular",
+        "resume bullet"
+      ]
     },
     {
       "id": "first-internship-application-kit",
       "slug": "first-internship-application-kit",
       "status": "published",
-      "title": "First Internship Application Kit",
-      "description": "The three things to check before you submit, the message to send after, and when to let it go — none of it asking you to invent experience.",
+      "title": "First Internship Application Checklist",
+      "description": "Check your application before you submit it, use the follow-up message, and know when to move on.",
       "outcome": "You leave with a checked application and one message ready to send.",
       "category": "applying",
       "format": "pdf",
       "action": {
-        "label": "Download PDF",
+        "label": "Download checklist",
         "url": "/resources/first-internship-application-kit.pdf",
         "download": true
       },
@@ -157,19 +174,26 @@
       "featured": false,
       "latest": true,
       "group": "apply",
-      "bestFor": "About to apply"
+      "bestFor": "Your first internship application",
+      "searchTerms": [
+        "internship application",
+        "application checklist",
+        "follow up email",
+        "first internship",
+        "submit"
+      ]
     },
     {
       "id": "three-better-networking-questions",
       "slug": "three-better-networking-questions",
       "status": "published",
-      "title": "3 Better Networking Questions",
-      "description": "The three questions to ask at a career fair instead of the ones you could have Googled — plus the one thing to do with the answers that night.",
+      "title": "3 Questions to Ask at a Career Fair",
+      "description": "Save these questions on your phone before the event, then use the answers to follow up that night.",
       "outcome": "You leave with three questions on your phone and a next move.",
       "category": "networking",
       "format": "pdf",
       "action": {
-        "label": "Download PDF",
+        "label": "Download questions",
         "url": "/resources/three-better-networking-questions.pdf",
         "download": true
       },
@@ -190,19 +214,26 @@
       "featured": false,
       "latest": true,
       "group": "apply",
-      "bestFor": "A career fair this week"
+      "bestFor": "You are going to a career fair",
+      "searchTerms": [
+        "career fair",
+        "networking questions",
+        "what to ask",
+        "follow up",
+        "meet employers"
+      ]
     },
     {
       "id": "five-free-credentials-before-graduation",
       "slug": "five-free-credentials-before-graduation",
       "status": "published",
-      "title": "5 Free Credentials Before Graduation",
-      "description": "Five official programs offering free credentials, badges, or certificates — and the reason you should only finish one of them.",
+      "title": "5 Free Credentials for Your Resume",
+      "description": "Compare five free courses that award a certificate, badge, or credential. Pick one that backs up a project or skill you can show.",
       "outcome": "You leave having picked one credential that matches a project.",
       "category": "credentials",
       "format": "pdf",
       "action": {
-        "label": "Download PDF",
+        "label": "Download credential guide",
         "url": "/resources/five-free-credentials-before-graduation.pdf",
         "download": true
       },
@@ -225,19 +256,27 @@
       "featured": false,
       "latest": true,
       "group": "experience",
-      "bestFor": "A resume with no proof"
+      "bestFor": "Your resume needs proof of a skill",
+      "searchTerms": [
+        "free certificates",
+        "certifications",
+        "badges",
+        "online courses",
+        "resume skills",
+        "proof of skills"
+      ]
     },
     {
       "id": "high-school-resume-starter",
       "slug": "high-school-resume-starter",
       "status": "published",
-      "title": "The High-School Resume Starter",
-      "description": "A one-page template built for someone with no formal job yet. Every line is a prompt you replace. City and state only, no street address, no objective.",
+      "title": "High School Resume Template (No Experience Needed)",
+      "description": "Edit this one-page Word template, replace the prompts with your own information, and export it as a PDF.",
       "outcome": "You leave with a resume you can fill in and export today.",
       "category": "resume",
       "format": "docx",
       "action": {
-        "label": "Download template",
+        "label": "Download resume template",
         "url": "/resources/skillbridge-high-school-resume-starter.docx",
         "download": true
       },
@@ -255,19 +294,27 @@
       "featured": false,
       "latest": false,
       "group": "apply",
-      "bestFor": "Your first resume"
+      "bestFor": "You are writing your first resume",
+      "searchTerms": [
+        "resume template",
+        "cv",
+        "first resume",
+        "no experience",
+        "word template",
+        "student resume"
+      ]
     },
     {
       "id": "ai-tools-guide",
       "slug": "ai-tools-guide",
       "status": "published",
-      "title": "The AI Tools Guide",
-      "description": "Which AI to use for which job, what each one is actually best at, and prompts you can adapt for resumes, mock interviews, outreach, and studying.",
+      "title": "AI Tools for School and Job Search",
+      "description": "See which AI tool to use for studying, resumes, interview practice, outreach, and other common student tasks.",
       "outcome": "You stop guessing which tool to open.",
       "category": "ai",
       "format": "google-doc",
       "action": {
-        "label": "Open the guide",
+        "label": "Open AI tools guide",
         "url": "https://docs.google.com/document/d/11LiRU32S09jeHYkVuENUWtJ7-YzAVyTis3rflA8Yli0/preview",
         "external": true
       },
@@ -284,19 +331,28 @@
       "featured": false,
       "latest": false,
       "group": "skills",
-      "bestFor": "Using AI for schoolwork"
+      "bestFor": "You need AI for a specific task",
+      "searchTerms": [
+        "chatgpt",
+        "claude",
+        "ai tools",
+        "study help",
+        "resume ai",
+        "mock interview",
+        "prompts"
+      ]
     },
     {
       "id": "linkedin-best-practices",
       "slug": "linkedin-best-practices",
       "status": "published",
-      "title": "LinkedIn Best Practices",
-      "description": "How to set up the profile: the photo, the headline, the About section, and the parts most students leave blank.",
+      "title": "Build Your First LinkedIn Profile",
+      "description": "Set up your photo, headline, About section, and experience so your profile does not look empty.",
       "outcome": "You leave with a profile someone would actually reply to.",
       "category": "networking",
       "format": "google-slides",
       "action": {
-        "label": "Open the slides",
+        "label": "Open LinkedIn guide",
         "url": "https://docs.google.com/presentation/d/1IRFFT3mo2X0hogjRSFL-C8ZOmQxmdR3caSF7p1h724c/preview",
         "external": true
       },
@@ -313,7 +369,15 @@
       "featured": false,
       "latest": false,
       "group": "apply",
-      "bestFor": "An empty profile"
+      "bestFor": "Your LinkedIn profile is empty",
+      "searchTerms": [
+        "linkedin profile",
+        "headline",
+        "about section",
+        "networking",
+        "student linkedin",
+        "empty profile"
+      ]
     },
     {
       "id": "blank-resume-google-doc",

@@ -204,6 +204,114 @@ check('every resource link works with JS off',
   await p2.$$eval('.rrow__link', (els) => els.length > 0 && els.every((a) => a.getAttribute('href'))));
 await noJs.close();
 
+// ------------------------------------------- 12. plain-language copy + search
+console.log('\n[12] plain titles, action labels, synonyms');
+await page.setViewportSize({ width: 1440, height: 900 });
+await page.goto(URL_, { waitUntil: 'networkidle' });
+
+for (const r of published) {
+  const row = `[data-resource="${r.id}"]`;
+  // textContent includes the visually-hidden "(opens in a new tab)" hint on
+  // external rows, which is intentional a11y text rather than part of the title.
+  const title = (await page.textContent(`${row} .rrow__title`))
+    .replace(/\(opens in a new tab\)/i, '').trim();
+  check(`title matches the catalog: ${r.id}`, title === r.title, `"${title}"`);
+  const go = (await page.textContent(`${row} .rrow__go`)).trim();
+  check(`action label comes from the catalog: ${r.id}`, go.startsWith(r.action.label), `"${go}" vs "${r.action.label}"`);
+}
+
+// Internal packaging words must no longer lead a title.
+const packaging = published.map((r) => r.title).filter((t) => /\b(starter|toolkit|kit)\b/i.test(t));
+check('no title leans on starter/toolkit/kit', packaging.length === 0, JSON.stringify(packaging));
+
+check('the usage label reads "Use this when"',
+  (await page.textContent('.rrow__best-k')).trim().toLowerCase() === 'use this when');
+
+// Every synonym must actually surface its own row.
+for (const r of published.filter((x) => x.searchTerms)) {
+  for (const term of r.searchTerms.slice(0, 3)) {
+    await page.fill('#resource-search', term);
+    await page.waitForTimeout(160);
+    const ids = await page.$$eval('[data-resource]', (els) =>
+      els.filter((e) => e.getClientRects().length).map((e) => e.dataset.resource));
+    check(`synonym "${term}" finds ${r.id}`, ids.includes(r.id), `got ${JSON.stringify(ids)}`);
+  }
+}
+await page.fill('#resource-search', '');
+await page.waitForTimeout(160);
+
+// ------------------------------------------------------------- 13. motion
+console.log('\n[13] motion');
+const vt = await page.evaluate(() => {
+  const css = [...document.styleSheets]
+    .flatMap((s) => { try { return [...s.cssRules]; } catch { return []; } })
+    .map((r) => r.cssText);
+  return {
+    atRule: css.some((t) => t.includes('@view-transition')),
+    oldRoot: css.some((t) => t.includes('view-transition-old(root)')),
+    newRoot: css.some((t) => t.includes('view-transition-new(root)')),
+    header: getComputedStyle(document.querySelector('.site-header')).viewTransitionName,
+  };
+});
+check('a cross-document view transition is declared', vt.atRule && vt.oldRoot && vt.newRoot, JSON.stringify(vt));
+check('the header is its own transition group so it stays put', vt.header === 'site-header', vt.header);
+
+const glyphBefore = await page.$eval('.rrow__glyph--down', (e) => getComputedStyle(e).transform);
+const hBefore = await page.$$eval('.rrow', (els) => els.map((e) => Math.round(e.getBoundingClientRect().height)));
+await page.hover('.rrow');
+await page.waitForTimeout(320);
+const glyphAfter = await page.$eval('.rrow__glyph--down', (e) => getComputedStyle(e).transform);
+const hAfter = await page.$$eval('.rrow', (els) => els.map((e) => Math.round(e.getBoundingClientRect().height)));
+check('the download glyph responds on row hover', glyphBefore !== glyphAfter, `${glyphBefore} -> ${glyphAfter}`);
+check('glyph motion causes no layout shift', JSON.stringify(hBefore) === JSON.stringify(hAfter));
+
+// ------------------------------------------------- 14. reduced motion safety
+console.log('\n[14] reduced motion');
+const rm = await browser.newContext({ viewport: { width: 1440, height: 900 }, reducedMotion: 'reduce' });
+const rmPage = await rm.newPage();
+await rmPage.goto(URL_, { waitUntil: 'networkidle' });
+const rmState = await rmPage.evaluate(() => {
+  const dur = (s) => parseFloat(getComputedStyle(document.querySelector(s)).transitionDuration) || 0;
+  return {
+    allRowsVisible: [...document.querySelectorAll('.rrow')].every((e) => getComputedStyle(e).opacity === '1'),
+    glyph: dur('.rrow__glyph'),
+    chip: dur('.lib__chip'),
+    deck: dur('.lib__deck'),
+    killsViewTransition: [...document.styleSheets]
+      .flatMap((s) => { try { return [...s.cssRules]; } catch { return []; } })
+      .filter((r) => r.conditionText && r.conditionText.includes('reduced-motion'))
+      .flatMap((r) => [...r.cssRules].map((x) => x.cssText))
+      .some((t) => t.includes('view-transition-group')),
+  };
+});
+check('every row is visible with reduced motion', rmState.allRowsVisible);
+check('interaction transitions are disabled', rmState.glyph < 0.01 && rmState.chip < 0.01 && rmState.deck < 0.01, JSON.stringify(rmState));
+check('page transitions are disabled under reduced motion', rmState.killsViewTransition);
+await rmPage.focus('#resource-search');
+await rmPage.keyboard.press('Tab');
+check('focus stays visible with motion off', await rmPage.evaluate(() => {
+  const cs = getComputedStyle(document.activeElement);
+  return cs.outlineStyle !== 'none' && parseFloat(cs.outlineWidth) > 0;
+}));
+await rmPage.click('.lib__chip[data-group="apply"]');
+await rmPage.waitForTimeout(120);
+check('filtering stays immediate with motion off',
+  (await rmPage.$$eval('[data-resource]', (els) => els.filter((e) => e.getClientRects().length).length)) ===
+    published.filter((r) => r.group === 'apply').length);
+await rm.close();
+
+// --------------------------------------------- 15. public surface unchanged
+console.log('\n[15] public surface unchanged');
+await page.goto(URL_, { waitUntil: 'networkidle' });
+for (const r of published) {
+  const href = await page.$eval(`[data-resource="${r.id}"] .rrow__link`, (e) => e.getAttribute('href'));
+  check(`action URL unchanged: ${r.id}`, href === r.action.url, `${href} vs ${r.action.url}`);
+}
+const shownKw = await page.$$eval('.rrow__kw', (els) =>
+  els.map((e) => e.textContent.replace(/^.*comment\s*/i, '').trim()).sort().join(','));
+check('CTA keywords still rendered on the four video guides',
+  shownKw === published.filter((r) => r.cta).map((r) => r.cta.keyword).sort().join(','), shownKw);
+
 await browser.close();
 console.log(`\n[resources-page] ${pass} passed, ${failures.length} failed`);
 if (failures.length) {

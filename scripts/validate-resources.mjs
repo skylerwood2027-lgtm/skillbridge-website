@@ -51,6 +51,22 @@ for (const r of resources) {
   if (!groupIds.has(r.group)) fail(`${at}: unknown group "${r.group}"`);
   if (r.group === 'all') fail(`${at}: "all" is the reset control, not a real group`);
   if ((r.bestFor || '').length > 34) fail(`${at}: bestFor is ${r.bestFor.length} chars — keep it to one short line (<=34)`);
+
+  // Search synonyms are optional, but when present they must actually be usable:
+  // a nonempty array of unique, nonempty strings. They never render, so a typo
+  // here would silently make a resource unfindable.
+  if ('searchTerms' in r) {
+    const t = r.searchTerms;
+    if (!Array.isArray(t) || t.length === 0) {
+      fail(`${at}: searchTerms must be a nonempty array`);
+    } else if (!t.every((v) => typeof v === 'string' && v.trim())) {
+      fail(`${at}: searchTerms must contain only nonempty strings`);
+    } else if (new Set(t.map((v) => v.trim().toLowerCase())).size !== t.length) {
+      fail(`${at}: searchTerms has duplicate entries`);
+    }
+  } else if (r.status === 'published') {
+    warn(`${r.id}: no searchTerms — students searching their own words may miss it`);
+  }
   if (!formatIds.has(r.format)) fail(`${at}: unknown format "${r.format}"`);
   if (!/^[a-z0-9-]+$/.test(r.slug || '')) fail(`${at}: slug must be lowercase-kebab (got "${r.slug}")`);
 
