@@ -30,7 +30,8 @@ const wordmark = await loadWordmark(root, 'wordmark.png');
 
 function renderEntry(e) {
   const twoCol = e.bestFor && e.pairWith;
-  return `<section class="item">
+  const pageBreak = e.pageBreakBefore ? ' item--page-break' : '';
+  return `<section class="item${pageBreak}">
     <div class="item__head">
       <span class="item__n">${esc(e.n)}</span>
       <div>
@@ -80,6 +81,7 @@ function render(doc) {
   return `<!doctype html><html lang="en"><head><meta charset="utf-8"><style>
 ${fonts}
 ${SYSTEM_CSS}
+.item--page-break{break-before:page}
 </style></head><body>
   <header class="mast">
     <div class="mast__brand"><img src="data:image/png;base64,${wordmark}" alt="SkillBridge" /></div>

@@ -1,50 +1,54 @@
 {
   "slug": "three-better-networking-questions",
   "title": "3 Better Networking Questions",
-  "subtitle": "The three questions to use at a career fair instead of the ones you could have Googled — and the one thing to do with the answers.",
-  "fromVideo": "From the video: three questions that make networking useful",
-  "intro": "Most students burn a career event asking what the company does and what a typical day looks like. Both are on the website. These three are not, because the answers only exist inside the person's head. Screenshot this page and open it in line.",
+  "subtitle": "Three questions to ask after someone replies to your LinkedIn message or agrees to a quick call.",
+  "fromVideo": "From the video: what to ask when they say yes",
+  "intro": "Do not send all three in your first DM. Start with a specific opener, wait for a reply, then ask one question that fits their experience. Listen to the answer before you choose a follow-up.",
   "entries": [
     {
       "n": "1",
-      "title": "What part of your job took the longest to learn?",
-      "lead": "Ask this first. It is the one that opens people up.",
+      "title": "What helped you get your first opportunity when you did not have much experience yet?",
+      "lead": "Use this with an intern, recent graduate, or anyone only a few steps ahead of you.",
       "items": [
-        "You get the real skill, not the job description version of it.",
-        "It tells you what to start learning now, years before you would find out on your own.",
-        "People like answering it, because it is about their experience and not a test of the company."
-      ]
+        "Listen for a person, program, project, class, or habit you can investigate.",
+        "A useful follow-up is: What do you think made the biggest difference?",
+        "Keep it about their path. Do not turn it into: Can you get me an internship?"
+      ],
+      "note": "Why it works: their first step is recent enough to remember and realistic enough for you to use."
     },
     {
       "n": "2",
       "title": "What do beginners in your field usually misunderstand?",
-      "lead": "This is the mistake question, asked so they do not have to call you a beginner.",
+      "lead": "This gets the correction that rarely appears on a company website.",
       "items": [
-        "You find out what everyone your age gets wrong, before you get it wrong.",
-        "It shows you are thinking about the work, not about getting hired today.",
-        "Listen for the word \"actually\" — that is where the useful part starts."
-      ]
+        "You learn which skills, classes, or job titles people overvalue or overlook.",
+        "A useful follow-up is: What does a beginner usually find out too late?",
+        "Write down the part that changes what you were planning to do."
+      ],
+      "note": "Why it works: you are asking for judgment from experience, not a fact you could search."
     },
     {
       "n": "3",
-      "title": "What is AI changing in your work, and what skill would you learn first if you were my age?",
-      "lead": "Two halves, one question. Ask both together.",
+      "pageBreakBefore": true,
+      "title": "If you were in my position, what would you do in the next 30 days?",
+      "lead": "Use this near the end of the conversation to turn advice into one next move.",
       "items": [
-        "The first half tells you which parts of the job are moving.",
-        "The second half turns their whole career into one recommendation aimed at you.",
-        "You will get a different answer from every person. Collect them."
-      ]
+        "Give them enough context first: your grade, your interest, and what you have already tried.",
+        "A useful follow-up is: If I did one thing this week, which would you pick?",
+        "Write down the exact action, not just the general topic."
+      ],
+      "note": "Why it works: a short time frame makes the answer specific and easier to act on."
     },
     {
       "n": "4",
-      "title": "Then do the part everyone skips",
-      "lead": "The conversation is not the value. What you do that night is.",
+      "title": "Follow up with proof that you listened",
+      "lead": "The best thank-you message shows that their answer changed what you did.",
       "items": [
-        "Write down ONE tool, skill, or problem they mentioned. Just one, in your phone, before you walk away.",
-        "Research it that night while you still remember why it mattered.",
-        "Now the conversation gave you an actual next move instead of a business card."
+        "Write down one recommendation before you close the conversation.",
+        "Try it, research it, or make a first attempt within a week.",
+        "Then send: Hey Maria, thanks again. You mentioned X, so I tried Y. I appreciated the advice."
       ],
-      "note": "This is also the best possible follow-up message: \"You mentioned X — I looked into it and tried Y.\"",
+      "note": "Do not ask for another favor in the thank-you. Give the relationship room to grow.",
       "action": {
         "label": "Browse the free library",
         "url": "https://joinskillbridge.com/resources",
@@ -55,12 +59,12 @@
   "rule": {
     "title": "The pocket version",
     "items": [
-      "What took the longest to learn?",
+      "What helped you get your first opportunity?",
       "What do beginners misunderstand?",
-      "What is AI changing, and what would you learn first at my age?",
-      "Write down one tool, skill, or problem. Research it tonight."
+      "What would you do in my position over the next 30 days?",
+      "Ask one. Listen. Act on the answer. Follow up with what you did."
     ]
   },
-  "verified": "2026-07-28",
-  "verifyNote": "The three questions are the exact ones from the video. Ask them in your own voice."
+  "verified": "2026-09-20",
+  "verifyNote": "Written for LinkedIn conversations with interns, recent graduates, and early-career professionals. Adapt the details to the person you contacted."
 }

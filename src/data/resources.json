@@ -1,6 +1,6 @@
 {
   "_readme": "CANONICAL SkillBridge resource catalog — the single source of truth. The website renders it, `npm run resources:check` validates it, and `npm run resources:sync` writes a verified snapshot into the content repo for Creator Flow CTA validation. Never hand-edit the snapshot. Only `status: published` items render in production.",
-  "updated": "2026-07-28",
+  "updated": "2026-09-20",
   "formats": {
     "pdf": {
       "label": "PDF",
@@ -187,9 +187,9 @@
       "id": "three-better-networking-questions",
       "slug": "three-better-networking-questions",
       "status": "published",
-      "title": "3 Questions to Ask at a Career Fair",
-      "description": "Save these questions on your phone before the event, then use the answers to follow up that night.",
-      "outcome": "You leave with three questions on your phone and a next move.",
+      "title": "3 Better Networking Questions",
+      "description": "Use these after someone replies to your LinkedIn message or agrees to a quick call. Each one gets you an answer you cannot Google.",
+      "outcome": "You leave with one useful answer, one next move, and a reason to follow up.",
       "category": "networking",
       "format": "pdf",
       "action": {
@@ -202,25 +202,26 @@
       ],
       "source": {
         "kind": "creator-flow-job",
-        "job": "creator-flow/01 DROP RECORDINGS HERE/20260724-networking-questions/job.json",
+        "job": "creator-flow/01 DROP RECORDINGS HERE/20260919-linkedin-dms-noob-vs-pro/job.json",
         "content": "src/data/resource-content/three-better-networking-questions.json",
         "generator": "scripts/build-resource-pdfs.mjs"
       },
-      "lastVerified": "2026-07-28",
+      "lastVerified": "2026-09-20",
       "cta": {
         "keyword": "NETWORK",
-        "videoJobId": "20260724-networking-questions"
+        "videoJobId": "20260919-linkedin-dms-noob-vs-pro"
       },
       "featured": false,
       "latest": true,
       "group": "apply",
-      "bestFor": "You are going to a career fair",
+      "bestFor": "A LinkedIn contact replied",
       "searchTerms": [
-        "career fair",
+        "LinkedIn networking",
         "networking questions",
-        "what to ask",
+        "internship advice",
+        "informational interview",
         "follow up",
-        "meet employers"
+        "what to ask"
       ]
     },
     {
