@@ -23,6 +23,7 @@ const pages = [
   { name: 'resources', path: '/resources' },
   { name: 'starter-toolkit', path: '/resources/skillbridge-starter-toolkit' },
   { name: 'our-story', path: '/our-story' },
+  { name: 'bridge-finder', path: '/bridge-finder' },
 ];
 const viewports = [
   { tag: 'desktop', width: 1440, mobile: false },

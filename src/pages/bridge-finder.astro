@@ -1,0 +1,946 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import siteConfig from '../config.json';
+
+// Bridge Finder: a student drops in the Connections.csv LinkedIn exports, names the
+// places they want to work, and sees who they already know there ("bridges") and
+// who to ask for a coffee chat first. Everything runs in the browser tab. The site
+// is static and has no backend, and a student's contact list should never need one.
+const questionsGuide = '/resources/three-better-networking-questions.pdf';
+---
+
+<BaseLayout
+  title="Bridge Finder · SkillBridge"
+  description="Drop in your LinkedIn connections and see who you already know at the companies you want — and who to ask for a coffee chat first. Runs in your browser; nothing is uploaded."
+>
+  <div class="bf">
+    <section class="bf-hero">
+      <div class="container bf-hero__grid">
+        <div class="bf-hero__main">
+          <p class="bf-kicker">Bridge Finder</p>
+          <h1 class="bf-title">See who you know at the places you want to work.</h1>
+          <p class="bf-lead">
+            Upload your LinkedIn connections. We'll show who you know at each company and who to message first.
+          </p>
+
+          <label class="bf-drop" data-drop>
+            <input class="visually-hidden" type="file" accept=".csv,text/csv" data-file />
+            <svg class="bf-drop__icon" viewBox="0 0 48 20" aria-hidden="true">
+              <path d="M2 18 Q12 2 24 2 Q36 2 46 18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" />
+              <path d="M2 18 H46 M12 18 V9 M24 18 V3 M36 18 V9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+            </svg>
+            <span class="bf-drop__title">Drop <b>Connections.csv</b> here</span>
+            <span class="bf-drop__sub">or <u>choose the file</u></span>
+          </label>
+          <p class="bf-error" role="alert" data-error hidden></p>
+
+          <div class="bf-hero__row">
+            <button type="button" class="bf-link-btn" data-sample>Try it with sample data</button>
+            <p class="bf-privacy">Your file never leaves your browser.</p>
+          </div>
+        </div>
+
+        <aside class="bf-steps" aria-labelledby="bf-steps-title">
+          <h2 id="bf-steps-title" class="bf-steps__title">How to get the file</h2>
+          <ol class="bf-steps__list">
+            <li>On LinkedIn, go to <b>Me</b> &gt; <b>Settings &amp; Privacy</b>.</li>
+            <li>Click <b>Data privacy</b> &gt; <b>Download your data</b>.</li>
+            <li>Pick <b>Connections</b>, then click <b>Request archive</b>.</li>
+            <li>Open LinkedIn's email, unzip the download, and drop <b>Connections.csv</b> here.</li>
+          </ol>
+          <p class="bf-steps__note">
+            Seeing <b>Request pending</b>? You already asked. Watch your email.
+          </p>
+        </aside>
+      </div>
+    </section>
+
+    <section class="bf-results container" data-results hidden aria-live="polite">
+      <div class="bf-sample-bar" data-sample-bar hidden>
+        Showing sample data with made-up people.
+        <button type="button" class="bf-link-btn" data-clear>Use my own file instead</button>
+      </div>
+
+      <div class="bf-setup">
+        <div>
+          <h2 class="bf-h2">Where do you want to go?</h2>
+          <p class="bf-summary" data-summary></p>
+        </div>
+        <form class="bf-targets" data-target-form>
+          <label for="bf-target-input" class="bf-label">Add a company or school</label>
+          <div class="bf-targets__field">
+            <input id="bf-target-input" class="bf-input" type="text" autocomplete="off" placeholder="e.g. Nike, Stanford" data-target-input />
+            <button type="submit" class="bf-btn">Add</button>
+          </div>
+          <ul class="bf-chips" data-targets aria-label="Your target companies"></ul>
+        </form>
+        <div class="bf-suggest" data-suggest-wrap hidden>
+          <p class="bf-label">Or tap one from your network</p>
+          <ul class="bf-chips" data-suggest></ul>
+        </div>
+      </div>
+
+      <div class="bf-layout">
+        <div class="bf-companies">
+          <a class="bf-jump" href="#bf-chat-title" data-jump hidden>Go to your messages</a>
+          <div data-companies></div>
+          <div class="bf-empty" data-empty hidden>
+            <h3>Add a company to see who you know there.</h3>
+          </div>
+          <div class="bf-nobody" data-nobody-wrap hidden>
+            <h3 class="bf-nobody__title">No one yet</h3>
+            <p class="bf-nobody__body">Search LinkedIn for students and alumni there.</p>
+            <ul class="bf-nobody__list" data-nobody></ul>
+          </div>
+        </div>
+
+        <aside class="bf-chat" aria-labelledby="bf-chat-title">
+          <h2 id="bf-chat-title" class="bf-chat__title">Your messages <span data-chat-count>(0)</span></h2>
+          <p class="bf-chat__empty" data-chat-empty>Tap <b>Add to list</b> on anyone you'd like to talk to. Two or three is plenty.</p>
+
+          <label class="bf-label bf-chat__me" for="bf-myname">Your first name</label>
+          <input id="bf-myname" class="bf-input" type="text" autocomplete="given-name" placeholder="Your name" data-myname />
+
+          <ul class="bf-chat__list" data-chat-list></ul>
+
+          <details class="bf-chat__edit">
+            <summary>Change the wording</summary>
+            <textarea id="bf-template" class="bf-input bf-textarea" rows="8" aria-label="Message wording" data-template></textarea>
+            <p class="bf-hint">{'{first}'} is their first name, {'{company}'} is their company, {'{me}'} is your name.</p>
+            <button type="button" class="bf-link-btn bf-hint" data-reset-template>Reset to the original</button>
+          </details>
+          <p class="bf-hint">
+            What to ask on the call: <a href={questionsGuide}>Three better networking questions</a>
+          </p>
+        </aside>
+      </div>
+    </section>
+
+    <section class="bf-cta container">
+      <p>Nervous about the call? Ask in the SkillBridge Discord.</p>
+      <a class="bf-btn bf-btn--blue" href={siteConfig.discordUrl} target="_blank" rel="noopener noreferrer">Join the Discord</a>
+    </section>
+  </div>
+</BaseLayout>
+
+<script is:inline>
+  (function () {
+    var root = document.querySelector('.bf');
+    if (!root) return;
+    var $ = function (sel) { return root.querySelector(sel); };
+
+    var els = {
+      drop: $('[data-drop]'), file: $('[data-file]'), error: $('[data-error]'),
+      sample: $('[data-sample]'), clear: $('[data-clear]'), sampleBar: $('[data-sample-bar]'),
+      results: $('[data-results]'), summary: $('[data-summary]'),
+      form: $('[data-target-form]'), input: $('[data-target-input]'), targets: $('[data-targets]'),
+      suggestWrap: $('[data-suggest-wrap]'), suggest: $('[data-suggest]'),
+      companies: $('[data-companies]'), empty: $('[data-empty]'),
+      nobodyWrap: $('[data-nobody-wrap]'), nobody: $('[data-nobody]'),
+      chatList: $('[data-chat-list]'), chatEmpty: $('[data-chat-empty]'), chatCount: $('[data-chat-count]'),
+      myname: $('[data-myname]'), template: $('[data-template]'),
+    };
+
+    var DEFAULT_TEMPLATE =
+      "Hi {first}, I'm a high school student exploring careers, and I saw you're at {company}. " +
+      "Would you be open to a 15-minute call in the next few weeks? I'd love to hear how you got " +
+      "started and what you wish you'd known at my age.\n\nThanks either way,\n{me}";
+
+    var state = { people: [], targets: [], chat: [], isSample: false };
+
+    // ---- per-viewer conveniences (never the contact list itself) -------------
+    function load(key, fallback) {
+      try { var v = localStorage.getItem(key); return v == null ? fallback : JSON.parse(v); } catch (e) { return fallback; }
+    }
+    function save(key, val) { try { localStorage.setItem(key, JSON.stringify(val)); } catch (e) {} }
+
+    els.template.value = load('sb-bf-template', DEFAULT_TEMPLATE);
+    els.myname.value = load('sb-bf-name', '');
+    // Every keystroke in either box redraws the visible message, so what you see is
+    // exactly what Copy puts on the clipboard.
+    els.template.addEventListener('input', function () { save('sb-bf-template', els.template.value); updatePreviews(); });
+    els.myname.addEventListener('input', function () { save('sb-bf-name', els.myname.value); updatePreviews(); });
+    $('[data-reset-template]').addEventListener('click', function () {
+      els.template.value = DEFAULT_TEMPLATE;
+      save('sb-bf-template', DEFAULT_TEMPLATE);
+      updatePreviews();
+    });
+
+    // ---- parsing ---------------------------------------------------------------
+    function parseCSV(text) {
+      var rows = [], row = [], field = '', q = false;
+      for (var i = 0; i < text.length; i++) {
+        var c = text[i];
+        if (q) {
+          if (c === '"') { if (text[i + 1] === '"') { field += '"'; i++; } else q = false; }
+          else field += c;
+        } else if (c === '"') q = true;
+        else if (c === ',') { row.push(field); field = ''; }
+        else if (c === '\n' || c === '\r') {
+          if (c === '\r' && text[i + 1] === '\n') i++;
+          row.push(field); rows.push(row); row = []; field = '';
+        } else field += c;
+      }
+      if (field || row.length) { row.push(field); rows.push(row); }
+      return rows;
+    }
+
+    var MONTHS = { jan: 0, feb: 1, mar: 2, apr: 3, may: 4, jun: 5, jul: 6, aug: 7, sep: 8, oct: 9, nov: 10, dec: 11 };
+    function parseDate(s) {
+      var m = /(\d{1,2})\s+([A-Za-z]{3})[A-Za-z]*\s+(\d{4})/.exec(s || '');
+      if (m && MONTHS[m[2].toLowerCase()] != null) return new Date(+m[3], MONTHS[m[2].toLowerCase()], +m[1]);
+      var t = Date.parse(s);
+      return isNaN(t) ? null : new Date(t);
+    }
+
+    // LinkedIn's file opens with a few "Notes:" lines before the real header row.
+    function toPeople(text) {
+      var rows = parseCSV(text.replace(/^﻿/, ''));
+      var h = -1;
+      for (var i = 0; i < Math.min(rows.length, 15); i++) {
+        var joined = rows[i].join('|').toLowerCase();
+        if (joined.indexOf('first name') > -1 && joined.indexOf('company') > -1) { h = i; break; }
+      }
+      if (h < 0) return null;
+      var head = rows[h].map(function (x) { return x.trim().toLowerCase(); });
+      var col = function (name) { return head.indexOf(name); };
+      var cF = col('first name'), cL = col('last name'), cU = col('url'), cC = col('company'), cP = col('position'), cD = col('connected on');
+      var out = [];
+      for (var r = h + 1; r < rows.length; r++) {
+        var x = rows[r];
+        var first = (x[cF] || '').trim(), last = (x[cL] || '').trim();
+        if (!first && !last) continue;
+        out.push({
+          id: 'p' + r,
+          first: first, last: last,
+          url: cU > -1 ? (x[cU] || '').trim() : '',
+          company: cC > -1 ? (x[cC] || '').trim() : '',
+          position: cP > -1 ? (x[cP] || '').trim() : '',
+          connected: cD > -1 ? parseDate(x[cD]) : null,
+        });
+      }
+      return out;
+    }
+
+    // ---- matching + ranking ----------------------------------------------------
+    function norm(s) {
+      return (' ' + (s || '').toLowerCase().replace(/&/g, ' and ').replace(/[^a-z0-9]+/g, ' ') + ' ')
+        .replace(/ (the|inc|llc|ltd|corp|corporation|co|company|plc|group) /g, ' ')
+        .replace(/\s+/g, ' ');
+    }
+    function matches(target, company) {
+      var t = norm(target), c = norm(company);
+      return t.trim() && c.indexOf(t) > -1;
+    }
+
+    var YEAR = 365 * 864e5;
+    function reasons(p) {
+      var out = [], score = 0, pos = p.position.toLowerCase();
+      if (/\b(intern|student|co-?op|apprentice|fellow)\b/.test(pos)) { out.push('Intern or student'); score += 3; }
+      else if (/\b(recruit|talent|university relations|campus|early career)/.test(pos)) { out.push('Recruiter'); score += 2; }
+      if (p.connected && Date.now() - p.connected.getTime() < YEAR) { out.push('Connected this year'); score += 2; }
+      return { score: score, list: out };
+    }
+    function rankPeople(list) {
+      return list.map(function (p) { var r = reasons(p); return { p: p, score: r.score, why: r.list }; })
+        .sort(function (a, b) {
+          return b.score - a.score || ((b.p.connected ? +b.p.connected : 0) - (a.p.connected ? +a.p.connected : 0));
+        });
+    }
+
+    // ---- rendering helpers -----------------------------------------------------
+    function el(tag, cls, text) {
+      var n = document.createElement(tag);
+      if (cls) n.className = cls;
+      if (text != null) n.textContent = text;
+      return n;
+    }
+    function fullName(p) { return (p.first + ' ' + p.last).trim(); }
+    function safeUrl(u) { return /^https:\/\/([a-z]+\.)?linkedin\.com\//i.test(u) ? u : ''; }
+
+    // The signature mark: one bridge span per person you know there, up to five.
+    // Zero draws a broken, dashed span.
+    function spans(n) {
+      var k = Math.min(n, 5), w = Math.max(k, 1) * 22 + 4;
+      var ns = 'http://www.w3.org/2000/svg';
+      var svg = document.createElementNS(ns, 'svg');
+      svg.setAttribute('viewBox', '0 0 ' + w + ' 16');
+      svg.setAttribute('width', w); svg.setAttribute('height', 16);
+      svg.setAttribute('aria-hidden', 'true');
+      svg.setAttribute('class', 'bf-spans' + (n ? '' : ' bf-spans--none'));
+      var d = 'M2 14 H' + (w - 2);
+      for (var i = 0; i < Math.max(k, 1); i++) { var x = 2 + i * 22; d += ' M' + x + ' 14 Q' + (x + 11) + ' 0 ' + (x + 22) + ' 14'; }
+      var path = document.createElementNS(ns, 'path');
+      path.setAttribute('d', d);
+      svg.appendChild(path);
+      return svg;
+    }
+
+    function chip(label, onClick, opts) {
+      var li = el('li');
+      var b = el('button', 'bf-chip' + (opts && opts.removable ? ' bf-chip--on' : ''), label);
+      b.type = 'button';
+      if (opts && opts.aria) b.setAttribute('aria-label', opts.aria);
+      b.addEventListener('click', onClick);
+      li.appendChild(b);
+      return li;
+    }
+
+    // ---- render ------------------------------------------------------------------
+    function render() {
+      var people = state.people;
+      // Count by normalized name so "Nike" and "Nike, Inc." are one employer, shown
+      // under whichever spelling appears first in the file.
+      var companyCount = {}, label = {};
+      people.forEach(function (p) {
+        if (!p.company) return;
+        var k = norm(p.company).trim();
+        if (!label[k]) label[k] = p.company;
+        companyCount[label[k]] = (companyCount[label[k]] || 0) + 1;
+      });
+      var nCompanies = Object.keys(companyCount).length;
+      els.summary.textContent = people.length + ' connection' + (people.length === 1 ? '' : 's') +
+        ' across ' + nCompanies + ' compan' + (nCompanies === 1 ? 'y' : 'ies') + '.';
+
+      // targets
+      els.targets.replaceChildren();
+      state.targets.forEach(function (t) {
+        els.targets.appendChild(chip(t + ' ×', function () { removeTarget(t); }, { removable: true, aria: 'Remove ' + t }));
+      });
+
+      // suggestions: the biggest employers in their network that aren't targets yet
+      var top = Object.keys(companyCount)
+        .filter(function (c) { return !state.targets.some(function (t) { return matches(t, c); }); })
+        .sort(function (a, b) { return companyCount[b] - companyCount[a]; })
+        .slice(0, 8);
+      els.suggest.replaceChildren();
+      top.forEach(function (c) {
+        els.suggest.appendChild(chip('+ ' + c + ' (' + companyCount[c] + ')', function () { addTarget(c); }, { aria: 'Add ' + c }));
+      });
+      els.suggestWrap.hidden = !top.length;
+
+      // company groups
+      els.companies.replaceChildren();
+      els.nobody.replaceChildren();
+      var nobody = [];
+      state.targets.forEach(function (t) {
+        var found = people.filter(function (p) { return matches(t, p.company); });
+        if (!found.length) { nobody.push(t); return; }
+        // Show the company the way the file spells it ("Stripe", not a typed "stripe").
+        var exact = found.filter(function (p) { return norm(p.company) === norm(t); })[0];
+        els.companies.appendChild(companyBlock(exact ? exact.company : t, rankPeople(found)));
+      });
+      nobody.forEach(function (t) {
+        var li = el('li', 'bf-nobody__item');
+        li.appendChild(spans(0));
+        li.appendChild(el('span', 'bf-nobody__name', t));
+        var a = el('a', 'bf-nobody__search', 'Search LinkedIn for people there');
+        a.href = 'https://www.linkedin.com/search/results/people/?keywords=' + encodeURIComponent(t);
+        a.target = '_blank'; a.rel = 'noopener noreferrer';
+        li.appendChild(a);
+        els.nobody.appendChild(li);
+      });
+      els.nobodyWrap.hidden = !nobody.length;
+      els.empty.hidden = state.targets.length > 0;
+
+      renderChat();
+    }
+
+    function companyBlock(target, ranked) {
+      var art = el('article', 'bf-co');
+      var head = el('header', 'bf-co__head');
+      head.appendChild(spans(ranked.length));
+      var h = el('h3', 'bf-co__title', ranked.length + (ranked.length === 1 ? ' bridge into ' : ' bridges into ') + target);
+      head.appendChild(h);
+      art.appendChild(head);
+
+      var list = el('ol', 'bf-people');
+      ranked.forEach(function (r, i) {
+        var li = el('li', 'bf-person' + (i === 0 ? ' bf-person--first' : ''));
+        if (i >= 3) li.hidden = true;
+        var who = el('div', 'bf-person__who');
+        var name = el('p', 'bf-person__name');
+        var url = safeUrl(r.p.url);
+        if (url) {
+          var a = el('a', null, fullName(r.p)); a.href = url; a.target = '_blank'; a.rel = 'noopener noreferrer';
+          name.appendChild(a);
+        } else name.textContent = fullName(r.p);
+        if (i === 0) name.appendChild(el('span', 'bf-badge', 'Ask first'));
+        who.appendChild(name);
+        who.appendChild(el('p', 'bf-person__role', [r.p.position, r.p.company].filter(Boolean).join(', ')));
+        if (r.why.length) {
+          var why = el('ul', 'bf-person__why', null);
+          why.setAttribute('aria-label', 'Why this person');
+          r.why.forEach(function (w) { why.appendChild(el('li', 'bf-tag', w)); });
+          who.appendChild(why);
+        }
+        li.appendChild(who);
+        var inChat = state.chat.some(function (c) { return c.p.id === r.p.id; });
+        var add = el('button', 'bf-add' + (inChat ? ' is-added' : ''), inChat ? 'Added ✓' : 'Add to list');
+        add.type = 'button';
+        add.setAttribute('aria-pressed', inChat ? 'true' : 'false');
+        add.addEventListener('click', function () { toggleChat(r.p, target); });
+        li.appendChild(add);
+        list.appendChild(li);
+      });
+      art.appendChild(list);
+
+      if (ranked.length > 3) {
+        var more = el('button', 'bf-link-btn bf-co__more', 'Show ' + (ranked.length - 3) + ' more');
+        more.type = 'button';
+        more.addEventListener('click', function () {
+          list.querySelectorAll('li[hidden]').forEach(function (n) { n.hidden = false; });
+          more.remove();
+        });
+        art.appendChild(more);
+      }
+      return art;
+    }
+
+    function fill(p, target) {
+      var me = els.myname.value.trim() || '[your name]';
+      return els.template.value
+        .replace(/\{first\}/g, p.first || 'there')
+        .replace(/\{company\}/g, p.company || target)
+        .replace(/\{me\}/g, me);
+    }
+
+    var previews = [];
+    function updatePreviews() {
+      previews.forEach(function (v) { v.node.textContent = fill(v.c.p, v.c.target); });
+    }
+
+    function renderChat() {
+      els.chatList.replaceChildren();
+      previews = [];
+      els.chatEmpty.hidden = state.chat.length > 0;
+      els.chatCount.textContent = '(' + state.chat.length + ')';
+      var jump = root.querySelector('[data-jump]');
+      jump.hidden = !state.chat.length;
+      jump.textContent = 'Go to your messages (' + state.chat.length + ')';
+      // One message open at a time keeps the panel short; the newest add opens.
+      if (!state.chat.some(function (c) { return c.p.id === state.open; })) {
+        state.open = state.chat.length ? state.chat[state.chat.length - 1].p.id : null;
+      }
+      state.chat.forEach(function (c) {
+        var isOpen = c.p.id === state.open;
+        var li = el('li', 'bf-chat__item' + (isOpen ? ' is-open' : ''));
+        var top = el('div', 'bf-chat__row');
+        var info = el('button', 'bf-chat__toggle');
+        info.type = 'button';
+        info.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+        info.appendChild(el('span', 'bf-chat__name', fullName(c.p)));
+        info.appendChild(el('span', 'bf-chat__co', c.p.company || c.target));
+        info.addEventListener('click', function () { state.open = isOpen ? '' : c.p.id; renderChat(); });
+        top.appendChild(info);
+        var rm = el('button', 'bf-x', '×');
+        rm.type = 'button';
+        rm.setAttribute('aria-label', 'Remove ' + fullName(c.p) + ' from your list');
+        rm.addEventListener('click', function () { toggleChat(c.p, c.target); });
+        top.appendChild(rm);
+        li.appendChild(top);
+        if (!isOpen) { els.chatList.appendChild(li); return; }
+
+        var msg = el('p', 'bf-chat__msg', fill(c.p, c.target));
+        previews.push({ node: msg, c: c });
+        li.appendChild(msg);
+
+        var actions = el('div', 'bf-chat__actions');
+        var copy = el('button', 'bf-btn bf-btn--sm', 'Copy message');
+        copy.type = 'button';
+        copy.addEventListener('click', function () {
+          var text = fill(c.p, c.target);
+          var done = function () { copy.textContent = 'Copied'; setTimeout(function () { copy.textContent = 'Copy message'; }, 1600); };
+          if (navigator.clipboard) navigator.clipboard.writeText(text).then(done, function () { window.prompt('Copy this message:', text); });
+          else window.prompt('Copy this message:', text);
+        });
+        actions.appendChild(copy);
+        var url = safeUrl(c.p.url);
+        if (url) {
+          var open = el('a', 'bf-chat__open', 'Open profile');
+          open.href = url; open.target = '_blank'; open.rel = 'noopener noreferrer';
+          actions.appendChild(open);
+        }
+        li.appendChild(actions);
+        els.chatList.appendChild(li);
+      });
+    }
+
+    // ---- actions -------------------------------------------------------------------
+    function addTarget(t) {
+      t = t.trim();
+      if (!t || state.targets.some(function (x) { return norm(x) === norm(t); })) return;
+      state.targets.push(t);
+      if (!state.isSample) save('sb-bf-targets', state.targets);
+      render();
+    }
+    function removeTarget(t) {
+      state.targets = state.targets.filter(function (x) { return x !== t; });
+      if (!state.isSample) save('sb-bf-targets', state.targets);
+      render();
+    }
+    function toggleChat(p, target) {
+      var i = state.chat.findIndex(function (c) { return c.p.id === p.id; });
+      if (i > -1) state.chat.splice(i, 1);
+      else { state.chat.push({ p: p, target: target }); state.open = p.id; }
+      render();
+    }
+
+    function showError(msg) { els.error.textContent = msg; els.error.hidden = !msg; }
+
+    function start(people, isSample, targets) {
+      state.people = people;
+      state.isSample = isSample;
+      state.chat = [];
+      state.targets = targets;
+      els.sampleBar.hidden = !isSample;
+      els.results.hidden = false;
+      showError('');
+      render();
+      els.results.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    function readFile(f) {
+      if (!f) return;
+      if (/\.zip$/i.test(f.name)) {
+        showError("That's the zip LinkedIn emailed you. Open it first, then drop the Connections.csv file from inside.");
+        return;
+      }
+      var reader = new FileReader();
+      reader.onload = function () {
+        var people = toPeople(String(reader.result || ''));
+        if (!people) {
+          showError("This file doesn't look like LinkedIn's Connections.csv. It should have First Name, Last Name, and Company columns.");
+          return;
+        }
+        if (!people.length) {
+          showError('The file has no connections in it yet. Add a few people on LinkedIn, then export again.');
+          return;
+        }
+        start(people, false, load('sb-bf-targets', []));
+      };
+      reader.onerror = function () { showError("That file couldn't be read. Try choosing it again."); };
+      reader.readAsText(f);
+    }
+
+    els.file.addEventListener('change', function () { readFile(els.file.files[0]); els.file.value = ''; });
+    ['dragenter', 'dragover'].forEach(function (ev) {
+      els.drop.addEventListener(ev, function (e) { e.preventDefault(); els.drop.classList.add('is-over'); });
+    });
+    ['dragleave', 'drop'].forEach(function (ev) {
+      els.drop.addEventListener(ev, function (e) { e.preventDefault(); els.drop.classList.remove('is-over'); });
+    });
+    els.drop.addEventListener('drop', function (e) { readFile(e.dataTransfer.files[0]); });
+
+    els.form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      addTarget(els.input.value);
+      els.input.value = '';
+    });
+
+    els.clear.addEventListener('click', function () {
+      state = { people: [], targets: [], chat: [], isSample: false };
+      els.results.hidden = true;
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      els.file.click();
+    });
+
+    // ---- sample data: fictional people, so anyone can see it work ---------------
+    var SAMPLE = [
+      ['Maya', 'Patel', 'Software Engineering Intern', 'Google', '3 Jul 2026'],
+      ['Jordan', 'Reyes', 'Product Manager', 'Google', '12 Nov 2023'],
+      ['Chris', 'Okafor', 'University Recruiter', 'Google', '20 Jan 2026'],
+      ['Sam', 'Lee', 'Data Analyst', 'Google', '5 May 2022'],
+      ['Ava', 'Chen', 'Summer Intern', 'Stripe', '18 Jun 2026'],
+      ['Leo', 'Martins', 'Account Executive', 'Stripe', '2 Mar 2024'],
+      ['Priya', 'Shah', 'Marketing Coordinator', 'Nike', '9 Sep 2025'],
+      ['Noah', 'Kim', 'Retail Operations Manager', 'Nike, Inc.', '14 Feb 2021'],
+      ['Grace', 'Adeyemi', 'Audit Associate', 'Deloitte', '30 Aug 2025'],
+      ['Ethan', 'Brooks', 'Campus Recruiting Lead', 'Deloitte', '11 Dec 2024'],
+      ['Zoe', 'Nguyen', 'Consulting Analyst', 'Deloitte', '1 Apr 2026'],
+      ['Omar', 'Haddad', 'Nurse', "Dell Children's Medical Center", '22 Oct 2025'],
+      ['Lily', 'Brown', 'Student', 'University of Texas at Austin', '7 Aug 2026'],
+      ['Diego', 'Lopez', 'Research Assistant', 'University of Texas at Austin', '19 Mar 2025'],
+      ['Hannah', 'Wright', 'Teacher', 'Austin ISD', '4 Jan 2023'],
+      ['Isaac', 'Cohen', 'Software Engineer', 'Microsoft', '27 Jul 2025'],
+      ['Mia', 'Rossi', 'Program Manager Intern', 'Microsoft', '15 Jun 2026'],
+      ['Ben', 'Carter', 'Owner', 'Carter Landscaping', '8 May 2020'],
+      ['Sofia', 'Garcia', 'Financial Analyst', 'JPMorgan Chase & Co.', '2 Feb 2026'],
+      ['Ryan', "O'Neil", 'Store Associate', 'Target', '13 Sep 2024'],
+    ];
+    els.sample.addEventListener('click', function () {
+      var people = SAMPLE.map(function (r, i) {
+        return { id: 's' + i, first: r[0], last: r[1], url: '', position: r[2], company: r[3], connected: parseDate(r[4]) };
+      });
+      start(people, true, ['Google', 'Deloitte', 'Stripe', 'SpaceX']);
+    });
+  })();
+</script>
+
+<style is:global>
+  .bf { --bf-gap: clamp(1.25rem, 0.8rem + 2vw, 2.5rem); }
+
+  /* ---------- hero ---------- */
+  .bf-hero {
+    background: var(--light);
+    border-bottom: 1px solid var(--line);
+    padding-block: clamp(2.5rem, 1.5rem + 4vw, 4.75rem);
+  }
+  .bf-hero__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
+    gap: var(--bf-gap);
+    align-items: start;
+  }
+  .bf-kicker {
+    font-family: var(--font-head);
+    font-weight: 700;
+    color: var(--blue-ink);
+    margin-bottom: 0.6rem;
+  }
+  .bf-title { font-size: var(--step-4); max-width: 17ch; }
+  .bf-lead { font-size: var(--step-1); color: var(--ink-soft); margin-top: 1rem; max-width: 52ch; line-height: 1.55; }
+
+  .bf-drop {
+    margin-top: 1.75rem;
+    display: grid;
+    justify-items: center;
+    gap: 0.35rem;
+    padding: 2rem 1.25rem;
+    background: #fff;
+    border: 2px dashed var(--line-strong);
+    border-radius: var(--radius-lg);
+    text-align: center;
+    cursor: pointer;
+    transition: border-color 0.15s ease, background-color 0.15s ease;
+  }
+  .bf-drop:hover, .bf-drop.is-over { border-color: var(--blue); background: #f7fbff; }
+  .bf-drop:focus-within { outline: 3px solid var(--blue); outline-offset: 2px; }
+  .bf-drop__icon { width: 64px; color: var(--navy); margin-bottom: 0.35rem; }
+  .bf-drop__title { font-family: var(--font-head); font-weight: 700; font-size: var(--step-1); color: var(--navy); }
+  .bf-drop__sub { color: var(--ink-soft); }
+  .bf-drop__sub u { text-decoration-color: var(--blue); text-underline-offset: 3px; text-decoration-thickness: 2px; }
+
+  .bf-error {
+    margin-top: 0.75rem;
+    padding: 0.7rem 0.9rem;
+    border-left: 3px solid #b4232a;
+    background: #fff4f4;
+    color: #7a1d22;
+    border-radius: 0 8px 8px 0;
+  }
+  .bf-hero__row { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.5rem 1.25rem; margin-top: 1rem; }
+  .bf-privacy { color: var(--ink-faint); font-size: var(--step--1); }
+
+  .bf-link-btn {
+    font: inherit;
+    font-weight: 600;
+    color: var(--navy);
+    background: none;
+    border: 0;
+    padding: 0;
+    cursor: pointer;
+    text-decoration: underline;
+    text-decoration-color: var(--blue);
+    text-underline-offset: 3px;
+    text-decoration-thickness: 2px;
+  }
+  .bf-link-btn:hover { color: var(--blue-ink); }
+
+  .bf-steps {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    padding: clamp(1.25rem, 1rem + 1vw, 1.75rem);
+  }
+  .bf-steps__title { font-size: var(--step-1); margin-bottom: 0.9rem; }
+  .bf-steps__list { list-style: none; padding: 0; counter-reset: step; display: grid; gap: 0.75rem; }
+  .bf-steps__list li {
+    counter-increment: step;
+    position: relative;
+    padding-left: 2.2rem;
+    color: var(--ink-soft);
+    font-size: var(--step--1);
+    line-height: 1.5;
+  }
+  .bf-steps__list li::before {
+    content: counter(step);
+    position: absolute;
+    left: 0;
+    top: -0.05rem;
+    width: 1.55rem;
+    height: 1.55rem;
+    border-radius: 50%;
+    background: var(--navy);
+    color: #fff;
+    font-family: var(--font-head);
+    font-weight: 700;
+    font-size: 0.8rem;
+    display: grid;
+    place-items: center;
+  }
+  .bf-steps__list b, .bf-steps__note b { color: var(--ink); font-weight: 600; }
+  .bf-steps__note + .bf-steps__note { border-top: 0; padding-top: 0; margin-top: 0.6rem; }
+  .bf-steps__note {
+    margin-top: 1.1rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--line);
+    font-size: var(--step--1);
+    color: var(--ink-soft);
+  }
+
+  /* ---------- results ---------- */
+  .bf-results { padding-block: clamp(2.5rem, 1.5rem + 4vw, 4.5rem); scroll-margin-top: 80px; }
+  .bf-results[hidden] { display: none; }
+  .bf-sample-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem 1rem;
+    align-items: baseline;
+    padding: 0.7rem 1rem;
+    margin-bottom: 1.75rem;
+    background: var(--light);
+    border-radius: var(--radius);
+    color: var(--ink-soft);
+    font-size: var(--step--1);
+  }
+  .bf-sample-bar[hidden] { display: none; }
+
+  .bf-setup {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr);
+    gap: 1rem var(--bf-gap);
+    padding-bottom: 1.75rem;
+    border-bottom: 1px solid var(--line);
+  }
+  .bf-h2 { font-size: var(--step-3); }
+  .bf-summary { color: var(--ink-soft); margin-top: 0.5rem; }
+  .bf-suggest { grid-column: 2; }
+  .bf-suggest[hidden] { display: none; }
+  .bf-label { display: block; font-family: var(--font-head); font-weight: 700; font-size: var(--step--1); color: var(--navy); margin-bottom: 0.45rem; }
+
+  .bf-targets__field { display: flex; gap: 0.5rem; }
+  .bf-input {
+    width: 100%;
+    font: inherit;
+    color: var(--ink);
+    padding: 0.65rem 0.85rem;
+    border: 1.5px solid var(--line-strong);
+    border-radius: 10px;
+    background: #fff;
+    min-height: 44px;
+  }
+  .bf-input:focus { outline: none; border-color: var(--blue); box-shadow: 0 0 0 3px rgba(91, 184, 245, 0.3); }
+  .bf-textarea { resize: vertical; line-height: 1.5; font-size: var(--step--1); }
+
+  .bf-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-head);
+    font-weight: 700;
+    font-size: 0.95rem;
+    line-height: 1;
+    color: #fff;
+    background: var(--navy);
+    border: 0;
+    border-radius: var(--radius-pill);
+    min-height: 44px;
+    padding: 0 1.2rem;
+    cursor: pointer;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: background-color 0.15s ease;
+  }
+  .bf-btn:hover { background: var(--dark); color: #fff; }
+  .bf-btn--sm { min-height: 36px; font-size: 0.87rem; padding: 0 0.95rem; }
+  .bf-btn--blue { background: var(--blue); color: var(--dark); }
+  .bf-btn--blue:hover { background: #7cc6f7; color: var(--dark); }
+
+  .bf-chips { list-style: none; padding: 0; display: flex; flex-wrap: wrap; gap: 0.45rem; margin-top: 0.7rem; }
+  .bf-chip {
+    font: inherit;
+    font-size: var(--step--1);
+    font-weight: 500;
+    color: var(--navy);
+    background: #fff;
+    border: 1.5px solid var(--line-strong);
+    border-radius: var(--radius-pill);
+    padding: 0.35rem 0.8rem;
+    min-height: 36px;
+    cursor: pointer;
+  }
+  .bf-chip:hover { border-color: var(--blue); background: var(--light); }
+  .bf-chip--on { background: var(--navy); border-color: var(--navy); color: #fff; font-weight: 600; }
+  .bf-chip--on:hover { background: var(--dark); border-color: var(--dark); }
+
+  .bf-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr);
+    gap: var(--bf-gap);
+    align-items: start;
+    margin-top: 2rem;
+  }
+
+  /* company group: a plain list with the bridge spans as the one bold mark */
+  .bf-co { padding-block: 1.25rem 1.5rem; border-bottom: 1px solid var(--line); }
+  .bf-co:first-child { padding-top: 0; }
+  .bf-co__head { display: flex; align-items: center; gap: 0.85rem; flex-wrap: wrap; margin-bottom: 0.9rem; }
+  .bf-co__title { font-size: var(--step-2); }
+  .bf-co__more { margin-top: 0.75rem; }
+  .bf-spans { flex: none; }
+  .bf-spans path { fill: none; stroke: var(--blue); stroke-width: 2.5; stroke-linecap: round; }
+  .bf-spans--none path { stroke: var(--ink-faint); stroke-dasharray: 3 4; }
+
+  .bf-people { list-style: none; padding: 0; display: grid; gap: 0.6rem; }
+  .bf-person {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 1rem;
+    padding: 0.85rem 1rem;
+    border-radius: var(--radius);
+    border: 1px solid var(--line);
+    background: #fff;
+  }
+  .bf-person[hidden] { display: none; }
+  .bf-person--first { border-color: var(--blue); background: #f7fbff; }
+  .bf-person__name { font-family: var(--font-head); font-weight: 700; color: var(--navy); display: flex; align-items: center; flex-wrap: wrap; gap: 0.5rem; }
+  .bf-person__name a { text-decoration: none; }
+  .bf-person__name a:hover { text-decoration: underline; }
+  .bf-person__role { color: var(--ink-soft); font-size: var(--step--1); }
+  .bf-person__why { list-style: none; padding: 0; margin-top: 0.45rem; display: flex; flex-wrap: wrap; gap: 0.3rem; }
+  .bf-tag { font-size: var(--step--2); font-weight: 500; color: var(--ink-soft); background: var(--light); border-radius: 6px; padding: 0.12rem 0.5rem; }
+  .bf-badge {
+    font-family: var(--font-body);
+    font-size: var(--step--2);
+    font-weight: 600;
+    color: var(--blue-ink);
+    background: var(--light);
+    border-radius: var(--radius-pill);
+    padding: 0.1rem 0.55rem;
+  }
+
+  .bf-add {
+    flex: none;
+    font: inherit;
+    font-size: var(--step--1);
+    font-weight: 600;
+    color: var(--navy);
+    background: #fff;
+    border: 1.5px solid var(--line-strong);
+    border-radius: var(--radius-pill);
+    padding: 0.4rem 0.85rem;
+    min-height: 36px;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+  .bf-add:hover { border-color: var(--blue); }
+  .bf-add.is-added { background: var(--navy); border-color: var(--navy); color: #fff; }
+
+  .bf-empty { padding: 1.5rem; border: 1.5px dashed var(--line-strong); border-radius: var(--radius-lg); color: var(--ink-soft); }
+  .bf-empty[hidden] { display: none; }
+  .bf-empty h3 { margin-bottom: 0.3rem; }
+
+  .bf-nobody { margin-top: 2rem; }
+  .bf-nobody[hidden] { display: none; }
+  .bf-nobody__title { font-size: var(--step-2); }
+  .bf-nobody__body { color: var(--ink-soft); margin-top: 0.4rem; max-width: 60ch; }
+  .bf-nobody__list { list-style: none; padding: 0; margin-top: 1rem; display: grid; gap: 0.5rem; }
+  .bf-nobody__item { display: flex; align-items: center; flex-wrap: wrap; gap: 0.4rem 0.85rem; padding: 0.6rem 0; border-bottom: 1px solid var(--line); }
+  .bf-nobody__name { font-family: var(--font-head); font-weight: 700; color: var(--navy); }
+  .bf-nobody__search { margin-left: auto; font-size: var(--step--1); font-weight: 600; }
+
+  /* coffee-chat panel */
+  .bf-chat {
+    position: sticky;
+    top: 90px;
+    background: var(--light);
+    border-radius: var(--radius-lg);
+    padding: clamp(1.1rem, 0.9rem + 1vw, 1.6rem);
+  }
+  .bf-chat__title { font-size: var(--step-1); }
+  .bf-chat__title span { color: var(--ink-faint); font-weight: 600; }
+  .bf-chat__empty { color: var(--ink-soft); font-size: var(--step--1); margin-top: 0.4rem; }
+  .bf-chat__empty[hidden] { display: none; }
+  .bf-chat__list { list-style: none; padding: 0; display: grid; gap: 0.5rem; margin-top: 0.8rem; }
+  .bf-chat__item { background: #fff; border-radius: var(--radius); padding: 0.65rem 0.85rem; border: 1.5px solid transparent; }
+  .bf-chat__item.is-open { border-color: var(--blue); padding-bottom: 0.9rem; }
+  .bf-chat__row { display: flex; justify-content: space-between; align-items: center; gap: 0.5rem; }
+  .bf-chat__toggle { flex: 1; display: grid; text-align: left; font: inherit; background: none; border: 0; padding: 0.1rem 0; cursor: pointer; }
+  .bf-chat__name { font-family: var(--font-head); font-weight: 700; color: var(--navy); line-height: 1.3; }
+  .bf-chat__co { font-size: var(--step--1); color: var(--ink-soft); }
+  .bf-chat__msg {
+    margin-top: 0.6rem;
+    padding: 0.75rem 0.85rem;
+    background: var(--light);
+    border-radius: 10px;
+    font-size: var(--step--1);
+    line-height: 1.55;
+    color: var(--ink);
+    white-space: pre-wrap;
+  }
+  .bf-chat__me { margin-top: 1rem; }
+  .bf-chat__actions { display: flex; align-items: center; gap: 0.9rem; margin-top: 0.6rem; }
+  .bf-chat__open { font-size: var(--step--1); font-weight: 600; }
+  .bf-x {
+    flex: none;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: 0;
+    background: transparent;
+    color: var(--ink-faint);
+    font-size: 1.3rem;
+    line-height: 1;
+    cursor: pointer;
+  }
+  .bf-x:hover { background: var(--light); color: var(--navy); }
+  .bf-chat__edit { margin-top: 1rem; padding-top: 0.9rem; border-top: 1px solid var(--line-strong); }
+  .bf-chat__edit summary { cursor: pointer; font-family: var(--font-head); font-weight: 700; font-size: var(--step--1); color: var(--navy); }
+  .bf-chat__edit[open] summary { margin-bottom: 0.6rem; }
+  .bf-chat__edit + .bf-hint { margin-top: 0.9rem; }
+  .bf-hint { font-size: var(--step--2); color: var(--ink-faint); margin-top: 0.45rem; }
+
+  .bf-cta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem 2rem;
+    padding-block: 2rem clamp(2.5rem, 1.5rem + 3vw, 4rem);
+    color: var(--ink-soft);
+  }
+  .bf-cta p { max-width: 60ch; }
+
+  /* Phones only: the chat panel stacks below every company, so give a way down. */
+  .bf-jump { display: none; }
+  .bf-chat__title { scroll-margin-top: 90px; }
+
+  @media (max-width: 900px) {
+    .bf-jump:not([hidden]) {
+      display: block;
+      position: sticky;
+      top: 78px;
+      z-index: 5;
+      margin-bottom: 1rem;
+      padding: 0.65rem 1rem;
+      background: var(--navy);
+      color: #fff;
+      border-radius: var(--radius-pill);
+      font-family: var(--font-head);
+      font-weight: 700;
+      font-size: var(--step--1);
+      text-align: center;
+      text-decoration: none;
+      box-shadow: var(--shadow-md);
+    }
+    .bf-hero__grid, .bf-setup, .bf-layout { grid-template-columns: 1fr; }
+    .bf-suggest { grid-column: auto; }
+    .bf-chat { position: static; }
+  }
+  @media (max-width: 560px) {
+    .bf-person { flex-direction: column; gap: 0.6rem; }
+    .bf-nobody__search { margin-left: 0; width: 100%; }
+  }
+</style>
