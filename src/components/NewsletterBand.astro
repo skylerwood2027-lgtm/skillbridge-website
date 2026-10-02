@@ -172,8 +172,11 @@ const { as: Tag = 'h2' } = Astro.props;
     min-width: 0;
     background: #fff;
     border-radius: var(--radius-lg);
-    padding: 0.5rem 0.5rem 0.15rem;
+    padding: 0.5rem;
     box-shadow: 0 18px 40px rgba(0, 0, 0, 0.22);
+    /* The iframe draws its own rounded card; without clipping, its corner pokes
+       past ours at the bottom edge and reads as a chipped corner. */
+    overflow: hidden;
   }
   .brief__noscript {
     color: rgba(235, 244, 252, 0.9);
