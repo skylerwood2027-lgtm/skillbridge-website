@@ -21,7 +21,6 @@ import toolkit from '../../data/toolkit.json';
       <div class="guide__hero-motif motif" aria-hidden="true"><img src="/brand/icon.webp" alt="" /></div>
       <div class="container container-narrow">
         <a class="guide__back" href="/resources">← All free resources</a>
-        <p class="eyebrow reveal">The free toolkit</p>
         <h1 class="guide__title reveal" data-delay="1">{toolkit.title}</h1>
         <p class="guide__tagline lead reveal" data-delay="2">{toolkit.tagline}</p>
         <div class="guide__actions reveal" data-delay="3">
@@ -52,7 +51,7 @@ import toolkit from '../../data/toolkit.json';
 
       <p class="guide__outro reveal">
         {toolkit.outroLead} {toolkit.outroDiscord}
-        <a href="/resources">See the other free guides →</a>
+        <a href="/resources">See the other free guides</a>
       </p>
     </div>
   </article>
@@ -87,7 +86,7 @@ import toolkit from '../../data/toolkit.json';
     text-decoration-color: var(--line-strong);
   }
   .guide__back:hover { color: var(--navy); text-decoration-color: var(--blue); }
-  .guide__title { margin-top: 0.4rem; font-size: var(--step-4); }
+  .guide__title { font-size: var(--step-4); }
   .guide__tagline { margin-top: 1rem; max-width: 60ch; }
   .guide__actions {
     display: flex;

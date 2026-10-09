@@ -20,8 +20,14 @@ branding for the site live here.
 
 - Palette: navy `#1B3A6B` · blue `#5BB8F5` · light `#EBF4FC` · dark `#0D1B2A`.
   Tokens live in `src/styles/global.css`.
-- Fonts: **Manrope** (headings), **Inter** (body). Inter is a deliberate choice —
-  **do NOT swap it.**
+- Fonts: **Manrope** (headings), **Atkinson Hyperlegible Next** (body, via
+  `@fontsource-variable/atkinson-hyperlegible-next`). Skyler approved replacing
+  Inter on 2026-10-09 because Inter + Manrope read as the stock AI-site pairing.
+  **Do not switch the body back to Inter.** (The PDF and OG scripts still embed
+  Inter from `@fontsource/inter`; that is separate.)
+- No tracked ALL-CAPS kicker/eyebrow labels above headings — the heading speaks
+  for itself. Small labels (categories, "Use this when", file facts) are
+  sentence case. Lists are hairline rows, not boxed tiles or pill chips.
 - Logo: real assets only. Sources in `brand-src/`, processed into `public/brand/`
   by `npm run logos`:
   - `wordmark.png` (navy) → light backgrounds · `wordmark-white.png` → dark

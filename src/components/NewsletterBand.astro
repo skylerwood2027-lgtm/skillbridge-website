@@ -164,12 +164,11 @@ const { as: Tag = 'h2' } = Astro.props;
     }
   }
 
+  /* The newsletter's name, set as a name (sentence case), not a tracked caps kicker. */
   .brief__kicker {
     font-family: var(--font-head);
     font-weight: 700;
-    font-size: 0.74rem;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
+    font-size: var(--step-0);
     color: var(--blue);
   }
   .brief__title {

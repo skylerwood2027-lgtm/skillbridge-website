@@ -1,7 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Button from '../components/Button.astro';
-import siteConfig from '../config.json';
 import catalog from '../data/resources.json';
 
 // Only groups that actually contain a published resource become tiles, so every
@@ -22,7 +21,6 @@ const findGroups = catalog.groups
     <div class="hero__motif motif" aria-hidden="true"><img src="/brand/icon.webp" alt="" /></div>
     <div class="container hero__inner">
       <div class="hero__copy">
-        <p class="eyebrow reveal">By two high schoolers · {siteConfig.handle}</p>
         <h1 class="hero__title reveal" data-delay="1">The professional skills school skips.</h1>
         <p class="hero__sub lead reveal" data-delay="2">
           Two high schoolers teaching the stuff that actually moves you forward — LinkedIn, resumes,
@@ -32,11 +30,7 @@ const findGroups = catalog.groups
           <Button href="#newsletter" variant="primary" size="lg">Join the Brief</Button>
           <Button href="/resources" variant="outline" size="lg">Browse free resources</Button>
         </div>
-        <ul class="hero__chips reveal" data-delay="4">
-          <li>100% free</li>
-          <li>No credit card</li>
-          <li>Checked June 2026</li>
-        </ul>
+        <p class="hero__note reveal" data-delay="4">No credit card. Last checked June 2026.</p>
       </div>
 
       <div class="hero__media reveal" data-delay="2">
@@ -82,30 +76,33 @@ const findGroups = catalog.groups
   <section class="section find">
     <div class="container">
       <div class="find__head">
-        <p class="eyebrow reveal">What you'll find here</p>
         <h2 class="reveal" data-delay="1">A short, honest list of what actually works.</h2>
         <p class="lead reveal" data-delay="2">
           No fluff, no gatekeeping. The same free tools and moves we used to land internships and
           build a network, sorted so you can start today.
         </p>
       </div>
-      <ul class="find__grid">
+      {/* Rows, not tiles: the same hairline list and navy deck line the resource
+          library uses, so the home page and the library read as one system. */}
+      <ul class="find__list">
         {
           findGroups.map((g: any, i: number) => (
-            <li class="find__item reveal" data-delay={String((i % 3) + 1)}>
-              <a class="find__card" href={`/resources?group=${g.id}`}>
+            <li class="reveal" data-delay={String((i % 3) + 1)}>
+              <a class="find__row" href={`/resources?group=${g.id}`}>
                 <span class="find__label">{g.label}</span>
                 <span class="find__count">
                   {g.count} {g.count === 1 ? 'resource' : 'resources'}
                 </span>
-                <span class="find__go" aria-hidden="true">→</span>
+                <svg class="find__go" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M5 12h14" /><path d="m13 6 6 6-6 6" />
+                </svg>
               </a>
             </li>
           ))
         }
       </ul>
       <div class="find__more reveal">
-        <Button href="/resources" variant="outline">Browse free resources →</Button>
+        <Button href="/resources" variant="outline">Browse all free resources</Button>
       </div>
     </div>
   </section>
@@ -149,30 +146,15 @@ const findGroups = catalog.groups
     align-items: center;
   }
   .hero__copy { max-width: 620px; }
-  .hero__title { margin-top: 0.7rem; font-size: clamp(2.4rem, 1.55rem + 3vw, 3.6rem); }
+  .hero__title { font-size: clamp(2.4rem, 1.55rem + 3vw, 3.6rem); }
   .hero__sub { margin-top: 1.2rem; max-width: 46ch; }
   .hero__cta { display: flex; flex-wrap: wrap; gap: 0.8rem; margin-top: 1.9rem; }
-  .hero__chips { display: flex; flex-wrap: wrap; gap: 0.5rem 0.6rem; margin-top: 1.5rem; }
-  .hero__chips li {
-    font-family: var(--font-head);
-    font-weight: 600;
-    font-size: 0.85rem;
-    color: var(--navy);
-    background: #fff;
-    border: 1px solid var(--line);
-    border-radius: var(--radius-pill);
-    padding: 0.4rem 0.85rem;
-    display: inline-flex;
-    align-items: center;
-    gap: 0.45rem;
-    box-shadow: var(--shadow-sm);
-  }
-  .hero__chips li::before {
-    content: '';
-    width: 7px;
-    height: 7px;
-    border-radius: 50%;
-    background: var(--blue);
+  /* The "100% free" part already lives in the subhead; this line only adds what
+     it doesn't say, as plain text instead of three badge pills. */
+  .hero__note {
+    margin-top: 1.35rem;
+    font-size: var(--step--1);
+    color: var(--ink-soft);
   }
 
   .hero__media { display: flex; justify-content: center; }
@@ -219,64 +201,64 @@ const findGroups = catalog.groups
 
   /* ---------------- FIND ---------------- */
   .find__head { max-width: 660px; }
-  .find__head h2 { margin-top: 0.4rem; }
   .find__head .lead { margin-top: 0.85rem; }
-  .find__grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(225px, 1fr));
-    gap: 1rem;
-    margin-top: 2.2rem;
+  .find__list {
+    max-width: 660px;
+    margin-top: 2rem;
+    border-bottom: 1px solid var(--line);
   }
-  .find__item { display: flex; }
-  /* A real link into the filtered library, so the hover state is now describing
-     something that actually happens when you click. */
-  .find__card {
+  /* A real link into the filtered library. Hover and keyboard focus both draw the
+     navy deck line under the row, the same cue the library rows use. */
+  .find__row {
+    position: relative;
     display: flex;
     align-items: center;
-    gap: 0.9rem;
-    width: 100%;
-    min-height: 44px;
-    background: #fff;
-    border: 1px solid var(--line);
-    border-radius: var(--radius);
-    padding: 1.05rem 1.2rem;
-    box-shadow: var(--shadow-sm);
+    gap: 1rem;
+    min-height: 64px;
+    padding: 0.9rem 0.1rem;
+    border-top: 1px solid var(--line);
     text-decoration: none;
-    transition: transform 0.16s var(--ease), box-shadow 0.16s ease, border-color 0.16s ease;
   }
-  /* Focus gets the same response as hover — a keyboard user should see the tile
-     react, not just the ring. */
-  .find__card:hover,
-  .find__card:focus-visible {
-    transform: translateY(-3px);
-    box-shadow: var(--shadow-md);
-    border-color: var(--blue);
+  .find__row::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -1px;
+    height: 2px;
+    background: var(--navy);
+    transform: scaleX(0);
+    transform-origin: left center;
+    transition: transform 0.26s var(--ease);
   }
+  .find__row:hover::after,
+  .find__row:focus-visible::after { transform: scaleX(1); }
   .find__label {
     font-family: var(--font-head);
     font-weight: 700;
+    font-size: var(--step-1);
     color: var(--navy);
     line-height: 1.22;
+    transition: color 0.16s var(--ease);
   }
+  .find__row:hover .find__label { color: var(--blue-ink); }
   .find__count {
     margin-left: auto;
     font-family: var(--font-head);
     font-weight: 700;
-    font-size: 0.76rem;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
+    font-size: var(--step--1);
     color: var(--ink-faint);
     white-space: nowrap;
   }
   .find__go {
     flex: none;
-    font-family: var(--font-head);
-    font-weight: 800;
+    width: 18px;
+    height: 18px;
     color: var(--blue-ink);
     transition: transform 0.16s var(--ease);
   }
-  .find__card:hover .find__go,
-  .find__card:focus-visible .find__go { transform: translateX(3px); }
+  .find__row:hover .find__go,
+  .find__row:focus-visible .find__go { transform: translateX(3px); }
   .find__more { margin-top: 1.8rem; }
 
   /* ---------------- CTA BAND ---------------- */

@@ -218,9 +218,7 @@ const count = published.length;
     display: block;
     font-family: var(--font-head);
     font-weight: 700;
-    font-size: 0.7rem;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
+    font-size: var(--step--1);
     color: var(--blue-ink);
     margin-bottom: 0.45rem;
   }
@@ -274,39 +272,56 @@ const count = published.length;
   }
   .lib__deck.is-none { background: var(--line-strong); }
 
+  /* Spacing lives in each tab's own padding (so even "All" is a 36px+ target);
+     the negative margin keeps the first label flush with the column edge. */
   .lib__filters {
+    --tab-pad: 0.6rem;
     display: flex;
     flex-wrap: wrap;
-    gap: 0.5rem;
-    margin-top: 0.95rem;
+    gap: 0 0.2rem;
+    margin-top: 0.45rem;
+    margin-inline: calc(var(--tab-pad) * -1);
   }
-  /* Filters read as filters: outlined, small, never a filled primary button. */
+  /* Filters speak the header nav's language: plain text, and the one in use gets
+     the same blue underline the current page gets up top. No pills, no boxes. */
   .lib__chip {
+    position: relative;
     font-family: var(--font-head);
-    font-weight: 700;
-    font-size: 0.88rem;
+    font-weight: 600;
+    font-size: 0.97rem;
     line-height: 1;
     color: var(--ink-soft);
     background: transparent;
-    border: 1.5px solid var(--line-strong);
-    border-radius: var(--radius-pill);
-    padding: 0 0.95rem;
+    border: 0;
+    padding: 0 var(--tab-pad);
     min-height: 44px;
     cursor: pointer;
     display: inline-flex;
     align-items: center;
-    transition:
-      color 0.16s var(--ease),
-      border-color 0.16s var(--ease),
-      background-color 0.16s var(--ease),
-      transform 0.12s var(--ease);
+    transition: color 0.16s var(--ease);
   }
-  .lib__chip:hover { color: var(--navy); border-color: var(--blue); }
-  .lib__chip:active { transform: translateY(1px); }
-  .lib__chip[aria-pressed='true'] {
-    color: var(--navy);
-    border-color: var(--navy);
-    background: var(--surface-tint);
+  /* Drawn 2px under the text rather than at the 44px box edge, so it sits where
+     the nav underline sits. */
+  .lib__chip::after {
+    content: '';
+    position: absolute;
+    left: var(--tab-pad);
+    right: var(--tab-pad);
+    bottom: 8px;
+    height: 2px;
+    background: var(--blue);
+    transform: scaleX(0);
+    transform-origin: left center;
+    transition: transform 0.22s var(--ease);
+  }
+  .lib__chip:hover { color: var(--navy); }
+  .lib__chip[aria-pressed='true'] { color: var(--navy); }
+  .lib__chip[aria-pressed='true']::after { transform: scaleX(1); }
+  /* Phones: keep all four on one line where they fit, instead of stranding the
+     last one on a row by itself. */
+  @media (max-width: 30rem) {
+    .lib__filters { --tab-pad: 0.45rem; gap: 0 0.05rem; }
+    .lib__chip { font-size: 0.92rem; }
   }
 
   .lib__count {

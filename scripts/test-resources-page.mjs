@@ -110,22 +110,24 @@ for (const path of ['/', '/resources', '/resources/skillbridge-starter-toolkit']
 }
 
 // ------------------------------------------------- 6. no false affordances
-console.log('\n[6] homepage tiles are real links');
+// The homepage categories were tiles until 2026-10-09; they are now list rows
+// (.find__row inside .find__list). The guarantees below are unchanged.
+console.log('\n[6] homepage category rows are real links');
 await page.goto(BASE + '/', { waitUntil: 'networkidle' });
-const tiles = await page.$$eval('.find__card', (els) => els.map((e) => ({ tag: e.tagName, href: e.getAttribute('href') })));
-check('every tile is an anchor with an href', tiles.length > 0 && tiles.every((t) => t.tag === 'A' && t.href));
+const tiles = await page.$$eval('.find__row', (els) => els.map((e) => ({ tag: e.tagName, href: e.getAttribute('href') })));
+check('every category row is an anchor with an href', tiles.length > 0 && tiles.every((t) => t.tag === 'A' && t.href));
 for (const t of tiles) {
   const res = await page.request.get(BASE + t.href.split('?')[0]);
-  check(`tile destination resolves: ${t.href}`, res.status() === 200, `HTTP ${res.status()}`);
+  check(`row destination resolves: ${t.href}`, res.status() === 200, `HTTP ${res.status()}`);
 }
 check('the non-interactive wrapper carries no card styling of its own',
-  await page.$$eval('.find__item', (els) => els.every((e) => {
+  await page.$$eval('.find__list > li', (els) => els.length > 0 && els.every((e) => {
     const cs = getComputedStyle(e);
     return cs.boxShadow === 'none' && cs.borderTopWidth === '0px' &&
       (cs.backgroundColor === 'rgba(0, 0, 0, 0)' || cs.backgroundColor === 'transparent');
   })));
-check('nothing outside an anchor gets the interactive tile treatment',
-  await page.$$eval('.find__card', (els) => els.every((e) => e.tagName === 'A')));
+check('nothing outside an anchor gets the interactive row treatment',
+  await page.$$eval('.find__row', (els) => els.every((e) => e.tagName === 'A')));
 
 // -------------------------------------------------- 7. backward compatibility
 console.log('\n[7] old URLs still work');
