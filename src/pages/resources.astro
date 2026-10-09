@@ -71,6 +71,9 @@ const count = published.length;
     </header>
 
     <div class="lib__col">
+      {/* Gives the row titles (h3) a parent section heading for screen-reader
+          heading navigation; the search and filters already say it visually. */}
+      <h2 class="visually-hidden">All resources</h2>
       <div class="lib__list" data-list>
         {resources.map((r: any, i: number) => <ResourceRow resource={r} index={i} />)}
       </div>
@@ -242,11 +245,16 @@ const count = published.length;
     border-radius: 12px;
     padding: 0.85rem 1rem 0.85rem 2.9rem;
     min-height: 52px;
-    transition: background-color 0.18s var(--ease), border-color 0.18s var(--ease);
+    transition: background-color 0.18s var(--ease), border-color 0.18s var(--ease), box-shadow 0.18s var(--ease);
   }
   .lib__input::placeholder { color: var(--ink-faint); }
   .lib__input:hover { background: #e3f0fc; }
-  .lib__input:focus { outline: none; background: #fff; border-color: var(--blue); }
+  .lib__input:focus {
+    outline: none;
+    background: #fff;
+    border-color: var(--navy);
+    box-shadow: 0 0 0 4px rgba(91, 184, 245, 0.35);
+  }
 
   .lib__span {
     height: 2px;

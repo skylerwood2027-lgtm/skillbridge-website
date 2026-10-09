@@ -18,7 +18,7 @@ import toolkit from '../../data/toolkit.json';
 <BaseLayout title={`${toolkit.title} · SkillBridge`} description={toolkit.tagline}>
   <article class="guide">
     <header class="guide__hero">
-      <div class="guide__hero-motif motif" aria-hidden="true"><img src="/brand/icon.png" alt="" /></div>
+      <div class="guide__hero-motif motif" aria-hidden="true"><img src="/brand/icon.webp" alt="" /></div>
       <div class="container container-narrow">
         <a class="guide__back" href="/resources">← All free resources</a>
         <p class="eyebrow reveal">The free toolkit</p>
@@ -77,7 +77,9 @@ import toolkit from '../../data/toolkit.json';
   }
   .guide__back {
     display: inline-block;
-    margin-bottom: 1.1rem;
+    /* ~44px tall hit area without moving anything: padding out, margin back in */
+    padding-block: 0.7rem;
+    margin-block: -0.7rem calc(1.1rem - 0.7rem);
     font-family: var(--font-head);
     font-weight: 700;
     font-size: 0.88rem;

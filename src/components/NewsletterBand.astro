@@ -34,13 +34,7 @@ const { as: Tag = 'h2' } = Astro.props;
 
     <div class="brief__form">
       <div class="brief__stage" data-embed-stage>
-        <div class="brief__embed" data-embed>
-          <script
-            is:inline
-            async
-            src="https://subscribe-forms.beehiiv.com/v3/loader.js"
-            data-beehiiv-form={FORM_ID}
-          ></script>
+        <div class="brief__embed" data-embed data-beehiiv-id={FORM_ID}>
           <noscript>
             <p class="brief__noscript">
               Turn on JavaScript to subscribe here, or find the signup form on
@@ -107,11 +101,40 @@ const { as: Tag = 'h2' } = Astro.props;
     });
     mo.observe(embed, { childList: true, subtree: true, attributes: true, attributeFilter: ['style'] });
     fit();
+
+    // The Beehiiv loader pulls ~800 KB of script, and this band sits at the bottom
+    // of every page. Inject it only when the band is about to scroll into view.
+    // The loader finds its own <script data-beehiiv-form> at run time and inserts
+    // the iframe right after it, so a late-added tag behaves like the static one.
+    const loadForm = () => {
+      if (embed.querySelector('script[data-beehiiv-form]')) return;
+      const s = document.createElement('script');
+      s.src = 'https://subscribe-forms.beehiiv.com/v3/loader.js';
+      s.async = true;
+      s.dataset.beehiivForm = embed.dataset.beehiivId ?? '';
+      embed.prepend(s);
+    };
+    if ('IntersectionObserver' in window) {
+      const io = new IntersectionObserver(
+        (entries) => {
+          if (entries.some((e) => e.isIntersecting)) {
+            io.disconnect();
+            loadForm();
+          }
+        },
+        { rootMargin: '500px 0px' },
+      );
+      // Watch the whole band: the stage itself is 0px tall until the form arrives.
+      io.observe(stage.closest('section') ?? stage);
+    } else {
+      loadForm();
+    }
   }
 </script>
 
 <style>
   .brief {
+    --focus-ring: var(--blue);
     background: var(--navy);
     color: #fff;
     position: relative;

@@ -615,7 +615,7 @@ const questionsGuide = '/resources/three-better-networking-questions.pdf';
     transition: border-color 0.15s ease, background-color 0.15s ease;
   }
   .bf-drop:hover, .bf-drop.is-over { border-color: var(--blue); background: #f7fbff; }
-  .bf-drop:focus-within { outline: 3px solid var(--blue); outline-offset: 2px; }
+  .bf-drop:focus-within { outline: 3px solid var(--focus-ring); outline-offset: 2px; }
   .bf-drop__icon { width: 64px; color: var(--navy); margin-bottom: 0.35rem; }
   .bf-drop__title { font-family: var(--font-head); font-weight: 700; font-size: var(--step-1); color: var(--navy); }
   .bf-drop__sub { color: var(--ink-soft); }
@@ -624,10 +624,10 @@ const questionsGuide = '/resources/three-better-networking-questions.pdf';
   .bf-error {
     margin-top: 0.75rem;
     padding: 0.7rem 0.9rem;
-    border-left: 3px solid #b4232a;
-    background: #fff4f4;
-    color: #7a1d22;
-    border-radius: 0 8px 8px 0;
+    border: 1px solid var(--danger-line);
+    background: var(--danger-tint);
+    color: var(--danger-ink);
+    border-radius: 8px;
   }
   .bf-hero__row { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.5rem 1.25rem; margin-top: 1rem; }
   .bf-privacy { color: var(--ink-faint); font-size: var(--step--1); }
@@ -730,7 +730,7 @@ const questionsGuide = '/resources/three-better-networking-questions.pdf';
     background: #fff;
     min-height: 44px;
   }
-  .bf-input:focus { outline: none; border-color: var(--blue); box-shadow: 0 0 0 3px rgba(91, 184, 245, 0.3); }
+  .bf-input:focus { outline: none; border-color: var(--navy); box-shadow: 0 0 0 4px rgba(91, 184, 245, 0.35); }
   .bf-textarea { resize: vertical; line-height: 1.5; font-size: var(--step--1); }
 
   .bf-btn {

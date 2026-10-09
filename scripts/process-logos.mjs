@@ -7,6 +7,13 @@
 //   icon.png            book+bridge icon, light-blue bg keyed to transparent
 //   favicon-32.png      icon on a white tile (browser tab)
 //   apple-touch-icon.png 180px icon on a white tile
+//
+// Web copies (what the pages load; the PNGs above stay full-size for the PDF and
+// OG-card scripts, which need the resolution):
+//   wordmark-web.png / wordmark-white-web.png  120px tall (~3x the 34px header logo),
+//                                       128-colour palette PNG (~6 KB; beat WebP 4x here)
+//   icon.webp                            512px, lossy — it is only ever a faint motif
+//   skyler-640.webp / david-640.webp     640w portraits for srcset (1000w stays the source)
 
 import sharp from 'sharp';
 import { mkdir } from 'node:fs/promises';
@@ -72,4 +79,18 @@ async function tile(size, pad, name) {
 await tile(32, 3, 'favicon-32.png');
 await tile(180, 24, 'apple-touch-icon.png');
 
-console.log(`logos processed -> wordmark ${wm.width}x${wm.height}, white wordmark, icon 512, favicons 32/180`);
+// 5) WEB COPIES — sized for how the site actually draws them
+const WEB_LOGO_H = 120;
+const webLogoPng = { palette: true, colours: 128, effort: 10, dither: 1 };
+await sharp(join(OUT, 'wordmark.png')).resize({ height: WEB_LOGO_H }).png(webLogoPng).toFile(join(OUT, 'wordmark-web.png'));
+await sharp(join(OUT, 'wordmark-white.png')).resize({ height: WEB_LOGO_H }).png(webLogoPng).toFile(join(OUT, 'wordmark-white-web.png'));
+await sharp(iconBuf).webp({ quality: 80, alphaQuality: 90 }).toFile(join(OUT, 'icon.webp'));
+for (const name of ['skyler', 'david']) {
+  await sharp(join(OUT, `${name}.webp`)).resize({ width: 640 }).webp({ quality: 82 }).toFile(join(OUT, `${name}-640.webp`));
+}
+const webLogo = await sharp(join(OUT, 'wordmark-web.png')).metadata();
+
+console.log(
+  `logos processed -> wordmark ${wm.width}x${wm.height}, white wordmark, icon 512, favicons 32/180, ` +
+    `web wordmark ${webLogo.width}x${webLogo.height}, icon.webp, 640w portraits`,
+);

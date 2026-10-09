@@ -9,11 +9,13 @@ interface Props {
   class?: string;
 }
 const { variant = 'navy', href = '/', class: className = '' } = Astro.props;
-const src = variant === 'white' ? '/brand/wordmark-white.png' : '/brand/wordmark.png';
+// The *-web.png copies are sized for the 34px header (~3x); the full-size PNGs are
+// kept for the PDF and OG-card scripts.
+const src = variant === 'white' ? '/brand/wordmark-white-web.png' : '/brand/wordmark-web.png';
 ---
 
 <a class:list={['logo', className]} href={href} aria-label="SkillBridge — home">
-  <img class="logo__img" src={src} alt="SkillBridge" width="831" height="171" decoding="async" />
+  <img class="logo__img" src={src} alt="SkillBridge" width="583" height="120" decoding="async" />
 </a>
 
 <style>

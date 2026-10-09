@@ -7,6 +7,8 @@ const { title, items } = Astro.props;
 ---
 
 <section class="traps reveal" aria-labelledby="traps-title">
+  {/* The warning is carried by the tinted panel and the title (whose own ⚠️ comes
+      verbatim from toolkit.json), not by a side stripe. */}
   <h2 id="traps-title" class="traps__title">{title}</h2>
   <ul class="traps__items">
     {items.map((item) => <li class="traps__item">{item.body}</li>)}
@@ -15,9 +17,8 @@ const { title, items } = Astro.props;
 
 <style>
   .traps {
-    background: #fff6f4;
-    border: 1px solid #f3cfc6;
-    border-left: 5px solid #d9543b;
+    background: var(--caution-tint);
+    border: 1px solid var(--caution-line);
     border-radius: var(--radius-lg);
     padding: clamp(1.25rem, 1rem + 1.5vw, 1.9rem);
     margin-top: 1.25rem;
@@ -25,7 +26,7 @@ const { title, items } = Astro.props;
   .traps__title {
     font-size: var(--step-1);
     font-weight: 800;
-    color: #a8341d;
+    color: var(--caution-ink);
     margin: 0 0 0.6rem;
   }
   .traps__items {
@@ -46,6 +47,6 @@ const { title, items } = Astro.props;
     width: 6px;
     height: 6px;
     border-radius: 50%;
-    background: #d9543b;
+    background: var(--caution);
   }
 </style>

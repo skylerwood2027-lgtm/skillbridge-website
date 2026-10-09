@@ -19,7 +19,7 @@ const findGroups = catalog.groups
 <BaseLayout title="SkillBridge — the professional skills school skips">
   <!-- HERO -->
   <section class="hero">
-    <div class="hero__motif motif" aria-hidden="true"><img src="/brand/icon.png" alt="" /></div>
+    <div class="hero__motif motif" aria-hidden="true"><img src="/brand/icon.webp" alt="" /></div>
     <div class="container hero__inner">
       <div class="hero__copy">
         <p class="eyebrow reveal">By two high schoolers · {siteConfig.handle}</p>
@@ -46,6 +46,8 @@ const findGroups = catalog.groups
               <img
                 class="portrait__img"
                 src="/brand/skyler.webp"
+                srcset="/brand/skyler-640.webp 640w, /brand/skyler.webp 1000w"
+                sizes="(max-width: 860px) 48vw, 255px"
                 alt="Skyler, co-founder of SkillBridge"
                 width="1000"
                 height="1250"
@@ -60,6 +62,8 @@ const findGroups = catalog.groups
               <img
                 class="portrait__img"
                 src="/brand/david.webp"
+                srcset="/brand/david-640.webp 640w, /brand/david.webp 1000w"
+                sizes="(max-width: 860px) 48vw, 255px"
                 alt="David, co-founder of SkillBridge"
                 width="1000"
                 height="1250"
@@ -108,7 +112,7 @@ const findGroups = catalog.groups
 
   <!-- CLOSING CTA BAND -->
   <section class="cta-band">
-    <div class="cta-band__motif motif" aria-hidden="true"><img src="/brand/icon.png" alt="" /></div>
+    <div class="cta-band__motif motif" aria-hidden="true"><img src="/brand/icon.webp" alt="" loading="lazy" decoding="async" /></div>
     <div class="container cta-band__inner">
       <h2 class="cta-band__title reveal">Start with the free resources.</h2>
       <p class="cta-band__sub reveal" data-delay="1">Eight guides and templates. Nothing costs money.</p>

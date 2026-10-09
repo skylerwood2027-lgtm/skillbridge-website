@@ -14,12 +14,26 @@
   /* derived / functional */
   --ink: #0d1b2a;          /* primary body text */
   --ink-soft: #475a78;     /* secondary text, AA on white */
-  --ink-faint: #6b7d97;    /* tertiary / captions */
+  --ink-faint: #5f6f87;    /* tertiary / captions — 5.1:1 on white, 4.6:1 on light */
   --line: #d9e8f8;         /* hairline borders */
   --line-strong: #c3dcf3;
   --surface: #ffffff;
   --surface-tint: #ebf4fc; /* light brand wash */
   --blue-ink: #155a8a;     /* deeper blue that passes AA as text on white */
+
+  /* keyboard focus: navy on light surfaces (11:1); dark sections override this to
+     --blue, because a blue ring on white is only 2.2:1 */
+  --focus-ring: var(--navy);
+
+  /* status colors (functional, not brand) */
+  --danger: #b4232a;
+  --danger-ink: #7a1d22;
+  --danger-tint: #fff4f4;
+  --danger-line: #f1c9cb;
+  --caution: #d9543b;
+  --caution-ink: #a8341d;
+  --caution-tint: #fff6f4;
+  --caution-line: #f3cfc6;
 
   /* type */
   --font-head: 'Manrope', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
@@ -94,7 +108,7 @@ img, svg { display: block; max-width: 100%; }
 ul { list-style: none; padding: 0; }
 strong, b { font-weight: 700; }
 
-:focus-visible { outline: 3px solid var(--blue); outline-offset: 2px; border-radius: 5px; }
+:focus-visible { outline: 3px solid var(--focus-ring); outline-offset: 2px; border-radius: 5px; }
 
 /* utilities */
 .container {
