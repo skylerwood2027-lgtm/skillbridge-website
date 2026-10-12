@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Button from '../components/Button.astro';
+import HeroBridge from '../components/HeroBridge.astro';
 import catalog from '../data/resources.json';
 
 // Only groups that actually contain a published resource become tiles, so every
@@ -17,23 +18,24 @@ const findGroups = catalog.groups
 
 <BaseLayout title="SkillBridge — the professional skills school skips">
   <!-- HERO -->
+  {/* Hero motion is choreographed in src/scripts/motion.ts (data-hero marks the
+      pieces). The bridge replaces the old faint logo motif: same image, now built. */}
   <section class="hero">
-    <div class="hero__motif motif" aria-hidden="true"><img src="/brand/icon.webp" alt="" /></div>
     <div class="container hero__inner">
       <div class="hero__copy">
-        <h1 class="hero__title reveal" data-delay="1">The professional skills school skips.</h1>
-        <p class="hero__sub lead reveal" data-delay="2">
+        <h1 class="hero__title" data-hero="title">The professional skills school skips.</h1>
+        <p class="hero__sub lead" data-hero="fade">
           Two high schoolers teaching the stuff that actually moves you forward — LinkedIn, resumes,
           interviewing, networking, and college prep. Free, no paywalls.
         </p>
-        <div class="hero__cta reveal" data-delay="3">
+        <div class="hero__cta" data-hero="fade">
           <Button href="#newsletter" variant="primary" size="lg">Join the Brief</Button>
           <Button href="/resources" variant="outline" size="lg">Browse free resources</Button>
         </div>
-        <p class="hero__note reveal" data-delay="4">No credit card. Last checked June 2026.</p>
+        <p class="hero__note" data-hero="fade">No credit card. Last checked June 2026.</p>
       </div>
 
-      <div class="hero__media reveal" data-delay="2">
+      <div class="hero__media">
         <div class="hero__portraits">
           <figure class="portrait">
             <div class="portrait__frame">
@@ -69,6 +71,9 @@ const findGroups = catalog.groups
           </figure>
         </div>
       </div>
+    </div>
+    <div class="container hero__bridge">
+      <HeroBridge />
     </div>
   </section>
 
@@ -129,16 +134,11 @@ const findGroups = catalog.groups
     overflow: hidden;
     background: radial-gradient(120% 95% at 88% -20%, var(--light) 0%, #fff 62%);
     border-bottom: 1px solid var(--line);
-    padding-block: clamp(2.75rem, 2rem + 5vw, 5.5rem) clamp(2.5rem, 2rem + 4vw, 4.5rem);
+    padding-top: clamp(2.75rem, 2rem + 5vw, 5.5rem);
   }
-  .hero__motif {
-    top: -8%;
-    right: -5%;
-    width: min(46vw, 540px);
-    aspect-ratio: 1;
-    opacity: 0.06;
-    transform: rotate(-6deg);
-  }
+  /* The bridge is the hero's horizon: its deck sits just above the section's
+     bottom border, under both the copy and the founders. */
+  .hero__bridge { margin-top: clamp(1.25rem, 0.5rem + 3vw, 2.5rem); }
   .hero__inner {
     display: grid;
     grid-template-columns: 1.15fr 0.85fr;

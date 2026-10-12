@@ -59,7 +59,28 @@ branding for the site live here.
 
 ## Motion
 
-Restrained only. Scroll-reveal via the `.reveal` class (IntersectionObserver in
-`BaseLayout.astro`), hover micro-interactions, and the bridge motif. Always
-reduced-motion safe. If an effect feels gimmicky, cut it (the Chanel rule:
-before leaving the house, remove one accessory).
+Engine: **GSAP** (choreography, ScrollTrigger, SplitText, DrawSVG) + **Lenis**
+(smooth scroll), all in `src/scripts/motion.ts`. Skyler asked for this on
+2026-10-11. Effects are adapted from **Magic UI** and **React Bits** but rebuilt
+on GSAP. Don't add React, Tailwind, or `motion/react` to use those libraries.
+Pull a component's source from their registries (`magicui.design/r/<name>.json`,
+`reactbits.dev/r/<Name>-TS-CSS.json`, or the `magicui` MCP) and port it.
+
+- One orchestrated moment: the home hero. The headline rises word by word,
+  the founders blur-fade in, then the logo's suspension bridge
+  (`HeroBridge.astro`) is built (deck, towers, cable, hangers) and one light
+  crosses it. On phones the bridge builds when it scrolls into view.
+- Supporting motion stays quiet: `main h2` line-mask reveals, portrait and
+  band-motif scroll drift, the primary-button hover sheen, and the
+  scroll-progress hairline on long pages only.
+- Other content keeps the `.reveal` IntersectionObserver fade.
+- Reduced motion or no JS = the finished static page. `motion-pending` hides
+  the hero only until GSAP sets start states, with a 2.5s failsafe.
+- Programmatic scrolling goes through `window.lenis.scrollTo` when it exists
+  (see `bridge-finder.astro`). Native smooth scrolling fights Lenis.
+- Skyler's laptop has Windows "Animation effects" off, so Chrome reports reduced
+  motion and his own browser shows the static site. To review motion, force it
+  in Puppeteer with `emulateMediaFeatures([{ name: 'prefers-reduced-motion',
+  value: 'no-preference' }])`. `npm run shots` stays reduced-motion on purpose.
+- If an effect feels gimmicky, cut it (the Chanel rule: before leaving the
+  house, remove one accessory).

@@ -1,0 +1,89 @@
+---
+// The suspension bridge from the logo, redrawn as line art so it can be built
+// stroke by stroke on page load (src/scripts/motion.ts). Without JS or with
+// reduced motion it simply renders finished.
+//
+// Geometry lives in a 1200 x 200 box: deck at y=172, towers at x=300 and x=900,
+// one main span and two side spans. Hangers are computed from the same quadratic
+// curves the cables use, so every hanger meets its cable exactly.
+const W = 1200;
+const DECK = 172;
+const TOP = 30;
+const T1 = 300;
+const T2 = 900;
+
+type Pt = [number, number];
+const quad = (p0: Pt, p1: Pt, p2: Pt, t: number): Pt => [
+  (1 - t) ** 2 * p0[0] + 2 * (1 - t) * t * p1[0] + t ** 2 * p2[0],
+  (1 - t) ** 2 * p0[1] + 2 * (1 - t) * t * p1[1] + t ** 2 * p2[1],
+];
+// Control x sits at the midpoint of each span, so x is linear in t and a hanger
+// at x can be placed with t = (x - x0) / (x2 - x0).
+const spans: [Pt, Pt, Pt][] = [
+  [[0, 160], [T1 / 2, 150], [T1, TOP + 4]],
+  [[T1, TOP + 4], [(T1 + T2) / 2, 262], [T2, TOP + 4]],
+  [[T2, TOP + 4], [(T2 + W) / 2, 150], [W, 160]],
+];
+const cablePath = spans
+  .map(([a, b, c], i) => `${i === 0 ? `M${a[0]},${a[1]} ` : ''}Q${b[0]},${b[1]} ${c[0]},${c[1]}`)
+  .join(' ');
+
+const hangers: { x: number; y: number }[] = [];
+for (const [a, b, c] of spans) {
+  for (let x = a[0] + 40; x < c[0] - 10; x += 40) {
+    if (Math.abs(x - T1) < 12 || Math.abs(x - T2) < 12) continue;
+    const [, y] = quad(a, b, c, (x - a[0]) / (c[0] - a[0]));
+    if (DECK - y > 6) hangers.push({ x, y: Math.round(y * 10) / 10 });
+  }
+}
+---
+
+<div class="bridge" aria-hidden="true">
+  <svg viewBox={`0 0 ${W} 200`} preserveAspectRatio="xMidYMax slice" focusable="false">
+    <g class="bridge__hangers">
+      {hangers.map((h) => <line class="bridge__hanger" x1={h.x} y1={h.y} x2={h.x} y2={DECK} />)}
+    </g>
+    <path class="bridge__cable" d={cablePath} />
+    <g class="bridge__towers">
+      <path class="bridge__tower" d={`M${T1},${DECK} V${TOP} M${T1 - 9},${TOP} H${T1 + 9}`} />
+      <path class="bridge__tower" d={`M${T2},${DECK} V${TOP} M${T2 - 9},${TOP} H${T2 + 9}`} />
+    </g>
+    <line class="bridge__deck" x1="0" y1={DECK} x2={W} y2={DECK} />
+    <line class="bridge__pulse" x1="0" y1={DECK} x2={W} y2={DECK} />
+  </svg>
+</div>
+
+<style>
+  .bridge {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 6 / 1;
+    min-height: 92px;
+    pointer-events: none;
+  }
+  .bridge svg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+  }
+  .bridge line,
+  .bridge path {
+    fill: none;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .bridge__deck { stroke: var(--navy); stroke-width: 3; opacity: 0.85; }
+  .bridge__tower { stroke: var(--navy); stroke-width: 5; opacity: 0.85; }
+  .bridge__cable { stroke: var(--blue-ink); stroke-width: 2.25; opacity: 0.7; }
+  .bridge__hanger { stroke: var(--blue); stroke-width: 1.6; opacity: 0.75; }
+  /* The one light that crosses the finished bridge. Hidden until the build
+     sequence runs it, so a static render never shows a stray dash. */
+  .bridge__pulse {
+    stroke: var(--blue);
+    stroke-width: 4;
+    opacity: 0;
+    filter: drop-shadow(0 0 6px rgba(91, 184, 245, 0.9));
+  }
+</style>

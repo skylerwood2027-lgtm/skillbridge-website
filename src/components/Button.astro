@@ -63,6 +63,24 @@ if (download) attrs.download = '';
 
   .btn--primary { background: var(--navy); color: #fff; box-shadow: var(--shadow-sm); }
   .btn--primary:hover { background: var(--dark); color: #fff; box-shadow: var(--shadow-md); }
+  /* Magic UI shiny-button: one sheen crosses the button when you point at it.
+     It answers the hover, so it never runs on its own. */
+  .btn--primary { position: relative; overflow: hidden; isolation: isolate; }
+  .btn--primary::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: linear-gradient(-75deg, transparent 35%, rgba(91, 184, 245, 0.45) 50%, transparent 65%);
+    background-size: 250% 100%;
+    background-position: 120% 0;
+    pointer-events: none;
+  }
+  .btn--primary:hover::after,
+  .btn--primary:focus-visible::after {
+    background-position: -20% 0;
+    transition: background-position 0.75s var(--ease);
+  }
 
   .btn--discord { background: var(--blue); color: var(--dark); box-shadow: var(--shadow-sm); }
   .btn--discord:hover { background: #7cc6f7; color: var(--dark); box-shadow: var(--shadow-md); }

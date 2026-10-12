@@ -497,7 +497,8 @@ const questionsGuide = '/resources/three-better-networking-questions.pdf';
       els.results.hidden = false;
       showError('');
       render();
-      els.results.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      if (window.lenis) window.lenis.scrollTo(els.results, { offset: -80 });
+      else els.results.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
 
     function readFile(f) {
@@ -541,7 +542,8 @@ const questionsGuide = '/resources/three-better-networking-questions.pdf';
     els.clear.addEventListener('click', function () {
       state = { people: [], targets: [], chat: [], isSample: false };
       els.results.hidden = true;
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      if (window.lenis) window.lenis.scrollTo(0);
+      else window.scrollTo({ top: 0, behavior: 'smooth' });
       els.file.click();
     });
 

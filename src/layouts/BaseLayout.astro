@@ -32,7 +32,19 @@ const ogImage = new URL('/og.png', Astro.site ?? siteConfig.siteUrl).href;
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <script is:inline>document.documentElement.classList.add('js');</script>
+    <script is:inline>
+      (function () {
+        var r = document.documentElement;
+        r.classList.add('js');
+        // Motion only when the visitor hasn't asked for less. motion-pending hides
+        // the hero for the instant before GSAP sets its start states, and the
+        // timeout guarantees it can never stay hidden if the script fails.
+        if (window.matchMedia && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+          r.classList.add('motion', 'motion-pending');
+          setTimeout(function () { r.classList.remove('motion-pending'); }, 2500);
+        }
+      })();
+    </script>
     <link rel="icon" type="image/png" sizes="32x32" href="/brand/favicon-32.png" />
     <link rel="apple-touch-icon" href="/brand/apple-touch-icon.png" />
     <title>{title}</title>
@@ -53,6 +65,7 @@ const ogImage = new URL('/og.png', Astro.site ?? siteConfig.siteUrl).href;
   </head>
   <body>
     <a href="#main" class="skip-link">Skip to content</a>
+    <div class="scroll-progress" aria-hidden="true" hidden></div>
     <SiteHeader />
     <main id="main"><slot /></main>
     {newsletter && <NewsletterBand />}
@@ -78,6 +91,9 @@ const ogImage = new URL('/og.png', Astro.site ?? siteConfig.siteUrl).href;
         );
         els.forEach(function (el) { io.observe(el); });
       })();
+    </script>
+    <script>
+      import '../scripts/motion.ts';
     </script>
   </body>
 </html>

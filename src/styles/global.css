@@ -175,6 +175,29 @@ html.js .reveal[data-delay='3'] { transition-delay: 0.21s; }
 html.js .reveal[data-delay='4'] { transition-delay: 0.28s; }
 html.js .reveal[data-delay='5'] { transition-delay: 0.35s; }
 
+/* -------- motion: GSAP + Lenis (src/scripts/motion.ts) -------------------- */
+/* Hero pieces wait, invisible, for the instant before GSAP sets their start
+   states. Only ever set when motion is allowed, and cleared by a timeout. */
+html.motion-pending .hero [data-hero],
+html.motion-pending .hero .portrait,
+html.motion-pending .hero .bridge { visibility: hidden; }
+
+/* SplitText line masks: descenders must not be clipped by the mask. */
+html.motion h1 > div,
+html.motion h2 > div { padding-bottom: 0.08em; margin-bottom: -0.08em; }
+
+.scroll-progress {
+  position: fixed;
+  inset: 0 0 auto 0;
+  z-index: 60;
+  height: 2px;
+  background: var(--blue);
+  transform: scaleX(0);
+  transform-origin: left center;
+  pointer-events: none;
+}
+.scroll-progress[hidden] { display: none; }
+
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *, *::before, *::after {
