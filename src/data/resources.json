@@ -64,7 +64,7 @@
       "status": "published",
       "title": "Free Career Tools We Recommend",
       "description": "A short list of free websites and tools for getting experience, building skills, finding internships, and fixing your resume — plus the ones that look free and are not.",
-      "outcome": "You get the shortlist we actually use, in one file.",
+      "outcome": "You get the shortlist we use, all in one file.",
       "category": "toolkit",
       "format": "pdf",
       "action": {
@@ -107,7 +107,7 @@
       "status": "published",
       "title": "Build a Resume Project Without Job Experience",
       "description": "Pick a small project you can finish in two weeks, prove what you did, and turn it into a resume bullet.",
-      "outcome": "You leave with one project chosen, scoped, and written down.",
+      "outcome": "You leave with one small project picked and written down.",
       "category": "experience",
       "format": "pdf",
       "action": {
@@ -349,7 +349,7 @@
       "status": "published",
       "title": "Build Your First LinkedIn Profile",
       "description": "Set up your photo, headline, About section, and experience so your profile does not look empty.",
-      "outcome": "You leave with a profile someone would actually reply to.",
+      "outcome": "You leave with a profile someone would want to reply to.",
       "category": "networking",
       "format": "google-slides",
       "action": {

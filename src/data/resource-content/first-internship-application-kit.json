@@ -3,15 +3,15 @@
   "title": "First Internship Application Kit",
   "subtitle": "The three things to check before you submit, plus the message to send after — none of which require pretending you have experience you do not have.",
   "fromVideo": "From the video: before your first internship application",
-  "intro": "The application puts your name in the pile. A project and a real conversation give them something to remember. Work through the checklist, then send the message. Nothing here asks you to invent a title or a job you did not have.",
+  "intro": "The application puts your name in the pile. A project and a good conversation give them something to remember. Work through the checklist, then send the message. Nothing here asks you to invent a title or a job you did not have.",
   "entries": [
     {
       "n": "1",
       "title": "Your resume names a project, not just classes",
       "lead": "Open your resume. Find one line that is a thing you finished, not a course you took.",
       "items": [
-        "If it is there: make sure it has a verb, a result, and a link or a number.",
-        "If it is not there: you are not ready to submit yet. Pick one project and finish it first.",
+        "If it is there, make sure it has a verb, a result, and a link or a number.",
+        "If it is not there, you are not ready to submit yet. Pick one project and finish it first.",
         "Do not write \"intern\" for something that was not an internship. Write \"project\" and say what you did."
       ],
       "note": "Classes show you attended. A project shows you finished something without being graded on it.",
@@ -24,7 +24,7 @@
     {
       "n": "2",
       "title": "Your LinkedIn headline says what you are building toward",
-      "lead": "Not only your school name. Someone reading it should know what you are into in under three seconds.",
+      "lead": "Go beyond your school name. Someone reading it should know what you are into in under three seconds.",
       "items": [
         "Weak: \"Student at [High School]\" — true, but it says nothing.",
         "Better: what you are building toward plus where you are. Example: \"High school student building skills in marketing and analytics.\"",
@@ -39,7 +39,7 @@
     {
       "n": "3",
       "title": "After you apply, find one person and ask a specific question",
-      "lead": "One person. One question. Not a referral request.",
+      "lead": "Pick one person and ask one question, without asking for a referral.",
       "items": [
         "Do not open by asking for a referral, a job, or an internship. That ends the conversation before it starts.",
         "Ask about their work. Example: \"What skill mattered most when you started in this role?\"",
@@ -52,8 +52,8 @@
       "title": "The follow-up",
       "lead": "What to do with the answer, and when to let it go.",
       "items": [
-        "If they reply: thank them, and say what you did with the answer. \"I looked into the tool you mentioned and built X with it\" is the strongest second message you can send.",
-        "If they do not reply within a week: leave it. One message, no chasing. People are busy and it is not about you.",
+        "If they reply, thank them and say what you did with the answer. \"I looked into the tool you mentioned and built X with it\" is the strongest second message you can send.",
+        "If they do not reply within a week, leave it. One message, no chasing. People are busy and it is not about you.",
         "Either way, write down the tool, skill, or problem they mentioned and go learn it."
       ]
     }

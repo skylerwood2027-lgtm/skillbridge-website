@@ -1,14 +1,14 @@
 {
   "slug": "no-experience-project-starter",
   "title": "The No-Experience Project Starter",
-  "subtitle": "One real project you can choose this week, finish, prove, and put on your resume — without calling yourself an intern.",
-  "fromVideo": "From the video: three real ways to create experience",
+  "subtitle": "One project you can choose this week, finish, prove, and put on your resume without calling yourself an intern.",
+  "fromVideo": "From the video: three ways to create experience",
   "intro": "Nobody will hire you for experience you do not have yet. So make the experience instead. Pick ONE of the three routes below, finish it, and write it down honestly. One finished project beats four half-started ones.",
   "entries": [
     {
       "n": "1",
       "title": "Choose one route",
-      "lead": "Pick the one you can actually finish in the next two weeks. Not all three.",
+      "lead": "Pick the one you can finish in the next two weeks, not all three.",
       "items": [
         "A job simulation. Forage runs free simulations where you do tasks modeled on real company work and earn a certificate at the end. Their terms require you to be 16 or older.",
         "A project inside a club or volunteer group you are already in. Run an event, build a sign-up system, or manage a campaign — something with a start, an end, and a result.",
@@ -24,7 +24,7 @@
     {
       "n": "2",
       "title": "Make it small enough to finish",
-      "lead": "Write one sentence before you start: what will exist at the end that does not exist now?",
+      "lead": "Before you start, write one sentence describing what will exist at the end that does not exist now.",
       "items": [
         "Name the finished thing: a signup form, a five-page site, a two-page brief, a chart with a conclusion, a certificate.",
         "Give it a deadline you would be embarrassed to miss. Two weeks is usually right.",
@@ -38,7 +38,7 @@
       "items": [
         "A link — the live page, the public doc, the form, the folder, the repo.",
         "A file — the certificate PDF, the exported design, the brief.",
-        "A number you actually know — people signed up, items sold, hours run, dollars raised, weeks it ran. If you do not know the number, leave it out."
+        "A number you know for sure — people signed up, items sold, hours run, dollars raised, weeks it ran. If you do not know the number, leave it out."
       ],
       "note": "Screenshot it too. Links break, clubs graduate, and pages get taken down."
     },
