@@ -1,6 +1,6 @@
 {
   "_readme": "CANONICAL SkillBridge resource catalog — the single source of truth. The website renders it, `npm run resources:check` validates it, and `npm run resources:sync` writes a verified snapshot into the content repo for Creator Flow CTA validation. Never hand-edit the snapshot. Only `status: published` items render in production.",
-  "updated": "2026-11-04",
+  "updated": "2026-11-05",
   "formats": {
     "pdf": {
       "label": "PDF",
@@ -247,7 +247,7 @@
         "content": "src/data/resource-content/paid-summer-programs-2027.json",
         "generator": "scripts/build-resource-pdfs.mjs"
       },
-      "lastVerified": "2026-11-04",
+      "lastVerified": "2026-11-05",
       "cta": {
         "keyword": "SUMMER",
         "videoJobId": "20261103-paid-summer-internships"
@@ -387,6 +387,47 @@
         "resume bullets",
         "reference",
         "work log"
+      ]
+    },
+    {
+      "id": "experience-to-college-applications",
+      "slug": "experience-to-college-applications",
+      "status": "published",
+      "title": "How Your Experience Carries Over to College Applications",
+      "description": "How your resume, your experiences, and the people you meet can help when you apply to college.",
+      "outcome": "You leave with a simple way to save your activities, stories, and contacts for college applications.",
+      "category": "applying",
+      "format": "pdf",
+      "action": {
+        "label": "Download college guide",
+        "url": "/resources/experience-to-college-applications.pdf",
+        "download": true
+      },
+      "friction": [
+        "no-account"
+      ],
+      "source": {
+        "kind": "skillbridge-original",
+        "content": "src/data/resource-content/experience-to-college-applications.json",
+        "generator": "scripts/build-resource-pdfs.mjs",
+        "note": "Written from Skyler's three points on 2026-11-05. Common App, University of California, and UT Austin facts checked on their official sites the same day. Recheck when the 2027-28 applications open."
+      },
+      "lastVerified": "2026-11-05",
+      "cta": null,
+      "featured": false,
+      "latest": true,
+      "group": "apply",
+      "bestFor": "You are thinking about college",
+      "searchTerms": [
+        "college",
+        "college prep",
+        "college applications",
+        "Common App",
+        "activities list",
+        "college essay",
+        "personal statement",
+        "UC application",
+        "talk to college students"
       ]
     },
     {
@@ -548,9 +589,9 @@
     {
       "id": "blank-resume-google-doc",
       "slug": "blank-resume-google-doc",
-      "status": "blocked",
+      "status": "published",
       "title": "Blank resume template (Google Doc)",
-      "description": "The editable Google Doc version of the resume template from the Discord resume drop.",
+      "description": "The same resume template as a Google Doc, so you can edit it in your browser.",
       "outcome": "An editable copy students can make in one click.",
       "category": "resume",
       "format": "google-doc",
@@ -566,20 +607,25 @@
       ],
       "source": {
         "kind": "skillbridge-google-doc",
-        "note": "Anonymous access confirmed 2026-07-28 and the OBJECTIVE section has already been removed from the live doc."
+        "note": "Anonymous access confirmed 2026-11-05. The contact line now reads 'City, State' and there is no Objective section."
       },
-      "lastVerified": "2026-07-28",
-      "blockedReason": "The contact line still reads 'City, State Zipcode', which prompts students to publish a ZIP code. The approved editorial rule is city and state only. One edit to that line in the Doc clears this and the item can flip to published — no code change needed.",
+      "lastVerified": "2026-11-05",
       "cta": null,
       "featured": false,
       "latest": false,
       "group": "apply",
-      "bestFor": "Editing in Google Docs"
+      "bestFor": "Editing in Google Docs",
+      "searchTerms": [
+        "resume template",
+        "google docs resume",
+        "blank resume",
+        "first resume"
+      ]
     },
     {
       "id": "example-resume-google-doc",
       "slug": "example-resume-google-doc",
-      "status": "blocked",
+      "status": "published",
       "title": "Filled-in example resume (Google Doc)",
       "description": "A completed sample resume showing what each section looks like when it is filled in.",
       "outcome": "A worked example to compare your own draft against.",
@@ -595,15 +641,20 @@
       ],
       "source": {
         "kind": "skillbridge-google-doc",
-        "note": "Anonymous access confirmed 2026-07-28. The person in it is fictional, so there is no real-privacy problem."
+        "note": "Anonymous access confirmed 2026-11-05. The person in it is fictional, so there is no real-privacy problem. The ZIP code and Objective section were removed on 2026-11-05. David owns this Doc."
       },
-      "lastVerified": "2026-07-28",
-      "blockedReason": "The example prints a ZIP code ('Los Angeles, California 90024') and leads with a generic objective — the two things the approved editorial rule tells students not to do. Publishing it would teach the opposite of the template. Two edits to the Doc clear it.",
+      "lastVerified": "2026-11-05",
       "cta": null,
       "featured": false,
       "latest": false,
       "group": "apply",
-      "bestFor": "Seeing a finished example"
+      "bestFor": "Seeing a finished example",
+      "searchTerms": [
+        "resume example",
+        "sample resume",
+        "filled in resume",
+        "what a resume looks like"
+      ]
     },
     {
       "id": "interviewing-pack",

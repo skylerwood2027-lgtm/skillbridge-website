@@ -3,7 +3,7 @@
   "title": "Paid Summer Internships and Jobs for High Schoolers",
   "subtitle": "Summer 2027. The pay, the deadlines, and how hard each one is to get.",
   "fromVideo": "From the video: the paid programs most students miss",
-  "intro": "We checked these programs on their official websites on November 4, 2026. The Hutton, Boston and Smithsonian entries say what we could not confirm that day. If a 2027 date is not posted, we show the last date we could find. We left out anything that charges tuition.",
+  "intro": "We checked these programs on their official websites on November 4 and 5, 2026. The Boston and Smithsonian entries say what we could not confirm. If a 2027 date is not posted, we show the last date we could find. We left out anything that charges tuition.",
   "rulePosition": "top",
   "rule": {
     "title": "How to use this list",
@@ -20,7 +20,7 @@
     "items": [
       "Nov 30: Navy SEAP",
       "Jan 11: Air Force Research Lab",
-      "Jan 24: Hutton Fisheries (confirm date)",
+      "Jan 24: Hutton Fisheries",
       "Jan 26: NIH (seniors only)",
       "Feb 5: Memorial Sloan Kettering",
       "Feb 15: UCSF and Salk Institute",
@@ -57,8 +57,8 @@
       "provider": "American Fisheries Society",
       "title": "Hutton Junior Fisheries Biology Program",
       "pay": "$3,000 stipend over 8 weeks at 32 hours a week",
-      "deadline": "Opens November 23, 2026 and closes January 24, 2027 at our last check. Its site blocked our recheck, so confirm there.",
-      "who": "Current juniors and seniors, 16 by your start date. Confirm the exact age rule on the Hutton site if you are 15 now. No science prerequisites. Available in all 50 states, placed within about a 45-minute commute. A local mentor is not guaranteed. The program's main goal is reaching students from groups underrepresented in fisheries science.",
+      "deadline": "Opens November 23, 2026 and closes January 24, 2027.",
+      "who": "Current juniors and seniors (classes of 2028 and 2027). One FAQ answer says 16 by your start date and another says 16 by June 1, so go by June 1 to be safe. No science prerequisites. Available in all 50 states, placed within a 30 to 45 minute commute. A local mentor is not guaranteed. The program's main goal is reaching students from groups underrepresented in fisheries science.",
       "odds": "Competitive.",
       "oddsNote": "30 students from 256 applications in 2022, about 1 in 8.",
       "url": "https://hutton.fisheries.org/"
@@ -387,6 +387,6 @@
       ]
     }
   ],
-  "verified": "November 4, 2026",
+  "verified": "November 5, 2026",
   "verifyNote": "Programs change their rules and dates, so confirm on the official page before you apply. The odds labels are our own judgment from the newest public numbers we could find."
 }
