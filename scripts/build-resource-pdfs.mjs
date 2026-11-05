@@ -31,7 +31,7 @@ const wordmark = await loadWordmark(root, 'wordmark.png');
 function renderEntry(e) {
   const twoCol = e.bestFor && e.pairWith;
   const pageBreak = e.pageBreakBefore ? ' item--page-break' : '';
-  return `<section class="item${pageBreak}">
+  return `${e.section ? `<h2 class="list__section">${esc(e.section)}</h2>` : ''}<section class="item${pageBreak}">
     <div class="item__head">
       <span class="item__n">${esc(e.n)}</span>
       <div>
@@ -68,7 +68,32 @@ function renderEntry(e) {
   </section>`;
 }
 
+// Compact row for long directory-style lists. Used when an entry carries `pay`.
+function renderRow(e) {
+  return `${e.section ? `<h2 class="list__section">${esc(e.section)}</h2>` : ''}<section class="row">
+    <div class="row__top">
+      <div>
+        ${e.provider ? `<p class="item__provider">${esc(e.provider)}</p>` : ''}
+        <h3><span class="row__n">${esc(e.n)}</span>${esc(e.title)}</h3>
+      </div>
+      <a class="row__link" href="${esc(e.url)}">Official page${EXT_ICON}</a>
+    </div>
+    <div class="row__grid">
+      <p><b>Pay</b> ${esc(e.pay)}</p>
+      <p><b>Deadline</b> ${esc(e.deadline)}</p>
+    </div>
+    <p><b>Who</b> ${esc(e.who)}</p>
+    <p><b>How hard</b> <strong>${esc(e.odds)}</strong>${e.oddsNote ? ` ${esc(e.oddsNote)}` : ''}</p>
+  </section>`;
+}
+
 function render(doc) {
+  const glance = doc.glance
+    ? `<section class="glance">
+        <h2>${esc(doc.glance.title)}</h2>
+        <ul>${doc.glance.items.map((i) => `<li>${esc(i)}</li>`).join('')}</ul>
+      </section>`
+    : '';
   const rule = doc.rule
     ? `<section class="rule">
         <h2>${esc(doc.rule.title)}</h2>
@@ -82,6 +107,23 @@ function render(doc) {
 ${fonts}
 ${SYSTEM_CSS}
 .item--page-break{break-before:page}
+.list__section{font-size:14.5pt;margin:16pt 0 5pt;break-after:avoid}
+.list__section:first-child{margin-top:4pt}
+.list__section + .item,.list__section + .row{border-top:1.5pt solid #1B3A6B}
+.row{padding:6pt 0 7pt;border-top:.75pt solid #DCE8F5;break-inside:avoid}
+.row__top{display:flex;justify-content:space-between;align-items:flex-end;gap:12pt}
+.row h3{font-size:11.2pt;margin-top:1pt}
+.row__n{color:#5BB8F5;margin-right:5pt}
+.row__link{display:inline-flex;align-items:center;gap:3pt;flex:none;font-family:'Manrope',sans-serif;font-size:8.2pt;font-weight:700;color:#155A8A;white-space:nowrap}
+.row__link svg{width:8pt;height:8pt}
+.row__grid{display:grid;grid-template-columns:1fr 1fr;gap:0 16pt}
+.row p:not(.item__provider){margin-top:2.6pt;font-size:9.4pt;line-height:1.38;color:#43567A}
+.row p b{font-family:'Manrope',sans-serif;font-size:8pt;font-weight:800;color:#155A8A;margin-right:2pt}
+.row p strong{font-weight:700;color:#1B3A6B}
+.glance{margin-top:12pt;padding:9pt 12pt 10pt;background:#EEF6FD;border-radius:6pt;break-inside:avoid}
+.glance h2{font-size:12pt}
+.glance ul{margin:5pt 0 0;padding:0;list-style:none;columns:2;column-gap:18pt}
+.glance li{padding:1.4pt 0;font-size:9.6pt;line-height:1.36;color:#1B3A6B;break-inside:avoid}
 </style></head><body>
   <header class="mast">
     <div class="mast__brand"><img src="data:image/png;base64,${wordmark}" alt="SkillBridge" /></div>
@@ -92,7 +134,8 @@ ${SYSTEM_CSS}
   </header>
   <p class="lede">${esc(doc.intro)}</p>
   ${top ? rule : ''}
-  <div class="list">${doc.entries.map(renderEntry).join('')}</div>
+  ${glance}
+  <div class="list">${doc.entries.map((e) => (e.pay ? renderRow(e) : renderEntry(e))).join('')}</div>
   ${top ? '' : rule}
   <p class="verify"><b>Last verified ${esc(doc.verified)}.</b> ${esc(doc.verifyNote)}</p>
 </body></html>`;

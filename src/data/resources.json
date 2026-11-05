@@ -1,6 +1,6 @@
 {
   "_readme": "CANONICAL SkillBridge resource catalog — the single source of truth. The website renders it, `npm run resources:check` validates it, and `npm run resources:sync` writes a verified snapshot into the content repo for Creator Flow CTA validation. Never hand-edit the snapshot. Only `status: published` items render in production.",
-  "updated": "2026-09-20",
+  "updated": "2026-11-04",
   "formats": {
     "pdf": {
       "label": "PDF",
@@ -222,6 +222,171 @@
         "informational interview",
         "follow up",
         "what to ask"
+      ]
+    },
+    {
+      "id": "paid-summer-programs-2027",
+      "slug": "paid-summer-programs-2027",
+      "status": "published",
+      "title": "Paid Summer Internships and Jobs for High Schoolers",
+      "description": "28 paid summer 2027 programs with the pay, the deadline, and how hard each one is to get.",
+      "outcome": "You leave knowing which programs you can apply to and which deadline comes first.",
+      "category": "applying",
+      "format": "pdf",
+      "action": {
+        "label": "Download the list",
+        "url": "/resources/paid-summer-programs-2027.pdf",
+        "download": true
+      },
+      "friction": [
+        "no-account"
+      ],
+      "source": {
+        "kind": "creator-flow-job",
+        "job": "creator-flow/01 DROP RECORDINGS HERE/20261103-paid-summer-internships/job.json",
+        "content": "src/data/resource-content/paid-summer-programs-2027.json",
+        "generator": "scripts/build-resource-pdfs.mjs"
+      },
+      "lastVerified": "2026-11-04",
+      "cta": {
+        "keyword": "SUMMER",
+        "videoJobId": "20261103-paid-summer-internships"
+      },
+      "featured": false,
+      "latest": true,
+      "group": "experience",
+      "bestFor": "You want a paid summer",
+      "searchTerms": [
+        "paid internships",
+        "summer internships",
+        "high school internships",
+        "summer jobs",
+        "summer youth employment",
+        "stipend",
+        "application deadlines"
+      ]
+    },
+    {
+      "id": "find-a-high-school-internship",
+      "slug": "find-a-high-school-internship",
+      "status": "published",
+      "title": "How to Find a High School Internship",
+      "description": "Where high school internships come from, which sites are worth checking, and what to do when nobody replies.",
+      "outcome": "You leave with people to contact and a short message ready to send.",
+      "category": "applying",
+      "format": "pdf",
+      "action": {
+        "label": "Download internship guide",
+        "url": "/resources/find-a-high-school-internship.pdf",
+        "download": true
+      },
+      "friction": [
+        "no-account",
+        "age-16"
+      ],
+      "source": {
+        "kind": "discord-guide",
+        "channel": "internship-search",
+        "content": "src/data/resource-content/find-a-high-school-internship.json",
+        "generator": "scripts/build-resource-pdfs.mjs",
+        "note": "Adapted from Skyler's Discord guide. Handshake was cut because no source showed high school access. LinkedIn and Indeed age rules checked on their terms pages 2026-11-04."
+      },
+      "lastVerified": "2026-11-04",
+      "cta": null,
+      "featured": false,
+      "latest": true,
+      "group": "experience",
+      "bestFor": "You don't know where to look",
+      "searchTerms": [
+        "find an internship",
+        "high school internships",
+        "no experience",
+        "cold email",
+        "outreach",
+        "local internships",
+        "alumni",
+        "no response"
+      ]
+    },
+    {
+      "id": "first-interview-guide",
+      "slug": "first-interview-guide",
+      "status": "published",
+      "title": "How to Prepare for Your First Interview",
+      "description": "What interviewers listen for, how to answer the questions that keep coming up, and how to practice out loud.",
+      "outcome": "You leave with your stories picked, your answers planned, and questions to ask them.",
+      "category": "applying",
+      "format": "pdf",
+      "action": {
+        "label": "Download interview guide",
+        "url": "/resources/first-interview-guide.pdf",
+        "download": true
+      },
+      "friction": [
+        "no-account"
+      ],
+      "source": {
+        "kind": "discord-guide",
+        "channel": "interviewing-guide",
+        "content": "src/data/resource-content/first-interview-guide.json",
+        "generator": "scripts/build-resource-pdfs.mjs",
+        "note": "Adapted from Skyler's Discord guide plus format tips from the interviewing slides. Arrival time reconciled to five to ten minutes, because the two sources disagreed."
+      },
+      "lastVerified": "2026-11-04",
+      "cta": null,
+      "featured": false,
+      "latest": true,
+      "group": "apply",
+      "bestFor": "You have an interview coming up",
+      "searchTerms": [
+        "interview tips",
+        "job interview",
+        "tell me about yourself",
+        "STAR method",
+        "strengths and weaknesses",
+        "mock interview",
+        "thank you email",
+        "what to wear"
+      ]
+    },
+    {
+      "id": "first-internship-on-the-job-guide",
+      "slug": "first-internship-on-the-job-guide",
+      "status": "published",
+      "title": "How to Do Well at Your First Internship",
+      "description": "What people judge you on, what to ask in your first two weeks, and how to leave with proof of your work.",
+      "outcome": "You leave with a plan for your first two weeks and a log that turns into resume bullets.",
+      "category": "experience",
+      "format": "pdf",
+      "action": {
+        "label": "Download on-the-job guide",
+        "url": "/resources/first-internship-on-the-job-guide.pdf",
+        "download": true
+      },
+      "friction": [
+        "no-account"
+      ],
+      "source": {
+        "kind": "discord-guide",
+        "channel": "internship-on-the-job",
+        "content": "src/data/resource-content/first-internship-on-the-job-guide.json",
+        "generator": "scripts/build-resource-pdfs.mjs",
+        "note": "Adapted from Skyler's Discord guide."
+      },
+      "lastVerified": "2026-11-04",
+      "cta": null,
+      "featured": false,
+      "latest": true,
+      "group": "experience",
+      "bestFor": "You just landed an internship",
+      "searchTerms": [
+        "first job",
+        "internship tips",
+        "first day",
+        "how to ask for feedback",
+        "resume bullets",
+        "reference",
+        "work log"
       ]
     },
     {
@@ -455,10 +620,10 @@
       ],
       "source": {
         "kind": "discord-attachment",
-        "note": "Source files live under C:/Users/bnark/OneDrive/Downloads/ (SkillBridge Interviewing Slides.pdf, SkillBridge Interview_Tips_Quick_Reference (1).pdf, SkillBridge Mock Interview Prep.pdf, SkillBridge Mock Interview Scenario.pdf). Sizes match across duplicates — 3 copies of the slides at 289,291 bytes and 3 of the quick reference at 53,285 bytes — but the bytes could not be hashed or read."
+        "note": "Downloaded from Discord #resource-drops and read 2026-11-04. Fresh copies are in C:/Users/bnark/Downloads."
       },
       "lastVerified": null,
-      "blockedReason": "The source files are OneDrive cloud-only placeholders and the OneDrive cloud file provider is not running on this machine, so every read fails with 'The cloud file provider is not running.' Contents could not be audited, deduplicated by hash, or checked for privacy. Start OneDrive (or mark the folder Always keep on this device) and this can be built.",
+      "blockedReason": "Read in full on 2026-11-04. Do not re-host as is. The file metadata names a person and our school, the mock scenario looks like a guest speaker's material, and the slides say to arrive 10 minutes early where the Discord guide says 5. The useful parts now live in first-interview-guide. Publish only if Skyler confirms the author is fine with it and the metadata is stripped.",
       "cta": null,
       "featured": false,
       "latest": false,
@@ -480,10 +645,10 @@
       ],
       "source": {
         "kind": "discord-attachment",
-        "note": "C:/Users/bnark/OneDrive/Downloads/SkillBridge Resume Slides.pdf and '... (1).pdf', both 87,977 bytes."
+        "note": "Downloaded from Discord #resource-drops and read 2026-11-04. Fresh copy is in C:/Users/bnark/Downloads."
       },
       "lastVerified": null,
-      "blockedReason": "Same OneDrive cloud-placeholder problem — the bytes are not on this machine, so the deck could not be read, deduplicated, or checked.",
+      "blockedReason": "Read in full on 2026-11-04. Do not re-host as is. Slide 8 uses a real person's name as a file-name example, slide 10 lists an Objective section against the site's editorial rule, the file metadata names our school, and the deck looks like a guest speaker's. It would need a rewrite, not a reupload.",
       "cta": null,
       "featured": false,
       "latest": false,
@@ -505,10 +670,10 @@
       ],
       "source": {
         "kind": "discord-attachment",
-        "note": "C:/Users/bnark/OneDrive/Downloads/SkillBridge AI Slides.pdf, 345,373 bytes."
+        "note": "Downloaded from Discord #resource-drops and read 2026-11-04. Fresh copy is in C:/Users/bnark/Downloads."
       },
       "lastVerified": null,
-      "blockedReason": "Same OneDrive cloud-placeholder problem. The published AI Tools Guide covers this ground in the meantime.",
+      "blockedReason": "Read in full on 2026-11-04. Do not re-host as is. The deck is a live club session with a personal crew example and a 'UPGRADE TO GPT 5 PLUS' line, slides 6 and 7 have no text, and the file metadata names our club. The published AI Tools Guide covers this ground in the meantime.",
       "cta": null,
       "featured": false,
       "latest": false,

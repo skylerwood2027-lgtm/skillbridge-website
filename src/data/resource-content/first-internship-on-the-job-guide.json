@@ -1,0 +1,107 @@
+{
+  "slug": "first-internship-on-the-job-guide",
+  "title": "How to Do Well at Your First Internship",
+  "subtitle": "What people judge you on, what to ask in your first two weeks, and how to leave with proof of your work.",
+  "intro": "Getting the internship is the start, and what you do next is where you can pull ahead. This guide shows you how to leave with new skills and with people who remember your work.",
+  "entries": [
+    {
+      "n": "1",
+      "title": "Know what you are being judged on",
+      "lead": "Most interns are not judged on brilliance. The people around you are quietly asking simpler questions.",
+      "items": [
+        "Can I trust this person?",
+        "Do they communicate clearly?",
+        "Do they learn from feedback?",
+        "Do they make my job easier or harder?"
+      ]
+    },
+    {
+      "n": "2",
+      "title": "Set expectations in your first two weeks",
+      "lead": "Many internships start without clear goals. If nobody explains them, ask your supervisor. That shows maturity, not neediness.",
+      "items": [
+        "What am I responsible for?",
+        "What does doing well look like?",
+        "How will my work be reviewed?"
+      ]
+    },
+    {
+      "n": "3",
+      "title": "Define success in measurable terms",
+      "lead": "Vague work is hard to explain later, but measurable work adds up. Track the details as they happen.",
+      "items": [
+        "What you built or improved.",
+        "How often you did something.",
+        "What changed because of your work.",
+        "What problem you helped reduce."
+      ],
+      "note": "These details become your resume bullets later."
+    },
+    {
+      "n": "4",
+      "title": "Keep a running work log",
+      "lead": "Keep one simple document and add to it as you go, so you do not have to reconstruct your work at the end.",
+      "items": [
+        "Tasks you worked on.",
+        "Tools you used.",
+        "Problems you ran into.",
+        "What you learned."
+      ],
+      "note": "These notes help with resumes, interviews, and feedback conversations. Do not rely on memory."
+    },
+    {
+      "n": "5",
+      "title": "Speak up before something becomes a problem",
+      "lead": "Staying quiet is the risky choice. Clear updates build trust quickly, and trust leads to more responsibility.",
+      "items": [
+        "If you are stuck, ask early.",
+        "If you are unsure, clarify.",
+        "If you finish something, say so."
+      ]
+    },
+    {
+      "n": "6",
+      "title": "Ask for feedback before anyone offers it",
+      "lead": "Do not wait for a formal review. Feedback is easier to act on when it is small and frequent, and simple questions work.",
+      "items": [
+        "Is there anything I could do differently?",
+        "What would make this more useful?",
+        "What should I focus on improving next?"
+      ]
+    },
+    {
+      "n": "7",
+      "title": "Be curious without interrupting",
+      "lead": "Asking questions is good, but stopping someone every few minutes is not. Curiosity reads as competence when people can see the effort behind it.",
+      "items": [
+        "Try to solve it yourself before you ask.",
+        "Save your questions and ask several at once when you can.",
+        "Show what you already tried so they can see your thinking."
+      ]
+    },
+    {
+      "n": "8",
+      "title": "Build normal working relationships",
+      "lead": "You do not need to network at your internship. You need to be polite, be present, and follow through.",
+      "items": [
+        "Thank people who help you.",
+        "If you learn something from someone, tell them.",
+        "Treat each interaction as part of a longer timeline, not a one-time job."
+      ],
+      "note": "People remember how you worked, not just what you did. A good relationship now makes it easier to ask for advice, get a reference, or hear about the next opportunity.",
+      "pageBreakBefore": true
+    }
+  ],
+  "rule": {
+    "title": "Before your last day",
+    "body": "One good internship beats three forgettable ones. Finish this one well.",
+    "items": [
+      "Turn your work log into two or three resume bullets.",
+      "Thank the people who helped you, by name.",
+      "Ask your supervisor if you can use them as a reference.",
+      "Connect with them on LinkedIn if you are 16 or older."
+    ]
+  },
+  "verified": "November 4, 2026",
+  "verifyNote": "This guide comes from what we learned in our own internships and from students we worked with. Every workplace is different, so follow your supervisor's rules first."
+}

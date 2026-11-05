@@ -1,0 +1,105 @@
+{
+  "slug": "find-a-high-school-internship",
+  "title": "How to Find a High School Internship",
+  "subtitle": "Where high school internships come from, which sites are worth your time, and what to do when nobody answers.",
+  "intro": "Many high school internships are never posted. They get filled through referrals, direct outreach, and local relationships, so applying online means competing with a pile of applications you cannot outnumber. You will do better by staying close to home, being specific, and showing effort.",
+  "rulePosition": "top",
+  "entries": [
+    {
+      "n": "1",
+      "title": "Know where high school internships come from",
+      "lead": "Start at the top of this list and work down. Job postings come last for a reason.",
+      "items": [
+        "School and alumni networks. Teachers, counselors, coaches, and alumni often know people willing to take on a student.",
+        "Local businesses and small teams. Small companies, startups, clinics, studios, and shops tend to be more flexible than large corporations.",
+        "Nonprofits and community organizations. They often need help and are open to motivated students.",
+        "Direct outreach. Messaging someone whose work interests you is normal, even when it feels uncomfortable.",
+        "Posted roles. Some are worth applying to if you filter carefully."
+      ]
+    },
+    {
+      "n": "2",
+      "title": "Use job sites as tools, not a plan",
+      "lead": "Set a time limit. Hours of scrolling feel productive, but they rarely lead anywhere.",
+      "items": [
+        "LinkedIn is best for researching roles, finding people, and sending messages. Talking to people matters more than applying to its job posts. You must be at least 16 to use it.",
+        "Indeed is useful for local and part-time jobs, but many postings repeat, so skim quickly. You must be at least 16 in the US, and minors have to use it with a parent, guardian, or responsible adult supervising.",
+        "Company websites matter because some small companies only post openings there.",
+        "City, county, and nonprofit job boards often list internships that do not appear anywhere else."
+      ],
+      "action": {
+        "label": "See the paid summer list",
+        "url": "https://joinskillbridge.com/resources/paid-summer-programs-2027.pdf",
+        "note": "Paid programs for high schoolers, with pay, deadlines, and how hard each one is to get."
+      },
+      "pageBreakBefore": true
+    },
+    {
+      "n": "3",
+      "title": "Send fewer, better applications",
+      "lead": "Mass applying is usually a losing strategy. Ten thoughtful applications beat fifty generic ones.",
+      "items": [
+        "Look for roles that mention learning or training.",
+        "Look for smaller teams and responsibilities that sound concrete.",
+        "Skip postings that ask for years of experience.",
+        "Skip postings full of buzzwords that never describe the work."
+      ],
+      "warn": "Never pay to apply. Skip any posting that asks for money, bank details, or your Social Security number before you have a written offer.",
+      "action": {
+        "label": "Get the application checklist",
+        "url": "https://joinskillbridge.com/resources/first-internship-application-kit.pdf",
+        "note": "Run it before you submit anything."
+      }
+    },
+    {
+      "n": "4",
+      "title": "Reach out directly",
+      "lead": "Outreach is not begging. You are introducing yourself and explaining why their work interests you. Keep it short and stop after these three things.",
+      "items": [
+        "Who are you?",
+        "Why are you reaching out to this person in particular?",
+        "What are you hoping to learn or help with?"
+      ],
+      "note": "Here is an example. Hi [Name], I'm a junior at [school] and I've been following [specific work of theirs]. I want to learn how [field] works day to day. Would you be open to a 10-minute call, or to having a student help out this summer?",
+      "warn": "If you plan to meet someone you do not know, tell a parent or guardian first and keep it to a video call or a public place.",
+      "action": {
+        "label": "Get the networking questions",
+        "url": "https://joinskillbridge.com/resources/three-better-networking-questions.pdf",
+        "note": "What to ask once someone replies."
+      },
+      "pageBreakBefore": true
+    },
+    {
+      "n": "5",
+      "title": "Expect silence and keep moving",
+      "lead": "No response is normal, and it is not personal.",
+      "items": [
+        "After direct outreach, wait about a week and follow up once. If there is still no reply, move on.",
+        "A rejection often means the timing was wrong, they did not have capacity, or they went with someone they already knew.",
+        "Keep a simple list of who you contacted and when, so you can notice patterns."
+      ]
+    },
+    {
+      "n": "6",
+      "title": "Change your approach when nothing is working",
+      "lead": "If you have sent many applications and heard nothing, sending more of the same will not fix it.",
+      "items": [
+        "Revisit your resume and tighten your outreach message.",
+        "Narrow your focus to one kind of role.",
+        "Ask someone you trust to review your materials."
+      ],
+      "note": "The high schoolers who land internships are not always the most qualified. They show effort, follow through, and learn quickly."
+    }
+  ],
+  "rule": {
+    "title": "Start this week",
+    "items": [
+      "Write down five adults who might know someone, like teachers, coaches, family friends, or alumni.",
+      "Find three local businesses or nonprofits doing work you care about.",
+      "Send one short, specific message.",
+      "Start your list of who you contacted and when."
+    ]
+  },
+  "verified": "November 4, 2026",
+  "verifyNote": "This is advice from our own search, not a study. We checked the LinkedIn and Indeed age rules on their terms pages on this date, so confirm them before you sign up."
+}

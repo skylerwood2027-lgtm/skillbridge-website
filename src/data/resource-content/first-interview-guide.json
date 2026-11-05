@@ -1,0 +1,130 @@
+{
+  "slug": "first-interview-guide",
+  "title": "How to Prepare for Your First Interview",
+  "subtitle": "What interviewers listen for, how to answer the common questions, and how to practice before the real thing.",
+  "intro": "Most interviewers are not comparing you to professionals. They want to know if they can trust you to show up, learn, and communicate clearly. Being nervous is normal and they expect it. What stands out is someone who listens carefully, answers honestly, and has clearly prepared.",
+  "entries": [
+    {
+      "n": "1",
+      "title": "Prepare stories instead of scripts",
+      "lead": "Interviewers can tell when an answer is memorized, and they can also tell when you did not prepare. Aim for the middle by knowing your stories without memorizing the words.",
+      "items": [
+        "Pick two situations you handled well.",
+        "Pick one challenge you worked through.",
+        "Pick one time you learned something the hard way."
+      ],
+      "note": "No job history? Use clubs, group projects, volunteering, family responsibilities, or part-time work. If someone relied on you and you followed through, it counts."
+    },
+    {
+      "n": "2",
+      "title": "Research the company and the role",
+      "lead": "You do not need to become an expert, but you should be able to explain a few things before you walk in.",
+      "items": [
+        "What the company does.",
+        "What this role is responsible for.",
+        "Why this role exists."
+      ],
+      "note": "If a quick Google search could answer a question, do not ask it in the interview. Good questions build on what you already know."
+    },
+    {
+      "n": "3",
+      "title": "Use STAR to stop yourself from rambling",
+      "lead": "STAR is a way to organize a story so the interviewer can follow it. You never need to say the letters out loud.",
+      "items": [
+        "Situation means what was happening.",
+        "Task means what you were responsible for.",
+        "Action means what you did.",
+        "Result means what changed or what you learned."
+      ],
+      "note": "Here is an example. A teammate dropped out two days before our group presentation. I was in charge of the final slides, so I split up their section and set up one extra practice. We finished on time, and now I confirm who is doing what much earlier.",
+      "pageBreakBefore": true
+    },
+    {
+      "n": "4",
+      "title": "Plan your answers to the common questions",
+      "lead": "These four come up again and again. Each one is testing something specific.",
+      "items": [
+        "\"Tell me about yourself\" is asking what you are focused on right now, what you have done that shows responsibility, and why this opportunity makes sense for you. Skip your life story and do not recap your resume.",
+        "\"Why are you interested?\" is about direction. You do not need a perfect reason, but you do need an honest one, so talk about what you want to learn and which skills you want to build.",
+        "\"What is your strength?\" needs proof. Instead of \"I'm a hard worker,\" try \"I'm good at following through. In our club, I organized meetings and kept deadlines on track.\"",
+        "\"What is your weakness?\" needs something honest that would not rule you out, plus what you changed. For example, \"I used to jump into tasks without asking what was expected, which led to small mistakes. Now I ask questions first and confirm priorities before I start.\""
+      ]
+    },
+    {
+      "n": "5",
+      "title": "Be honest when you do not know something",
+      "lead": "Pretending you can do something is one of the fastest ways to lose trust, and interviewers can usually tell. Say so directly, then explain how you would learn it.",
+      "items": [
+        "\"I haven't done that yet, but here's how I'd start.\"",
+        "\"I don't have experience with that tool, but I've learned similar ones, and here's how I'd get up to speed.\""
+      ],
+      "note": "That answer shows honesty and problem-solving, which matters more than pretending to be ready on day one."
+    },
+    {
+      "n": "6",
+      "title": "Bring questions for them",
+      "lead": "When they ask if you have any questions, they are checking whether you are engaged. Saying no is a missed chance, so ask something that shows you are picturing the job.",
+      "items": [
+        "What does success look like here?",
+        "What do new hires usually struggle with?",
+        "What makes someone effective on this team?"
+      ]
+    },
+    {
+      "n": "7",
+      "title": "Get the setup right for the format",
+      "lead": "Phone, video, and in-person interviews need different preparation, but the interviewer expects the same things from you.",
+      "items": [
+        "On the phone, your voice does all the work. Slow down, smile while you talk, and keep notes nearby without reading from them.",
+        "On video, set up good lighting and a clean background, put the camera at eye level, and look at the camera instead of your screen. Turn off notifications before you start.",
+        "In person, bring a printed copy of your resume. The interview starts at the door, so be respectful to everyone you meet."
+      ]
+    },
+    {
+      "n": "8",
+      "title": "Make the first minute easy",
+      "lead": "The first minute shows whether you understand the setting. None of it is about looking older or more impressive than you are.",
+      "items": [
+        "Wear a collared shirt or something similar that is clean and simple. You rarely need a blazer for a student role, but follow any dress code they give you.",
+        "Walk in five to ten minutes before your time. Much earlier can be awkward for them, and late is worse.",
+        "Greet them clearly, make eye contact, and keep a calm pace."
+      ]
+    },
+    {
+      "n": "9",
+      "title": "Do one practice round out loud",
+      "lead": "Reading your notes is different from saying them. Prepare in writing first, then practice with another person.",
+      "items": [
+        "Write short notes for the four common questions and your stories.",
+        "Ask a parent, friend, or teacher to play the interviewer and ask the questions in a random order.",
+        "Answer out loud without reading. Keep \"Tell me about yourself\" to about a minute.",
+        "Ask them where you rambled or lost them, then go one more round."
+      ],
+      "action": {
+        "label": "Get the resume template",
+        "url": "https://joinskillbridge.com/resources/skillbridge-high-school-resume-starter.docx",
+        "note": "Bring a finished copy. It opens in Word, Google Docs, or Pages."
+      },
+      "pageBreakBefore": true
+    },
+    {
+      "n": "10",
+      "title": "Send a thank-you within a day",
+      "lead": "A short thank-you takes two minutes and reminds them who you are. Mention one specific thing from the conversation.",
+      "items": [
+        "\"Hi [Name], thank you for talking with me today. I enjoyed hearing about [one specific thing they said]. I'm still very interested in the role and happy to send anything else you need.\""
+      ]
+    }
+  ],
+  "rule": {
+    "title": "The day before",
+    "items": [
+      "You can explain what the company does and what this role is responsible for.",
+      "You have practiced your stories out loud at least once.",
+      "You have two questions ready to ask them.",
+      "Your outfit, directions, or video link are sorted out."
+    ]
+  },
+  "verified": "November 4, 2026",
+  "verifyNote": "This guide comes from our own interviews and the interview practice we ran in our school club. The example answers are examples, so put them in your own words."
+}
