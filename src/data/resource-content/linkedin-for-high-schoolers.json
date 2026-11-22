@@ -1,0 +1,111 @@
+{
+  "slug": "linkedin-for-high-schoolers",
+  "title": "LinkedIn for High Schoolers",
+  "subtitle": "An example profile you can build without a job or a founder title, section by section, plus a first message to send.",
+  "fromVideo": "From the video: what to put on LinkedIn in high school",
+  "intro": "Meet Jordan, a made-up junior with no job and no club title. Every example below is Jordan's. Anything in [brackets] is yours to swap. You have to be 16 to make a LinkedIn account.",
+  "entries": [
+    {
+      "n": "1",
+      "title": "Use a clear, recent photo of your face",
+      "lead": "A school portrait or a photo against a plain wall works.",
+      "items": [
+        "Make sure your face is easy to see, with no filters and no group shots.",
+        "The cover photo behind it is optional. A picture of your school or something you made is fine."
+      ],
+      "note": "LinkedIn's student page says you don't need a professional headshot, just a clear, recent photo that looks like you."
+    },
+    {
+      "n": "2",
+      "title": "Start the headline with your grade and school",
+      "lead": "Jordan's headline reads “Junior at [your school] | Interested in [graphic design] | Volunteer at [Riverside Library]”.",
+      "items": [
+        "Your grade and school tell people where to place you.",
+        "Then add the thing you're working on, or one interest if you haven't started anything yet.",
+        "Keep titles you earned, like club president. Leave out ones you didn't."
+      ],
+      "note": "LinkedIn's student page suggests pairing the experience you already have with the field you want to explore next."
+    },
+    {
+      "n": "3",
+      "title": "Use the About to explain what your headline names",
+      "lead": "Write two to four sentences in your own voice. If your headline says robotics, this is where you describe the robot you built.",
+      "items": [
+        "Jordan's About says “I'm a junior at [your school] who likes design. This year I made the flyers for our school food drive and taught myself the basics of Canva. On weekends I help kids with reading at [Riverside Library]. I'd like to learn how designers land their first projects.”",
+        "Say what you like doing and what you've tried so far. Leave out phrases like “passionate about making an impact.”"
+      ],
+      "note": "LinkedIn suggests keeping the About to one or two paragraphs.",
+      "pageBreakBefore": true
+    },
+    {
+      "n": "4",
+      "title": "Pin one thing you made in Featured",
+      "lead": "Featured sits above your Activity section and stays hidden until you add something.",
+      "items": [
+        "Jordan pinned a photo of the food drive flyer.",
+        "A class project, a slideshow, a video or a link to a post all work.",
+        "One good item beats five weak ones."
+      ]
+    },
+    {
+      "n": "5",
+      "title": "Put anything people counted on you for in Experience",
+      "lead": "You don't need a formal job. You do need to label each entry honestly.",
+      "items": [
+        "Jordan lists “Babysitter, Self-employed” with one line on what it involves, like watching two kids two afternoons a week and handling school pickups.",
+        "A part-time job, helping at a family business and regular paid gigs all belong here.",
+        "Volunteering has its own Volunteering section. A club you lead can go here or under Organizations, as long as you say what you did.",
+        "Never mark a school activity as Full-time."
+      ],
+      "note": "LinkedIn says Experience entries must be accurately labeled, and it uses Full-time for roles that take all of someone's professional time."
+    },
+    {
+      "n": "6",
+      "title": "Keep Education and Skills short",
+      "lead": "List your high school and the year you expect to graduate. Add summer programs you finished.",
+      "items": [
+        "Add coursework only if it explains your interest.",
+        "For skills, pick a few you could explain if someone asked. Jordan added Canva, Google Slides and Spanish.",
+        "Skip broad traits like “hardworking.” Your examples show those."
+      ]
+    },
+    {
+      "n": "7",
+      "title": "Send one specific question when you connect",
+      "lead": "Find someone whose work looks interesting, like an alum from your school, and add a note to your connection request.",
+      "items": [
+        "Jordan's note says “Hi [Name], I'm a [junior] at [your school] too. I saw you went into [design]. What was the first [project you put in your portfolio]?”",
+        "Change every bracket. Ask about something they did, so the answer takes a minute, not an hour.",
+        "Ask about their path, not for a job.",
+        "On a free account you can add a note to three connection requests a month, up to 200 characters each. You can only message people you're connected with."
+      ],
+      "note": "Filled in, Jordan's note is well under 200 characters."
+    },
+    {
+      "n": "8",
+      "title": "If you're under 18, check your message settings",
+      "lead": "LinkedIn lets you choose to receive messages only from your connections.",
+      "items": [
+        "LinkedIn says this keeps recruiters and other members from contacting you.",
+        "Only connect with people you've met or can tell are real professionals, like alumni and teachers."
+      ],
+      "action": {
+        "label": "Browse the free library",
+        "url": "https://joinskillbridge.com/resources",
+        "note": "Every free SkillBridge guide and template, including 3 Better Networking Questions for when someone replies."
+      }
+    }
+  ],
+  "rule": {
+    "title": "The short version",
+    "items": [
+      "Grade, school and one interest in the headline",
+      "What you're into and what you've tried in the About",
+      "One thing you made in Featured",
+      "Anything people counted on you for in Experience",
+      "One specific question in your first note"
+    ]
+  },
+  "verified": "2026-11-22",
+  "verifyNote": "LinkedIn rules checked live on LinkedIn Help (answers a563153, a6239760, 62940, a552452, a554351, a593695, a554472), students.linkedin.com and the User Agreement on 2026-11-22. Jordan is a made-up example."
+}

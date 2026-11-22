@@ -1,6 +1,6 @@
 {
   "_readme": "CANONICAL SkillBridge resource catalog — the single source of truth. The website renders it, `npm run resources:check` validates it, and `npm run resources:sync` writes a verified snapshot into the content repo for Creator Flow CTA validation. Never hand-edit the snapshot. Only `status: published` items render in production.",
-  "updated": "2026-11-05",
+  "updated": "2026-11-22",
   "formats": {
     "pdf": {
       "label": "PDF",
@@ -584,6 +584,48 @@
         "networking",
         "student linkedin",
         "empty profile"
+      ]
+    },
+    {
+      "id": "linkedin-for-high-schoolers",
+      "slug": "linkedin-for-high-schoolers",
+      "status": "published",
+      "title": "LinkedIn for High Schoolers",
+      "description": "An example profile you can build without a job or a founder title, section by section, plus a first message to send.",
+      "outcome": "You finish with a profile that says who you are and a first note that is easy to answer.",
+      "category": "networking",
+      "format": "pdf",
+      "action": {
+        "label": "Download guide",
+        "url": "/resources/linkedin-for-high-schoolers.pdf",
+        "download": true
+      },
+      "friction": [
+        "no-account",
+        "age-16"
+      ],
+      "source": {
+        "kind": "creator-flow-job",
+        "job": "content/batches/2026-11-22-my-linkedin-review/SCRIPT v4 - READ-OFF.md",
+        "content": "src/data/resource-content/linkedin-for-high-schoolers.json",
+        "generator": "scripts/build-resource-pdfs.mjs"
+      },
+      "lastVerified": "2026-11-22",
+      "cta": {
+        "keyword": "LINKEDIN",
+        "videoJobId": "20261122-linkedin-walkthrough"
+      },
+      "featured": false,
+      "latest": false,
+      "group": "apply",
+      "bestFor": "Setting up your first LinkedIn",
+      "searchTerms": [
+        "LinkedIn profile",
+        "LinkedIn for high school",
+        "LinkedIn headline",
+        "LinkedIn about section",
+        "connection request note",
+        "first LinkedIn message"
       ]
     },
     {
