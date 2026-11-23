@@ -149,6 +149,52 @@
       ]
     },
     {
+      "id": "teacher-recommendation-email",
+      "slug": "teacher-recommendation-email",
+      "status": "published",
+      "title": "10/10 Email to Ask a Teacher for a Recommendation",
+      "description": "The email from our video, as a fill-in template. It covers the subject line, the story that makes your teacher's letter specific, the deadline and what to attach.",
+      "outcome": "You send your teacher one email with everything they need to write a strong letter.",
+      "category": "applying",
+      "format": "docx",
+      "action": {
+        "label": "Download email template",
+        "url": "/resources/skillbridge-teacher-recommendation-email.docx",
+        "download": true
+      },
+      "readOnline": {
+        "label": "View it as a PDF",
+        "url": "/resources/skillbridge-teacher-recommendation-email.pdf"
+      },
+      "friction": [
+        "no-account",
+        "editable"
+      ],
+      "source": {
+        "kind": "video-template",
+        "generator": "scripts/build-teacher-recommendation-email.py",
+        "note": "Template and the made-up sample email from the Nov 2026 recommendation-email Reel. Advice checked against College Board BigFuture, Coursera and Harvard Summer School on 2026-11-22."
+      },
+      "lastVerified": "2026-11-22",
+      "cta": {
+        "keyword": "EMAIL",
+        "videoJobId": "20261122-recommendation-email"
+      },
+      "featured": false,
+      "latest": true,
+      "group": "apply",
+      "bestFor": "Asking for a recommendation",
+      "searchTerms": [
+        "recommendation letter",
+        "letter of recommendation",
+        "teacher recommendation",
+        "rec letter",
+        "email a teacher",
+        "email template",
+        "summer program application"
+      ]
+    },
+    {
       "id": "no-experience-project-starter",
       "slug": "no-experience-project-starter",
       "status": "published",
