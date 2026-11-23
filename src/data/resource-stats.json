@@ -4,6 +4,11 @@
     "sizeLabel": "229 KB",
     "pages": 2
   },
+  "high-school-resume-template": {
+    "bytes": 37407,
+    "sizeLabel": "37 KB",
+    "pages": 1
+  },
   "no-experience-project-starter": {
     "bytes": 213096,
     "sizeLabel": "208 KB",
@@ -54,7 +59,7 @@
     "sizeLabel": "38 KB"
   },
   "linkedin-for-high-schoolers": {
-    "bytes": 223167,
+    "bytes": 223016,
     "sizeLabel": "218 KB",
     "pages": 3
   }

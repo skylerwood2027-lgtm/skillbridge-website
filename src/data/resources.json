@@ -102,6 +102,53 @@
       ]
     },
     {
+      "id": "high-school-resume-template",
+      "slug": "high-school-resume-template",
+      "status": "published",
+      "title": "10/10 High School Resume Template",
+      "description": "The one-page template from our video. Every section tells you what to write, and the Projects section is for students who don't have a job yet.",
+      "outcome": "You leave with a one-page resume laid out section by section.",
+      "category": "resume",
+      "format": "docx",
+      "action": {
+        "label": "Download resume template",
+        "url": "/resources/skillbridge-high-school-resume-template.docx",
+        "download": true
+      },
+      "readOnline": {
+        "label": "View it as a PDF",
+        "url": "/resources/skillbridge-high-school-resume-template.pdf"
+      },
+      "friction": [
+        "no-account",
+        "editable"
+      ],
+      "source": {
+        "kind": "video-template",
+        "video": "https://www.instagram.com/reel/DgEV_iNpvl5/",
+        "generator": "scripts/build-high-school-resume-template.py",
+        "note": "David's Reel posted 2026-11-22. The text matches the template shown in the video word for word; the PDF is a Word export of the .docx."
+      },
+      "lastVerified": "2026-11-22",
+      "cta": {
+        "keyword": "RESUME",
+        "videoJobId": "20261122-david-resume-template"
+      },
+      "featured": false,
+      "latest": true,
+      "group": "apply",
+      "bestFor": "Laying out your whole resume",
+      "searchTerms": [
+        "resume template",
+        "high school resume",
+        "resume layout",
+        "projects section",
+        "resume with no job",
+        "10/10 resume",
+        "word resume template"
+      ]
+    },
+    {
       "id": "no-experience-project-starter",
       "slug": "no-experience-project-starter",
       "status": "published",

@@ -114,10 +114,14 @@ for (const r of resources) {
       const s = await stat(file);
       if (r.status === 'published') {
         const entry = (stats[r.id] ??= {});
-        entry.bytes = s.size;
-        entry.sizeLabel = s.size >= 1024 * 1024
-          ? `${(s.size / 1024 / 1024).toFixed(1)} MB`
-          : `${Math.round(s.size / 1024)} KB`;
+        // The size shown on the card is the download button's file; a
+        // readOnline preview (e.g. a PDF of a .docx) only adds the page count.
+        if (entry.bytes == null) {
+          entry.bytes = s.size;
+          entry.sizeLabel = s.size >= 1024 * 1024
+            ? `${(s.size / 1024 / 1024).toFixed(1)} MB`
+            : `${Math.round(s.size / 1024)} KB`;
+        }
         if (url.endsWith('.pdf')) {
           const buf = await readFile(file, 'latin1');
           const m = buf.match(/\/Count (\d+)/);
