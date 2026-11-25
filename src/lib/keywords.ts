@@ -11,6 +11,8 @@ export const shortNames: Record<string, string> = {
   PROJECT: 'project guide',
   NETWORK: 'networking questions',
   SKILLS: 'credential guide',
+  // CERTS has no file on this site: the DM sends three course links instead.
+  CERTS: 'certificate links',
 };
 
 /** "template", "guide", "list": the last word of the short name. */
