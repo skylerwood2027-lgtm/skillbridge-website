@@ -1,34 +1,51 @@
 /* ===========================================================================
-   SkillBridge — design tokens + base styles
-   Brand (LOCKED): navy #1B3A6B · blue #5BB8F5 · light #EBF4FC · dark #0D1B2A
-   Fonts (LOCKED): Manrope (headings) · Atkinson Hyperlegible Next (body)
-   Body moved off Inter on 2026-10-09 with Skyler's ok: Inter + Manrope read as
-   the stock AI-site pairing. Atkinson was drawn by the Braille Institute so no
-   two letters can be confused, which fits a free resource site for students.
+   SkillBridge — design tokens + base styles (brief v2, 2026-11-24)
+
+   Palette ceiling: paper, ink, navy, blue, dark, plus opacity steps of those.
+   Type ceiling: Familjen Grotesk (headings, buttons, numbers), Newsreader
+   italic (one to three words inside a heading, and the one pull quote),
+   Atkinson Hyperlegible Next (everything you read).
    =========================================================================== */
 :root {
   /* brand */
-  --navy: #1b3a6b;
-  --blue: #5bb8f5;
-  --light: #ebf4fc;
-  --dark: #0d1b2a;
-  --white: #ffffff;
+  --paper: #f7f5f0;        /* base background */
+  --paper-deep: #efebe3;   /* paper darkened 4%: the Bridge Finder row only */
+  --ink: #0d1b2a;          /* headings + body text */
+  --navy: #1b3a6b;         /* buttons, the newsletter band */
+  --blue: #5bb8f5;         /* accent, only ever on dark or navy */
+  --dark: #0d1b2a;         /* video section, footer */
+  --white: #ffffff;        /* text on dark, nothing else */
 
-  /* derived / functional */
-  --ink: #0d1b2a;          /* primary body text */
-  --ink-soft: #475a78;     /* secondary text, AA on white */
-  --ink-faint: #5f6f87;    /* tertiary / captions — 5.1:1 on white, 4.6:1 on light */
-  --line: #d9e8f8;         /* hairline borders */
-  --line-strong: #c3dcf3;
-  --surface: #ffffff;
-  --surface-tint: #ebf4fc; /* light brand wash */
-  --blue-ink: #155a8a;     /* deeper blue that passes AA as text on white */
+  /* opacity steps */
+  --ink-70: rgba(13, 27, 42, 0.7);    /* secondary text on paper, 6.3:1 */
+  --ink-16: rgba(13, 27, 42, 0.16);   /* 1px rules on paper */
+  --white-74: rgba(255, 255, 255, 0.74);
+  --white-18: rgba(255, 255, 255, 0.18);
 
-  /* keyboard focus: navy on light surfaces (11:1); dark sections override this to
-     --blue, because a blue ring on white is only 2.2:1 */
+  /* type */
+  --font-head: 'Familjen Grotesk Variable', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-accent: 'Newsreader Variable', 'Iowan Old Style', Georgia, serif;
+  --font-body: 'Atkinson Hyperlegible Next Variable', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+
+  /* layout */
+  --container: 1200px;
+  --gutter: clamp(1rem, 0.35rem + 2.7vw, 2.5rem);
+  --band: clamp(3.5rem, 2rem + 6vw, 6.5rem);   /* vertical breathing room of a full section */
+
+  /* keyboard focus: navy on paper, blue inside dark and navy sections */
   --focus-ring: var(--navy);
 
-  /* status colors (functional, not brand) */
+  /* ---- legacy tokens --------------------------------------------------------
+     Still read by /resources, /our-story and /bridge-finder, which have not been
+     redrawn to brief v2 yet. The homepage and /get pages do not use them. */
+  --light: #ebf4fc;
+  --ink-soft: #475a78;
+  --ink-faint: #5f6f87;
+  --line: #d9e8f8;
+  --line-strong: #c3dcf3;
+  --surface: #ffffff;
+  --surface-tint: #ebf4fc;
+  --blue-ink: #155a8a;
   --danger: #b4232a;
   --danger-ink: #7a1d22;
   --danger-tint: #fff4f4;
@@ -37,12 +54,6 @@
   --caution-ink: #a8341d;
   --caution-tint: #fff6f4;
   --caution-line: #f3cfc6;
-
-  /* type */
-  --font-head: 'Manrope', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
-  --font-body: 'Atkinson Hyperlegible Next Variable', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
-
-  /* fluid type scale — widened for stronger hierarchy */
   --step--2: clamp(0.74rem, 0.72rem + 0.1vw, 0.8rem);
   --step--1: clamp(0.83rem, 0.8rem + 0.15vw, 0.9rem);
   --step-0: clamp(1rem, 0.96rem + 0.2vw, 1.07rem);
@@ -51,9 +62,6 @@
   --step-3: clamp(1.85rem, 1.45rem + 1.9vw, 2.85rem);
   --step-4: clamp(2.3rem, 1.7rem + 3vw, 3.6rem);
   --step-5: clamp(2.7rem, 1.5rem + 5.4vw, 5.2rem);
-
-  /* layout */
-  --container: 1120px;
   --container-narrow: 760px;
   --radius: 14px;
   --radius-lg: 22px;
@@ -73,10 +81,10 @@ html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
 
 body {
   font-family: var(--font-body);
-  font-size: var(--step-0);
-  line-height: 1.6;
+  font-size: 1.0625rem;   /* 17px on phones */
+  line-height: 1.55;
   color: var(--ink);
-  background: var(--white);
+  background: var(--paper);
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
   min-height: 100dvh;
@@ -84,41 +92,43 @@ body {
   flex-direction: column;
   overflow-x: hidden;
 }
+@media (min-width: 48rem) {
+  body { font-size: 1.125rem; }   /* 18px from tablets up */
+}
 
 h1, h2, h3, h4 {
   font-family: var(--font-head);
-  line-height: 1.08;
+  font-weight: 700;
   letter-spacing: -0.025em;
-  color: var(--navy);
-  font-weight: 800;
+  line-height: 1;
+  color: var(--ink);
   text-wrap: balance;
 }
 h1 { font-size: var(--step-4); }
 h2 { font-size: var(--step-3); }
-h3 { font-size: var(--step-1); font-weight: 700; letter-spacing: -0.02em; }
+h3, h4 { line-height: 1.15; letter-spacing: -0.02em; }
+h3 { font-size: var(--step-1); }
 
 p { text-wrap: pretty; }
 
 a {
-  color: var(--navy);
-  text-decoration-color: var(--blue);
-  text-underline-offset: 3px;
-  text-decoration-thickness: 2px;
+  color: inherit;
+  text-decoration-thickness: 1.5px;
+  text-underline-offset: 0.18em;
 }
-a:hover { color: var(--blue-ink); text-decoration-color: var(--blue-ink); }
 
 img, svg { display: block; max-width: 100%; }
 ul { list-style: none; padding: 0; }
 strong, b { font-weight: 700; }
 
-:focus-visible { outline: 3px solid var(--focus-ring); outline-offset: 2px; border-radius: 5px; }
+:focus-visible { outline: 3px solid var(--focus-ring); outline-offset: 3px; border-radius: 4px; }
 
-/* utilities */
+/* ---- shared pieces --------------------------------------------------------- */
 .container {
   width: 100%;
-  max-width: var(--container);
+  max-width: calc(var(--container) + 2 * var(--gutter));
   margin-inline: auto;
-  padding-inline: clamp(1.1rem, 0.5rem + 3vw, 2rem);
+  padding-inline: var(--gutter);
   position: relative;
 }
 .container-narrow { max-width: var(--container-narrow); }
@@ -130,39 +140,120 @@ strong, b { font-weight: 700; }
   overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
 }
 .skip-link {
-  position: absolute; left: 1rem; top: -3.5rem; z-index: 100;
-  background: var(--navy); color: #fff; padding: 0.6rem 1rem; border-radius: 8px;
-  text-decoration: none; transition: top 0.15s ease;
+  position: absolute; left: 1rem; top: -4rem; z-index: 100;
+  background: var(--navy); color: #fff; padding: 0.7rem 1rem; border-radius: 8px;
+  text-decoration: none;
 }
 .skip-link:focus { top: 1rem; }
 
-/* brand motif (decorative bridge/book icon used as a faint graphic element) */
+/* The big section heading. Same face and rules as h1, sized between the hero
+   line and running text. */
+.display {
+  font-size: clamp(2.25rem, 1.45rem + 3.6vw, 4.25rem);
+  line-height: 1;
+  letter-spacing: -0.025em;
+}
+
+/* The serif italic voice: one to three words inside a heading, plus the one
+   pull quote. Newsreader runs smaller on the body than Familjen at the same
+   size, so it is nudged up to sit level with the sans around it. */
+.serif {
+  font-family: var(--font-accent);
+  font-style: italic;
+  font-weight: 500;
+  font-size: 1.08em;
+  letter-spacing: -0.02em;
+  /* Zero, so the slightly larger serif never pushes its line taller than the
+     sans lines around it. */
+  line-height: 0;
+}
+
+/* Buttons: 8px corners, 52px tall, one flat fill. No pills. */
+.sb-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  min-height: 52px;
+  padding: 0.5rem 1.35rem;
+  border: 1.5px solid transparent;
+  border-radius: 8px;
+  font-family: var(--font-head);
+  font-weight: 700;
+  font-size: 1.0625rem;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+}
+.sb-btn--primary { background: var(--navy); color: #fff; }
+.sb-btn--primary:hover { background: var(--ink); }
+.sb-btn--secondary { border-color: var(--ink); color: var(--ink); }
+.sb-btn--secondary:hover { background: var(--ink); color: var(--paper); }
+/* On dark or navy the primary flips to blue with ink text. */
+.sb-btn--ondark { background: var(--blue); color: var(--ink); }
+.sb-btn--ondark:hover { background: #fff; }
+.sb-btn--tall { min-height: 56px; }
+
+/* A link that is a line of its own (not inside a sentence). */
+.textlink {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  min-height: 48px;
+  font-family: var(--font-head);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 0.22em;
+}
+.textlink:hover { text-decoration-thickness: 3px; }
+
+/* The three hand-drawn glyphs (arrow, external, download). */
+.glyph { flex: none; width: 1.05em; height: 1.05em; }
+
+/* A flat ink tab cut into the bottom-left corner of a photo or Reel card. It
+   holds a name or a view count. The two corner pieces are plain bordered boxes
+   that round the picture where it meets the tab, so the cut reads as one shape. */
+.plate {
+  --plate-r: 14px;
+  --plate-lap: 8px;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  z-index: 1;
+  background: var(--ink);
+  color: #fff;
+  border-top-right-radius: var(--plate-r);
+  font-family: var(--font-head);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.01em;
+}
+.plate::before,
+.plate::after {
+  content: '';
+  position: absolute;
+  width: calc(var(--plate-r) + var(--plate-lap));
+  height: calc(var(--plate-r) + var(--plate-lap));
+  border: 0 solid var(--ink);
+  border-left-width: var(--plate-lap);
+  border-bottom-width: var(--plate-lap);
+  border-bottom-left-radius: calc(var(--plate-r) + var(--plate-lap));
+  pointer-events: none;
+}
+.plate::before { left: calc(-1 * var(--plate-lap)); bottom: calc(100% - var(--plate-lap)); }
+.plate::after { left: calc(100% - var(--plate-lap)); bottom: calc(-1 * var(--plate-lap)); }
+
+/* brand motif (legacy pages) */
 .motif { position: absolute; pointer-events: none; user-select: none; z-index: 0; }
 .motif img { width: 100%; height: 100%; object-fit: contain; }
 
-/* -------- motion: cross-document page transition -------------------------- */
-/* Native View Transitions, progressive enhancement only. No router, no SPA, no
-   dependency — a browser without support just navigates normally, and nothing
-   here is needed to read or operate the site. */
-@view-transition { navigation: auto; }
-
-/* The header is its own transition group so it holds still across a navigation.
-   What changes is the page content, and the motion should say exactly that. */
-.site-header { view-transition-name: site-header; }
-
-@keyframes page-enter {
-  from { opacity: 0; transform: translateY(6px); }
-}
-@keyframes page-exit {
-  to { opacity: 0; }
-}
-/* Exit is shorter than enter so the new page feels like it arrives rather than
-   waits for the old one to finish leaving. */
-::view-transition-old(root) { animation: page-exit 140ms var(--ease) both; }
-::view-transition-new(root) { animation: page-enter 220ms var(--ease) both; }
-
-/* -------- motion: scroll-reveal (progressive enhancement) ----------------- */
-/* only applies when JS is present, so no-JS users always see content */
+/* ---- scroll-reveal on the legacy pages -------------------------------------
+   Only applies when JS is present, so no-JS visitors always see content. The
+   homepage and /get pages do not use it. */
 html.js .reveal {
   opacity: 0;
   transform: translateY(14px);
@@ -175,42 +266,12 @@ html.js .reveal[data-delay='3'] { transition-delay: 0.21s; }
 html.js .reveal[data-delay='4'] { transition-delay: 0.28s; }
 html.js .reveal[data-delay='5'] { transition-delay: 0.35s; }
 
-/* -------- motion: GSAP + Lenis (src/scripts/motion.ts) -------------------- */
-/* Hero pieces wait, invisible, for the instant before GSAP sets their start
-   states. Only ever set when motion is allowed, and cleared by a timeout. */
-html.motion-pending .hero [data-hero],
-html.motion-pending .hero .portrait,
-html.motion-pending .hero .bridge { visibility: hidden; }
-
-/* SplitText line masks: descenders must not be clipped by the mask. */
-html.motion h1 > div,
-html.motion h2 > div { padding-bottom: 0.08em; margin-bottom: -0.08em; }
-
-.scroll-progress {
-  position: fixed;
-  inset: 0 0 auto 0;
-  z-index: 60;
-  height: 2px;
-  background: var(--blue);
-  transform: scaleX(0);
-  transform-origin: left center;
-  pointer-events: none;
-}
-.scroll-progress[hidden] { display: none; }
-
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *, *::before, *::after {
     animation-duration: 0.001ms !important;
+    animation-delay: 0s !important;
     transition-duration: 0.001ms !important;
   }
   html.js .reveal { opacity: 1 !important; transform: none !important; }
-  /* View-transition pseudo-elements sit outside the normal tree, so the
-     universal rule above does not reach them. Navigation becomes an instant
-     swap; focus states and every other affordance are untouched. */
-  ::view-transition-group(*),
-  ::view-transition-old(*),
-  ::view-transition-new(*) {
-    animation: none !important;
-  }
 }

@@ -1,0 +1,256 @@
+---
+// The page a DM link opens. A student commented a keyword on a Reel, got a DM,
+// and tapped through inside Instagram's in-app browser: the file goes in their
+// hands in one tap, then there is one next step. One page per published resource
+// that has a comment keyword, at /get/<keyword in lowercase>.
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ReelCard from '../../components/ReelCard.astro';
+import Glyph from '../../components/Glyph.astro';
+import siteConfig from '../../config.json';
+import catalog from '../../data/resources.json';
+import statsData from '../../data/resource-stats.json';
+import reelData from '../../data/reels.json';
+import { shortNames, downloadLabel } from '../../lib/keywords';
+
+type Resource = (typeof catalog.resources)[number];
+
+export function getStaticPaths() {
+  return catalog.resources
+    .filter((r) => r.status === 'published' && r.cta?.keyword)
+    .map((r) => ({ params: { keyword: r.cta!.keyword.toLowerCase() }, props: { resource: r } }));
+}
+
+const { resource } = Astro.props as { resource: Resource };
+const keyword = resource.cta!.keyword;
+const shortName = shortNames[keyword] ?? resource.title;
+
+// Facts line: the format's label from resources.json, and the page count we
+// measured from the real file.
+const formats = catalog.formats as Record<string, { label: string; action: string }>;
+const stats = statsData as Record<string, { pages?: number }>;
+const pages = stats[resource.id]?.pages;
+const facts = [formats[resource.format]?.label, pages && `${pages} ${pages === 1 ? 'page' : 'pages'}`].filter(Boolean);
+const label = (r: Resource) => downloadLabel(r.format, formats[r.format]?.action);
+
+// Only these two have a picture of the document.
+const preview = ({ RESUME: '/handouts/resume.webp', EMAIL: '/handouts/email.webp' } as Record<string, string>)[keyword];
+
+const reel = reelData.reels.find((r) => r.keyword === keyword);
+
+// Next step: the next published file in the same category, reading the catalog
+// in order from this resource and wrapping round. A category of one falls back
+// to the same group.
+const at = catalog.resources.indexOf(resource);
+const others = [...catalog.resources.slice(at + 1), ...catalog.resources.slice(0, at)].filter(
+  (r) => r.status === 'published' && r.action?.url?.startsWith('/'),
+);
+const next = others.find((r) => r.category === resource.category) ?? others.find((r) => r.group === resource.group);
+---
+
+<BaseLayout
+  title={`Here's your ${shortName} — SkillBridge`}
+  description={resource.description}
+  header="minimal"
+  footer={false}
+  newsletter={false}
+  noindex
+>
+  <div class="get">
+    <div class="container get__top">
+      <div class="get__lead">
+        <h1 class="get__title">Here's your <i class="serif">{shortName}</i>.</h1>
+        <p class="get__name">{resource.title}</p>
+        <p class="get__facts">{facts.join(' · ')}</p>
+
+        <a class="sb-btn sb-btn--primary sb-btn--tall get__download" href={resource.action.url} download>
+          <Glyph name="download" />
+          {label(resource)}
+        </a>
+        {
+          resource.readOnline && (
+            <p class="get__alt">
+              <a class="textlink" href={resource.readOnline.url}>View as PDF</a>
+            </p>
+          )
+        }
+        <p class="get__help">Download not starting? Tap ··· at the top and choose Open in browser.</p>
+      </div>
+
+      {
+        preview && (
+          <div class="get__preview">
+            <img src={preview} alt={`The first page of ${resource.title}`} width="918" height="1188" decoding="sync" />
+          </div>
+        )
+      }
+    </div>
+
+    {
+      (reel || next) && (
+        <div class="container get__more">
+          {reel && (
+            <section class="get__block">
+              <a class="get__reel" href={reel.url} target="_blank" rel="noopener noreferrer">
+                <ReelCard reel={reel} />
+                <div class="get__reel-text">
+                  <h2 class="get__label">Watch the video again</h2>
+                  <span class="get__reel-title">{reel.title}</span>
+                </div>
+              </a>
+            </section>
+          )}
+          {next && (
+            <section class="get__block">
+              <h2 class="get__label">Next step</h2>
+              <p class="get__next-title">{next.title}</p>
+              <a class="sb-btn sb-btn--secondary get__next-link" href={next.action.url} download>
+                <Glyph name="download" />
+                {label(next)}
+              </a>
+            </section>
+          )}
+        </div>
+      )
+    }
+
+    <div class="get__close">
+      <div class="container">
+        <a class="sb-btn sb-btn--ondark get__follow" href={siteConfig.instagramUrl} target="_blank" rel="noopener noreferrer">
+          Follow {siteConfig.handle} for the next one.
+        </a>
+      </div>
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  /* The page is at least one screen tall (minus the 60px wordmark bar), so on a
+     short page the dark closing band still sits on the bottom edge. */
+  .get {
+    display: flex;
+    flex-direction: column;
+    min-height: calc(100dvh - 60px);
+    overflow-x: clip;
+  }
+
+  /* ---- the file, first ---- */
+  .get__top {
+    display: grid;
+    gap: 1.5rem;
+    padding-block: 0.75rem clamp(2.5rem, 2rem + 3vw, 4.5rem);
+  }
+  .get__title {
+    font-size: clamp(2.6rem, 11.5vw, 4.75rem);
+    max-width: 9.5em;
+  }
+  .get__name {
+    margin-top: 1.1rem;
+    font-family: var(--font-head);
+    font-weight: 700;
+    font-size: 1.2rem;
+    line-height: 1.15;
+    letter-spacing: -0.015em;
+  }
+  .get__facts {
+    margin-top: 0.3rem;
+    color: var(--ink-70);
+  }
+  .get__download {
+    width: 100%;
+    margin-top: 1.25rem;
+    font-size: 1.125rem;
+  }
+  .get__alt { margin-top: 0.2rem; }
+  /* No PDF link between them: the help line needs its own air under the button. */
+  .get__download + .get__help { margin-top: 0.9rem; }
+  .get__help {
+    margin-top: 0.2rem;
+    max-width: 23rem;
+    font-size: 0.94em;
+    line-height: 1.45;
+    color: var(--ink-70);
+  }
+  .get__preview img {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 918 / 1188;
+    border: 1px solid var(--ink-16);
+    border-radius: 3px;
+    background: #fff;
+  }
+
+  /* ---- then one next step ---- */
+  .get__more {
+    display: grid;
+    gap: 2.5rem;
+    padding-bottom: clamp(2.75rem, 2rem + 3vw, 4.5rem);
+  }
+  .get__label {
+    font-size: clamp(1.6rem, 1.3rem + 1.2vw, 2.1rem);
+    letter-spacing: -0.025em;
+  }
+  .get__reel {
+    display: grid;
+    grid-template-columns: 8.25rem minmax(0, 1fr);
+    align-items: center;
+    gap: 1.25rem;
+    padding-top: 4px;
+    text-decoration: none;
+    border-radius: 22px;
+  }
+  .get__reel-text {
+    display: grid;
+    gap: 0.6rem;
+  }
+  .get__reel-title,
+  .get__next-title {
+    font-family: var(--font-head);
+    font-weight: 700;
+    font-size: 1.25rem;
+    line-height: 1.12;
+    letter-spacing: -0.02em;
+    text-wrap: balance;
+  }
+  .get__reel:hover .get__reel-title {
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 0.2em;
+  }
+  .get__next-title { margin-top: 0.9rem; }
+  .get__next-link { margin-top: 1rem; }
+
+  /* ---- and the way back to Instagram ---- */
+  .get__close {
+    --focus-ring: var(--blue);
+    margin-top: auto;
+    background: var(--dark);
+    padding-block: clamp(1.75rem, 1.25rem + 2vw, 3rem);
+  }
+  .get__follow { width: 100%; }
+
+  @media (min-width: 30rem) {
+    .get__download,
+    .get__follow { width: auto; }
+    .get__download { min-width: 20rem; }
+  }
+  @media (min-width: 60rem) {
+    .get__top {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 25rem);
+      align-items: start;
+      gap: clamp(3rem, 7vw, 7rem);
+      padding-top: 2.5rem;
+    }
+    .get__lead { padding-top: 1.5rem; }
+    /* On a wide screen the page sits beside the buttons like a sheet on a desk. */
+    .get__preview { rotate: 1.4deg; }
+    .get__more {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: clamp(3rem, 7vw, 7rem);
+    }
+    .get__more { align-items: center; }
+    .get__reel {
+      grid-template-columns: 10.5rem minmax(0, 1fr);
+      gap: 2rem;
+    }
+  }
+</style>

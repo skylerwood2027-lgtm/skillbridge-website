@@ -1,0 +1,11 @@
+{
+  "_readme": "Real @realskillbridge Reels. Views are verified from Instagram insights on the date in viewsAsOf; show a view count only where views is not null. Thumbnails in /public/reels are 9:16 (540x960).",
+  "totals": { "instagramViewsSinceJune": "275K+", "asOf": "2026-11-23" },
+  "reels": [
+    { "id": "resume", "title": "The 10/10 high school résumé", "views": "120K+", "viewsAsOf": "2026-11-24", "url": "https://www.instagram.com/reel/DgEV_iNpvl5/", "thumb": "/reels/resume.webp", "keyword": "RESUME" },
+    { "id": "linkedin-noob-pro", "title": "LinkedIn noob vs. LinkedIn pro", "views": "66K", "viewsAsOf": "2026-11-11", "url": "https://www.instagram.com/reel/DZLdTZXyX2K/", "thumb": "/reels/linkedin-noob-pro.webp", "keyword": null },
+    { "id": "top-flexes", "title": "Top flexes as a high schooler", "views": "22K", "viewsAsOf": "2026-11-11", "url": "https://www.instagram.com/reel/DZTj1suJ7Tn/", "thumb": "/reels/top-flexes.webp", "keyword": null },
+    { "id": "project", "title": "Create experience without a job", "views": null, "viewsAsOf": null, "url": "https://www.instagram.com/reel/DbT1-5wyrBv/", "thumb": "/reels/project.webp", "keyword": "PROJECT" },
+    { "id": "linkedin-messaging", "title": "Don't DM the CEO", "views": null, "viewsAsOf": null, "url": "https://www.instagram.com/reel/Ddhqm9gBhBc/", "thumb": "/reels/linkedin-messaging.webp", "keyword": null }
+  ]
+}

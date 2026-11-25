@@ -17,5 +17,6 @@ export default defineConfig({
     '/resources/everything-we-use': '/resources/skillbridge-starter-toolkit',
   },
 
-  integrations: [sitemap()],
+  // The /get pages are DM landing pages (noindex), so they stay out of the sitemap.
+  integrations: [sitemap({ filter: (page) => !page.includes('/get/') })],
 });

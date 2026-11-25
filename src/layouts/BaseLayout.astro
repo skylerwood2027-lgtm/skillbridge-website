@@ -1,9 +1,10 @@
 ---
-import '@fontsource/manrope/600.css';
-import '@fontsource/manrope/700.css';
-import '@fontsource/manrope/800.css';
+import '@fontsource-variable/familjen-grotesk';
+import '@fontsource-variable/newsreader/opsz-italic.css';
 import '@fontsource-variable/atkinson-hyperlegible-next';
 import '../styles/global.css';
+import headFont from '@fontsource-variable/familjen-grotesk/files/familjen-grotesk-latin-wght-normal.woff2?url';
+import accentFont from '@fontsource-variable/newsreader/files/newsreader-latin-opsz-italic.woff2?url';
 import SiteHeader from '../components/SiteHeader.astro';
 import SiteFooter from '../components/SiteFooter.astro';
 import NewsletterBand from '../components/NewsletterBand.astro';
@@ -13,15 +14,23 @@ interface Props {
   title: string;
   description?: string;
   ogType?: string;
-  /** Every page ends on the same newsletter band. Opt out only if a page
-      supplies its own conversion endpoint. */
+  /** Every page ends on the Brief band. Opt out only if a page supplies its own
+      closing action (the /get pages do). */
   newsletter?: boolean;
+  /** 'minimal' is the wordmark alone, for pages opened from a DM. */
+  header?: 'full' | 'minimal';
+  footer?: boolean;
+  /** Keeps a page out of search results. */
+  noindex?: boolean;
 }
 const {
   title,
   description = siteConfig.description,
   ogType = 'website',
   newsletter = true,
+  header = 'full',
+  footer = true,
+  noindex = false,
 } = Astro.props;
 const canonical = new URL(Astro.url.pathname, Astro.site ?? siteConfig.siteUrl).href;
 const ogImage = new URL('/og.png', Astro.site ?? siteConfig.siteUrl).href;
@@ -36,15 +45,16 @@ const ogImage = new URL('/og.png', Astro.site ?? siteConfig.siteUrl).href;
       (function () {
         var r = document.documentElement;
         r.classList.add('js');
-        // Motion only when the visitor hasn't asked for less. motion-pending hides
-        // the hero for the instant before GSAP sets its start states, and the
-        // timeout guarantees it can never stay hidden if the script fails.
+        // Motion only when the visitor hasn't asked for less. Nothing is ever
+        // hidden while waiting for a script: the load-in is plain CSS.
         if (window.matchMedia && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-          r.classList.add('motion', 'motion-pending');
-          setTimeout(function () { r.classList.remove('motion-pending'); }, 2500);
+          r.classList.add('motion');
         }
       })();
     </script>
+    {noindex && <meta name="robots" content="noindex" />}
+    <link rel="preload" as="font" type="font/woff2" href={headFont} crossorigin />
+    <link rel="preload" as="font" type="font/woff2" href={accentFont} crossorigin />
     <link rel="icon" type="image/png" sizes="32x32" href="/brand/favicon-32.png" />
     <link rel="apple-touch-icon" href="/brand/apple-touch-icon.png" />
     <title>{title}</title>
@@ -60,17 +70,17 @@ const ogImage = new URL('/og.png', Astro.site ?? siteConfig.siteUrl).href;
     <meta property="og:image:height" content="630" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:image" content={ogImage} />
-    <meta name="theme-color" content="#1B3A6B" />
+    <meta name="theme-color" content="#F7F5F0" />
     <meta name="generator" content={Astro.generator} />
   </head>
   <body>
     <a href="#main" class="skip-link">Skip to content</a>
-    <div class="scroll-progress" aria-hidden="true" hidden></div>
-    <SiteHeader />
+    <SiteHeader minimal={header === 'minimal'} />
     <main id="main"><slot /></main>
     {newsletter && <NewsletterBand />}
-    <SiteFooter />
+    {footer && <SiteFooter />}
     <script is:inline>
+      // Scroll-reveal for the pages that still mark elements with .reveal.
       (function () {
         var els = document.querySelectorAll('.reveal');
         if (!els.length) return;

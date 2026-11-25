@@ -1,168 +1,80 @@
-// Site motion: GSAP for choreography, Lenis for smooth scrolling.
+// Site motion, brief v2. Three things move on this site and only one of them
+// needs JavaScript:
 //
-// Effects are adapted from Magic UI (blur-fade, animated-beam, scroll-progress)
-// and React Bits (SplitText) and rebuilt on GSAP, so the site stays a static
-// Astro build with no React or Tailwind runtime.
+//   1. The bridge build (this file): deck, towers, cable, hangers, then one light
+//      crossing, 1.6s in total, played once when the bridge scrolls into view.
+//   2. The hero settling in on load: CSS in src/pages/index.astro.
+//   3. Reel cards lifting on hover or press: CSS in src/components/ReelCard.astro.
 //
-// Everything here is progressive enhancement. With reduced motion or no JS, the
-// page renders finished: nothing below runs, and the inline head script never
-// adds the `motion-pending` class that briefly hides the hero.
+// No smooth-scroll library, no parallax, no scroll-linked effects. With reduced
+// motion or no JS nothing here runs and the bridge is simply drawn finished.
 import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { SplitText } from 'gsap/SplitText';
 import { DrawSVGPlugin } from 'gsap/DrawSVGPlugin';
-import Lenis from 'lenis';
-import 'lenis/dist/lenis.css';
 
-gsap.registerPlugin(ScrollTrigger, SplitText, DrawSVGPlugin);
+gsap.registerPlugin(DrawSVGPlugin);
 
-const root = document.documentElement;
-const release = () => root.classList.remove('motion-pending');
+function bridgeBuild(bridge: HTMLElement) {
+  const q = (s: string) => bridge.querySelectorAll(s);
+  let tl: gsap.core.Timeline | null = null;
 
-declare global {
-  interface Window { lenis?: Lenis }
-}
-
-function smoothScroll() {
-  // Offset clears the sticky header (70px) the same way scroll-margin does.
-  const lenis = new Lenis({ lerp: 0.12, anchors: { offset: -80 } });
-  lenis.on('scroll', ScrollTrigger.update);
-  gsap.ticker.add((time) => lenis.raf(time * 1000));
-  gsap.ticker.lagSmoothing(0);
-  window.lenis = lenis;
-  return () => {
-    lenis.destroy();
-    delete window.lenis;
-  };
-}
-
-// The one orchestrated moment: the headline rises, the founders come into focus,
-// then the bridge from the logo is built (deck, towers, cable, hangers) and a
-// single light crosses it.
-function heroIntro() {
-  const hero = document.querySelector<HTMLElement>('.hero');
-  if (!hero) return;
-  const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
-
-  const title = hero.querySelector<HTMLElement>('[data-hero="title"]');
-  if (title) {
-    const split = SplitText.create(title, { type: 'words,lines', mask: 'lines' });
-    tl.from(split.words, { yPercent: 110, duration: 0.9, stagger: 0.06, ease: 'power4.out' }, 0);
-  }
-
-  // Magic UI blur-fade: 6px blur, 6px offset.
-  tl.from(
-    hero.querySelectorAll('[data-hero="fade"]'),
-    { autoAlpha: 0, y: 6, filter: 'blur(6px)', duration: 0.6, stagger: 0.1, clearProps: 'filter' },
-    0.35,
-  );
-  tl.from(
-    hero.querySelectorAll('.portrait'),
-    { autoAlpha: 0, y: 14, filter: 'blur(6px)', duration: 0.8, stagger: 0.12, clearProps: 'filter' },
-    0.15,
-  );
-
-  const bridge = hero.querySelector<HTMLElement>('.bridge');
-  if (bridge) {
-    const q = (s: string) => bridge.querySelectorAll(s);
-    // On a short screen (phones) the bridge starts below the fold, so it is
-    // built when it scrolls into view instead of offscreen during the intro.
-    const onScreen = bridge.getBoundingClientRect().top < window.innerHeight * 0.9;
-    const build = onScreen
-      ? tl
-      : gsap.timeline({ defaults: { ease: 'power3.out' }, scrollTrigger: { trigger: bridge, start: 'top 90%', once: true } });
-    const t0 = onScreen ? 0 : -0.3;
-    build.from(q('.bridge__deck'), { drawSVG: '0%', duration: 1.1, ease: 'power2.inOut' }, 0.3 + t0)
-      .from(q('.bridge__tower'), { drawSVG: '0%', duration: 0.6, stagger: 0.12, ease: 'power2.out' }, 0.95 + t0)
-      .from(q('.bridge__cable'), { drawSVG: '0%', duration: 1.2, ease: 'power1.inOut' }, 1.25 + t0)
+  // Arming hides the strokes (the from() start states), so it only ever happens
+  // while the bridge is still below the screen. Until then the bridge stays
+  // drawn, which is also what a visitor who never scrolls gets.
+  const arm = () => {
+    tl = gsap.timeline({ paused: true, defaults: { ease: 'power2.out' } });
+    tl.from(q('.bridge__deck'), { drawSVG: '0%', duration: 0.5, ease: 'power2.inOut' }, 0)
+      .from(q('.bridge__tower'), { drawSVG: '0%', duration: 0.35, stagger: 0.08 }, 0.3)
+      .from(q('.bridge__cable'), { drawSVG: '0%', duration: 0.55, ease: 'power1.inOut' }, 0.45)
       .from(
         q('.bridge__hanger'),
-        { scaleY: 0, transformOrigin: '50% 0%', duration: 0.4, stagger: { each: 0.022, from: 'center' }, ease: 'power2.out' },
-        1.65 + t0,
+        { scaleY: 0, transformOrigin: '50% 0%', duration: 0.24, stagger: { amount: 0.12, from: 'center' } },
+        0.74,
       )
-      // Magic UI animated-beam, run once along the deck.
+      // The one light, run once along the deck.
       .fromTo(
         q('.bridge__pulse'),
-        { drawSVG: '0% 5%', opacity: 1 },
-        // immediateRender off: the pulse must stay hidden until its turn.
-        { drawSVG: '95% 100%', duration: 1.5, ease: 'power1.inOut', immediateRender: false },
-        '>-0.15',
+        { drawSVG: '0% 7%', opacity: 1 },
+        // immediateRender off: the light must stay hidden until its turn.
+        { drawSVG: '93% 100%', duration: 0.5, ease: 'power1.inOut', immediateRender: false },
+        1.0,
       )
-      .to(q('.bridge__pulse'), { opacity: 0, duration: 0.35 }, '>-0.3');
-  }
+      .to(q('.bridge__pulse'), { opacity: 0, duration: 0.1, ease: 'none' }, 1.5)
+      // Hand the strokes back to plain CSS so a later resize cannot leave a
+      // dash pattern measured for the old width.
+      .set(q('line, path'), { clearProps: 'strokeDasharray,strokeDashoffset,transform' }, 1.6);
+  };
 
-  // from() tweens have already applied their start states, so the hero can be
-  // shown without a flash of the finished layout.
-  release();
-
-  // The founders drift up a little as the hero scrolls away.
-  gsap.to(hero.querySelector('.hero__portraits'), {
-    yPercent: -8,
-    ease: 'none',
-    scrollTrigger: { trigger: hero, start: 'top top', end: 'bottom top', scrub: true },
-  });
-}
-
-// Section headings reveal line by line behind a mask (React Bits SplitText,
-// power3.out). Replaces the generic fade-up for headings only.
-function headingReveals() {
-  document.querySelectorAll<HTMLElement>('main h2').forEach((h) => {
-    h.classList.remove('reveal');
-    SplitText.create(h, {
-      type: 'lines',
-      mask: 'lines',
-      autoSplit: true,
-      onSplit: (self) =>
-        gsap.from(self.lines, {
-          yPercent: 105,
-          duration: 0.8,
-          stagger: 0.08,
-          ease: 'power3.out',
-          scrollTrigger: { trigger: h, start: 'top 88%', once: true },
-        }),
-    });
-  });
-}
-
-// The faint logo motif in a band turns slowly as the band passes.
-function motifDrift() {
-  document.querySelectorAll<HTMLElement>('.cta-band__motif').forEach((m) => {
-    gsap.fromTo(
-      m,
-      { yPercent: -50, rotate: -14 },
-      {
-        yPercent: -50,
-        rotate: 2,
-        ease: 'none',
-        scrollTrigger: { trigger: m.parentElement, start: 'top bottom', end: 'bottom top', scrub: true },
+  const start = () => {
+    const armer = new IntersectionObserver(
+      (entries) => {
+        const entry = entries.find((e) => e.isIntersecting);
+        if (!entry) return;
+        armer.disconnect();
+        // Already on screen (a reload halfway down the page): hiding it now
+        // would flash, so leave it finished.
+        if (entry.boundingClientRect.top < window.innerHeight) return;
+        arm();
+        const player = new IntersectionObserver(
+          (hits) => {
+            if (!hits.some((e) => e.isIntersecting)) return;
+            player.disconnect();
+            tl?.play();
+          },
+          { rootMargin: '0px 0px -12% 0px' },
+        );
+        player.observe(bridge);
       },
+      // A band one screen tall below the fold: near enough to be next, far
+      // enough that the strokes are hidden before anyone can see them.
+      { rootMargin: '0px 0px 100% 0px' },
     );
-  });
+    armer.observe(bridge);
+  };
+
+  // Wait for a real scroll before touching the drawing at all.
+  window.addEventListener('scroll', start, { once: true, passive: true });
 }
 
-// Magic UI scroll-progress: a hairline under the header, only on pages long
-// enough for it to answer "how much is left".
-function scrollProgress() {
-  const bar = document.querySelector<HTMLElement>('.scroll-progress');
-  if (!bar) return;
-  if (document.documentElement.scrollHeight < window.innerHeight * 3.5) return;
-  bar.hidden = false;
-  gsap.fromTo(bar, { scaleX: 0 }, { scaleX: 1, ease: 'none', scrollTrigger: { start: 0, end: 'max', scrub: 0.3 } });
-}
-
-const mm = gsap.matchMedia();
-mm.add('(prefers-reduced-motion: no-preference)', () => {
-  const stopScroll = smoothScroll();
-  // Split text only after the web fonts land, or line breaks would be measured
-  // against the fallback face. Never wait longer than the hide-timeout in the head.
-  const fontsReady = Promise.race([document.fonts.ready, new Promise((r) => setTimeout(r, 900))]);
-  fontsReady.then(() => {
-    heroIntro();
-    headingReveals();
-    motifDrift();
-    scrollProgress();
-    ScrollTrigger.refresh();
-  });
-  return () => stopScroll();
-});
-mm.add('(prefers-reduced-motion: reduce)', release);
+const bridge = document.querySelector<HTMLElement>('.bridge');
+const motionOk = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+if (bridge && motionOk && 'IntersectionObserver' in window) bridgeBuild(bridge);

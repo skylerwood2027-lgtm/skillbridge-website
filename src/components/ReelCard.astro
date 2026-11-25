@@ -1,0 +1,75 @@
+---
+// One Reel as a phone-shaped card: the real 9:16 thumbnail, 22px corners, no
+// drawn bezel. When Instagram insights gave us a verified count (reels.json
+// `views` is not null) it sits in an ink tab on the card's bottom edge, with the
+// number in blue. No count in the data means no tab at all.
+//
+// The card is not a link by itself. Whatever wraps it (the videos row, the hero,
+// the /get page) owns the href and the title.
+interface Reel {
+  title: string;
+  views: string | null;
+  thumb: string;
+}
+interface Props {
+  reel: Reel;
+  loading?: 'eager' | 'lazy';
+}
+const { reel, loading = 'eager' } = Astro.props;
+---
+
+<span class:list={['reelcard', { 'reelcard--counted': reel.views }]}>
+  <img src={reel.thumb} alt="" width="540" height="960" loading={loading} decoding="sync" />
+  {
+    reel.views && (
+      <span class="plate reelcard__views">
+        <span class="reelcard__num">{reel.views}</span>
+        <span class="reelcard__unit">views</span>
+      </span>
+    )
+  }
+</span>
+
+<style is:global>
+  .reelcard {
+    position: relative;
+    display: block;
+    aspect-ratio: 9 / 16;
+    border-radius: 22px;
+    overflow: hidden;
+    background: var(--ink);
+    container-type: inline-size;
+    transition: translate 160ms ease-out;
+  }
+  .reelcard img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: scale 160ms ease-out;
+  }
+  /* Hover or press: the card lifts 4px and the thumbnail grows 3%. */
+  a:hover > .reelcard,
+  a:active > .reelcard { translate: 0 -4px; }
+  a:hover > .reelcard img,
+  a:active > .reelcard img { scale: 1.03; }
+
+  .reelcard__views {
+    --plate-r: 16px;
+    display: flex;
+    align-items: baseline;
+    gap: 0.4em;
+    padding: 0.55rem 0.9rem 0.7rem 1rem;
+    padding: 3.2cqw 5.5cqw 4.4cqw 6.5cqw;
+  }
+  .reelcard__num {
+    color: var(--blue);
+    font-size: 2.25rem;
+    font-size: clamp(1.45rem, 17.5cqw, 3.5rem);
+    letter-spacing: -0.035em;
+  }
+  .reelcard__unit {
+    font-size: 0.875rem;
+    font-size: clamp(0.8125rem, 6.2cqw, 1.0625rem);
+    font-weight: 700;
+  }
+</style>

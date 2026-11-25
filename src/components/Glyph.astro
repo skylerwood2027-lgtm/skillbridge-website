@@ -1,0 +1,28 @@
+---
+// The only three glyphs the site needs, drawn by hand on a 20px grid instead of
+// pulling in an icon library: arrow (stays on the site), external (leaves it),
+// download (hands you a file).
+interface Props {
+  name: 'arrow' | 'external' | 'download';
+}
+const { name } = Astro.props;
+const paths = {
+  arrow: 'M3 10h13.4M10.9 4.3 16.6 10l-5.7 5.7',
+  external: 'M5.3 14.7 14.5 5.5M7.3 5.3h7.4v7.4',
+  download: 'M10 2.9v10.3M5.3 8.7 10 13.4l4.7-4.7M3.9 17.1h12.2',
+};
+---
+
+<svg
+  class="glyph"
+  viewBox="0 0 20 20"
+  width="20"
+  height="20"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  aria-hidden="true"
+  focusable="false"><path d={paths[name]}></path></svg
+>

@@ -1,299 +1,535 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import Button from '../components/Button.astro';
 import HeroBridge from '../components/HeroBridge.astro';
+import ReelCard from '../components/ReelCard.astro';
+import Glyph from '../components/Glyph.astro';
+import siteConfig from '../config.json';
+import reelData from '../data/reels.json';
+import story from '../data/ourStory.json';
 import catalog from '../data/resources.json';
+import { keywordNoun } from '../lib/keywords';
 
-// Only groups that actually contain a published resource become tiles, so every
-// tile has a real destination with real results behind it.
-const published = catalog.resources.filter((r: any) => r.status === 'published');
-const findGroups = catalog.groups
-  .filter((g: any) => g.id !== 'all')
-  .map((g: any) => ({
-    ...g,
-    count: published.filter((r: any) => r.group === g.id).length,
-  }))
-  .filter((g: any) => g.count > 0);
+const reels = reelData.reels;
+// The Reel that sits with the portraits in the hero.
+const lead = reels.find((r) => r.id === 'resume') ?? reels[0];
+
+// The About heading is the Our Story headline, with its one serif word.
+const [headBefore, headAfter] = story.headline.split('LinkedIn');
+
+// The pull quote is lifted from ourStory.json at build time, so it can only ever
+// be a sentence that is really in the story.
+const storyText = story.sections.flatMap((s) => s.paragraphs).join(' ');
+const quote = storyText.match(/We started this to learn it ourselves[^.]*\./)?.[0];
+
+const published = catalog.resources.filter((r) => r.status === 'published');
 ---
 
-<BaseLayout title="SkillBridge — the professional skills school skips">
-  <!-- HERO -->
-  {/* Hero motion is choreographed in src/scripts/motion.ts (data-hero marks the
-      pieces). The bridge replaces the old faint logo motif: same image, now built. */}
+<BaseLayout title="SkillBridge — the career stuff school skips">
+  <!-- 2. HERO -->
   <section class="hero">
     <div class="container hero__inner">
       <div class="hero__copy">
-        <h1 class="hero__title" data-hero="title">The professional skills school skips.</h1>
-        <p class="hero__sub lead" data-hero="fade">
-          We're two high schoolers teaching LinkedIn, resumes, interviewing, networking, and college
-          prep. Everything here is free.
+        <h1 class="hero__title">
+          <span class="hero__line"><span>Hey, we're Skyler</span></span>
+          <span class="hero__line"><span>and <i class="serif">David</i>.</span></span>
+        </h1>
+        <p class="hero__sub">
+          Two high schoolers making the career stuff school skips, from résumés to LinkedIn to
+          internships. Every template is free.
         </p>
-        <div class="hero__cta" data-hero="fade">
-          <Button href="#newsletter" variant="primary" size="lg">Join the Brief</Button>
-          <Button href="/resources" variant="outline" size="lg">Browse free resources</Button>
+        <div class="hero__actions">
+          <a class="sb-btn sb-btn--primary" href={siteConfig.instagramUrl} target="_blank" rel="noopener noreferrer">
+            Follow {siteConfig.handle}
+          </a>
+          <a class="sb-btn sb-btn--secondary" href="#brief">Get new guides by email</a>
         </div>
-        <p class="hero__note" data-hero="fade">You never need a credit card. We last checked that every tool is free in June 2026.</p>
+        <p class="hero__proof"><b>{reelData.totals.instagramViewsSinceJune}</b> views on Instagram since June.</p>
       </div>
 
-      <div class="hero__media">
-        <div class="hero__portraits">
-          <figure class="portrait">
-            <div class="portrait__frame">
-              <img
-                class="portrait__img"
-                src="/brand/skyler.webp"
-                srcset="/brand/skyler-640.webp 640w, /brand/skyler.webp 1000w"
-                sizes="(max-width: 860px) 48vw, 255px"
-                alt="Skyler, co-founder of SkillBridge"
-                width="1000"
-                height="1250"
-                loading="eager"
-                decoding="async"
-              />
-            </div>
-            <figcaption class="portrait__cap">Skyler, co-founder</figcaption>
-          </figure>
-          <figure class="portrait">
-            <div class="portrait__frame">
-              <img
-                class="portrait__img"
-                src="/brand/david.webp"
-                srcset="/brand/david-640.webp 640w, /brand/david.webp 1000w"
-                sizes="(max-width: 860px) 48vw, 255px"
-                alt="David, co-founder of SkillBridge"
-                width="1000"
-                height="1250"
-                loading="eager"
-                decoding="async"
-              />
-            </div>
-            <figcaption class="portrait__cap">David, co-founder</figcaption>
-          </figure>
-        </div>
+      <div class="hero__visual">
+        <figure class="print print--skyler">
+          <img src="/brand/skyler-640.webp" alt="Skyler" width="640" height="800" decoding="sync" />
+          <figcaption class="plate print__name">Skyler</figcaption>
+        </figure>
+        <figure class="print print--david">
+          <img src="/brand/david-640.webp" alt="David" width="640" height="861" decoding="sync" />
+          <figcaption class="plate print__name">David</figcaption>
+        </figure>
+        <a
+          class="print print--reel"
+          href={lead.url}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label={`${lead.title}${lead.views ? `, ${lead.views} views` : ''}. Watch the Reel on Instagram.`}
+        >
+          <ReelCard reel={lead} />
+        </a>
       </div>
-    </div>
-    <div class="container hero__bridge">
-      <HeroBridge />
     </div>
   </section>
 
-  <!-- WHAT YOU'LL FIND HERE -->
-  <section class="section find">
+  <!-- 3. VIDEOS -->
+  <section class="videos" id="videos">
     <div class="container">
-      <div class="find__head">
-        <h2 class="reveal" data-delay="1">Here's what worked for us.</h2>
-        <p class="lead reveal" data-delay="2">
-          These are the free tools and moves we used to land internships and build a network, sorted
-          so you can start today.
-        </p>
-      </div>
-      {/* Rows, not tiles: the same hairline list and navy deck line the resource
-          library uses, so the home page and the library read as one system. */}
-      <ul class="find__list">
+      <h2 class="display videos__title">The videos that <i class="serif">took off</i>.</h2>
+    </div>
+    <div class="videos__scroller">
+      <ul class="videos__row">
         {
-          findGroups.map((g: any, i: number) => (
-            <li class="reveal" data-delay={String((i % 3) + 1)}>
-              <a class="find__row" href={`/resources?group=${g.id}`}>
-                <span class="find__label">{g.label}</span>
-                <span class="find__count">
-                  {g.count} {g.count === 1 ? 'resource' : 'resources'}
-                </span>
-                <svg class="find__go" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                  <path d="M5 12h14" /><path d="m13 6 6 6-6 6" />
-                </svg>
+          reels.map((r) => (
+            <li class="reel">
+              <a class="reel__link" href={r.url} target="_blank" rel="noopener noreferrer">
+                <ReelCard reel={r} />
+                <span class="reel__title">{r.title}</span>
+                {r.keyword && (
+                  <span class="reel__kw">
+                    Comment <b>{r.keyword}</b> for the {keywordNoun(r.keyword)}
+                  </span>
+                )}
               </a>
             </li>
           ))
         }
       </ul>
-      <div class="find__more reveal">
-        <Button href="/resources" variant="outline">Browse all free resources</Button>
-      </div>
+    </div>
+    <div class="container">
+      <a class="textlink videos__all" href={siteConfig.instagramUrl} target="_blank" rel="noopener noreferrer">
+        See all on Instagram <Glyph name="external" />
+      </a>
     </div>
   </section>
 
-  <!-- CLOSING CTA BAND -->
-  <section class="cta-band">
-    <div class="cta-band__motif motif" aria-hidden="true"><img src="/brand/icon.webp" alt="" loading="lazy" decoding="async" /></div>
-    <div class="container cta-band__inner">
-      <h2 class="cta-band__title reveal">Start with the free resources.</h2>
-      <p class="cta-band__sub reveal" data-delay="1">There are {published.length} guides and templates, and none of them cost money.</p>
-      {/* One action here. The newsletter band directly below is the page's
-          conversion endpoint, so a second CTA in this band would compete with it. */}
-      <div class="cta-band__btns reveal" data-delay="2">
-        <Button href="/resources" variant="primary" size="lg">Browse free resources</Button>
+  <!-- 4. THE BRIDGE: the seam between the videos and the two of us -->
+  <div class="seam">
+    <HeroBridge />
+  </div>
+
+  <!-- 5. ABOUT -->
+  <section class="about">
+    <div class="container about__grid">
+      <h2 class="display about__title">{headBefore}<i class="serif">LinkedIn</i>{headAfter}</h2>
+
+      <div class="about__body">
+        <p>
+          A couple of years ago, we were lost. Internships, jobs and networking felt like things
+          that started in college or later. So we pitched a club to the faculty member who ran our
+          school's alumni relations.
+        </p>
+        <p>
+          Our speakers included a recruiter from Zoox and someone who works at LinkedIn. It became
+          the biggest club on campus. Now we make the Reels, so it doesn't stay at one school.
+        </p>
       </div>
+
+      <div class="about__media">
+        <img
+          class="about__workshop"
+          src="/handouts/workshop.webp"
+          alt="Skyler and David presenting to a packed room at a Padre Professionals meeting"
+          width="1100"
+          height="825"
+          decoding="sync"
+        />
+        <div class="about__us">
+          <img class="about__face about__face--skyler" src="/brand/skyler-640.webp" alt="Skyler" width="640" height="800" decoding="sync" />
+          <img class="about__face about__face--david" src="/brand/david-640.webp" alt="David" width="640" height="861" decoding="sync" />
+          <blockquote class="about__quote">
+            <p>{quote ? `“${quote}”` : 'TODO: pull quote from ourStory.json'}</p>
+          </blockquote>
+        </div>
+      </div>
+
+      <a class="textlink about__more" href="/our-story">Read our story <Glyph name="arrow" /></a>
     </div>
   </section>
+
+  <!-- 6. BRIDGE FINDER -->
+  <section class="finder">
+    <div class="container finder__row">
+      <h2 class="display finder__title">See who you <i class="serif">already</i> know.</h2>
+      <p class="finder__line">
+        Drop in your LinkedIn connections and see who you know at the places you want to work.
+        Nothing gets uploaded.
+      </p>
+      <a class="sb-btn sb-btn--primary finder__go" href="/bridge-finder">Try Bridge Finder</a>
+    </div>
+  </section>
+
+  <!-- 7. FREE RESOURCES LINE -->
+  <section class="library">
+    <div class="container">
+      <p class="library__line">
+        Looking for a template from a video?
+        <a class="library__link" href="/resources">All {published.length} are free <Glyph name="arrow" /></a>
+      </p>
+    </div>
+  </section>
+
+  {/* 8. The Brief and 9. the footer come from BaseLayout. */}
 </BaseLayout>
 
 <style>
-  /* ---------------- HERO ---------------- */
+  /* ---------------- 2. HERO ---------------- */
   .hero {
-    position: relative;
-    overflow: hidden;
-    background: radial-gradient(120% 95% at 88% -20%, var(--light) 0%, #fff 62%);
-    border-bottom: 1px solid var(--line);
-    padding-top: clamp(2.75rem, 2rem + 5vw, 5.5rem);
+    padding-block: clamp(1.5rem, 0.9rem + 2.6vw, 3.25rem) clamp(2.75rem, 1.9rem + 3.6vw, 5rem);
+    overflow-x: clip;
   }
-  /* The bridge is the hero's horizon: its deck sits just above the section's
-     bottom border, under both the copy and the founders. */
-  .hero__bridge { margin-top: clamp(1.25rem, 0.5rem + 3vw, 2.5rem); }
   .hero__inner {
     display: grid;
-    grid-template-columns: 1.15fr 0.85fr;
-    gap: clamp(2rem, 4vw, 4rem);
-    align-items: center;
+    gap: 2.25rem;
   }
-  .hero__copy { max-width: 620px; }
-  .hero__title { font-size: clamp(2.4rem, 1.55rem + 3vw, 3.6rem); }
-  .hero__sub { margin-top: 1.2rem; max-width: 46ch; }
-  .hero__cta { display: flex; flex-wrap: wrap; gap: 0.8rem; margin-top: 1.9rem; }
-  /* The "100% free" part already lives in the subhead; this line only adds what
-     it doesn't say, as plain text instead of three badge pills. */
-  .hero__note {
-    margin-top: 1.35rem;
-    font-size: var(--step--1);
-    color: var(--ink-soft);
+  .hero__title { font-size: clamp(2.6rem, 11.2vw, 5.25rem); }
+  .hero__line { display: block; }
+  .hero__sub {
+    margin-top: 1.1rem;
+    max-width: 27em;
+    font-size: 1.15em;
+    line-height: 1.45;
   }
-
-  .hero__media { display: flex; justify-content: center; }
-  .hero__portraits {
+  .hero__actions {
     display: flex;
-    justify-content: center;
-    gap: clamp(0.8rem, 2vw, 1.4rem);
-    width: 100%;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: 1.5rem;
   }
-  .portrait { position: relative; width: 100%; max-width: 360px; margin: 0; }
-  .portrait__frame {
+  .hero__proof {
+    margin-top: 0.9rem;
+    font-size: 0.94em;
+    color: var(--ink-70);
+  }
+  .hero__proof b { color: var(--ink); }
+
+  /* The two of us and the Reel, laid down like prints on a desk: each one a
+     little off square, each with a paper edge so it cuts cleanly into the one
+     under it. The box is square and everything inside is placed in percentages,
+     so the arrangement is the same at every width. */
+  .hero__visual {
     position: relative;
-    aspect-ratio: 4 / 5;
-    border-radius: var(--radius-xl);
-    overflow: hidden;
-    background: linear-gradient(160deg, var(--surface-tint), #fff 72%);
-    border: 1px solid var(--line);
-    box-shadow: var(--shadow-lg);
+    width: 100%;
+    max-width: 34rem;
+    aspect-ratio: 1 / 1;
   }
-  .portrait__img {
+  .print {
+    position: absolute;
+    display: block;
+    margin: 0;
+    border: 6px solid var(--paper);
+    border-radius: 16px;
+    background: var(--paper);
+    overflow: hidden;
+    rotate: var(--tilt);
+  }
+  .print img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    object-position: 50% 50%;
-    display: block;
   }
-  .portrait__cap {
-    margin-top: 0.85rem;
-    text-align: center;
-    font-family: var(--font-head);
-    font-weight: 600;
-    font-size: 0.9rem;
-    color: var(--ink-soft);
-  }
-  /* when David's portrait is added, the pair auto-sizes to sit side by side */
-  .hero__portraits:has(.portrait + .portrait) .portrait { max-width: 255px; }
-
-  @media (max-width: 860px) {
-    .hero__inner { grid-template-columns: 1fr; gap: 2.25rem; }
-    .hero__media { justify-content: center; }
-    .portrait { max-width: 300px; }
-    .hero__portraits:has(.portrait + .portrait) .portrait { max-width: 48%; }
-  }
-
-  /* ---------------- FIND ---------------- */
-  .find__head { max-width: 660px; }
-  .find__head .lead { margin-top: 0.85rem; }
-  .find__list {
-    max-width: 660px;
-    margin-top: 2rem;
-    border-bottom: 1px solid var(--line);
-  }
-  /* A real link into the filtered library. Hover and keyboard focus both draw the
-     navy deck line under the row, the same cue the library rows use. */
-  .find__row {
-    position: relative;
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    min-height: 64px;
-    padding: 0.9rem 0.1rem;
-    border-top: 1px solid var(--line);
-    text-decoration: none;
-  }
-  .find__row::after {
-    content: '';
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: -1px;
-    height: 2px;
-    background: var(--navy);
-    transform: scaleX(0);
-    transform-origin: left center;
-    transition: transform 0.26s var(--ease);
-  }
-  .find__row:hover::after,
-  .find__row:focus-visible::after { transform: scaleX(1); }
-  .find__label {
-    font-family: var(--font-head);
-    font-weight: 700;
-    font-size: var(--step-1);
-    color: var(--navy);
-    line-height: 1.22;
-    transition: color 0.16s var(--ease);
-  }
-  .find__row:hover .find__label { color: var(--blue-ink); }
-  .find__count {
-    margin-left: auto;
-    font-family: var(--font-head);
-    font-weight: 700;
-    font-size: var(--step--1);
-    color: var(--ink-faint);
-    white-space: nowrap;
-  }
-  .find__go {
-    flex: none;
-    width: 18px;
-    height: 18px;
-    color: var(--blue-ink);
-    transition: transform 0.16s var(--ease);
-  }
-  .find__row:hover .find__go,
-  .find__row:focus-visible .find__go { transform: translateX(3px); }
-  .find__more { margin-top: 1.8rem; }
-
-  /* ---------------- CTA BAND ---------------- */
-  .cta-band {
-    position: relative;
-    overflow: hidden;
-    background: var(--surface-tint);
-    border-top: 1px solid var(--line);
-    color: var(--ink);
-  }
-  .cta-band__motif {
-    top: 50%;
-    right: -4%;
-    width: min(40vw, 420px);
-    aspect-ratio: 1;
-    transform: translateY(-50%) rotate(-6deg);
-    opacity: 0.07;
-  }
-  .cta-band__inner {
-    padding-block: clamp(3rem, 2rem + 5vw, 5.5rem);
-    text-align: center;
-    position: relative;
+  .print--skyler {
+    --tilt: -3deg;
+    left: 1.5%;
+    top: 2%;
+    width: 45%;
+    aspect-ratio: 4 / 5;
     z-index: 1;
   }
-  .cta-band__title { color: var(--navy); }
-  .cta-band__sub {
-    margin-top: 0.7rem;
-    color: var(--ink-soft);
-    font-size: 1.05rem;
+  .print--david {
+    --tilt: 2.5deg;
+    left: 24%;
+    top: 50%;
+    width: 39%;
+    aspect-ratio: 4 / 5;
+    z-index: 2;
   }
-  .cta-band__btns {
+  .print--david img { object-position: 50% 18%; }
+  .print--reel {
+    --tilt: 2deg;
+    right: 1%;
+    top: 11%;
+    width: 41.5%;
+    border-radius: 28px;
+    overflow: visible;
+    z-index: 3;
+    text-decoration: none;
+    transition: translate 160ms ease-out;
+  }
+  /* The whole print lifts here, paper edge included, so the card inside holds still. */
+  .print--reel:hover,
+  .print--reel:active { translate: 0 -4px; }
+  .print--reel:hover > :global(.reelcard),
+  .print--reel:active > :global(.reelcard) { translate: none; }
+  .print__name {
+    padding: 0.5rem 0.8rem 0.55rem 0.85rem;
+    font-size: 0.9375rem;
+  }
+
+  /* Load-in, once: the two H1 lines rise (450ms in all), and the prints settle
+     from 12px lower and 2deg further round onto their resting tilt (600ms in
+     all). Buttons and copy are simply there. Only runs when html.motion is set,
+     which the head script skips for reduced motion. */
+  :global(html.motion) .hero__line {
+    overflow: hidden;
+    padding-block: 0.08em 0.18em;
+    margin-block: -0.08em -0.18em;
+  }
+  :global(html.motion) .hero__line > span {
+    display: inline-block;
+    animation: hero-rise 380ms cubic-bezier(0.2, 0.7, 0.2, 1) backwards;
+  }
+  :global(html.motion) .hero__line:nth-child(2) > span { animation-delay: 70ms; }
+  :global(html.motion) .print { animation: print-settle 480ms cubic-bezier(0.2, 0.7, 0.2, 1) backwards; }
+  :global(html.motion) .print--david { animation-delay: 60ms; }
+  :global(html.motion) .print--reel { animation-delay: 120ms; }
+  @keyframes hero-rise {
+    from { translate: 0 112%; }
+  }
+  @keyframes print-settle {
+    from {
+      translate: 0 12px;
+      rotate: calc(var(--tilt) + 2deg);
+    }
+  }
+
+  @media (max-width: 30rem) {
+    .hero__actions .sb-btn { width: 100%; }
+  }
+  @media (min-width: 60rem) {
+    .hero__inner {
+      grid-template-columns: minmax(0, 1.18fr) minmax(0, 1fr);
+      align-items: center;
+      gap: 3rem;
+    }
+    .hero__title { font-size: clamp(3.4rem, 5.9vw, 5.25rem); }
+    .hero__visual { justify-self: end; }
+  }
+
+  /* ---------------- 3. VIDEOS ---------------- */
+  .videos {
+    --focus-ring: var(--blue);
+    background: var(--dark);
+    color: #fff;
+    padding-block: var(--band);
+    scroll-margin-top: 4.25rem;
+  }
+  .videos__title { color: #fff; }
+  /* Phones and tablets: the row scrolls sideways inside this box and nowhere
+     else, snapping card by card, with the next card peeking in. */
+  .videos__scroller {
+    margin-top: clamp(1.5rem, 1rem + 2vw, 2.75rem);
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: var(--gutter);
+    scrollbar-width: none;
+  }
+  .videos__scroller::-webkit-scrollbar { display: none; }
+  .videos__row {
+    display: flex;
+    gap: 0.875rem;
+    width: max-content;
+    /* 6px of headroom so a lifted card is not clipped by the scroll box. */
+    padding: 6px var(--gutter) 0;
+  }
+  .reel {
+    flex: none;
+    width: 72vw;
+    max-width: 20rem;
+    scroll-snap-align: start;
+  }
+  /* On the dark section the count's tab is the same ink as the background, so
+     the card reads as notched. Its corner under the tab is squared off: a round
+     clip there would leave a hairline of thumbnail showing along the curve. */
+  .videos :global(.reelcard--counted) { border-bottom-left-radius: 0; }
+  .reel__link {
+    display: block;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 22px;
+  }
+  .reel__title {
+    display: block;
+    margin-top: 0.9rem;
+    font-family: var(--font-head);
+    font-weight: 700;
+    font-size: 1.25rem;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    text-wrap: balance;
+  }
+  .reel__kw {
+    display: block;
+    margin-top: 0.4rem;
+    font-size: 0.9375rem;
+    line-height: 1.35;
+    color: var(--white-74);
+  }
+  .reel__kw b { color: #fff; }
+  .videos__all {
+    margin-top: clamp(1.25rem, 1rem + 1vw, 2rem);
+    color: var(--blue);
+    font-size: 1.1em;
+  }
+
+  /* Wide screens: all five across, inside the page width, nothing to scroll. */
+  @media (min-width: 68.75rem) {
+    .videos__scroller {
+      overflow: visible;
+      max-width: calc(var(--container) + 2 * var(--gutter));
+      margin-inline: auto;
+      padding-inline: var(--gutter);
+    }
+    .videos__row {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 1.25rem;
+      width: auto;
+      padding: 0;
+    }
+    .reel {
+      width: auto;
+      max-width: none;
+    }
+  }
+
+  /* ---------------- 4. THE BRIDGE ---------------- */
+  .seam { padding-top: clamp(1.75rem, 1rem + 3vw, 3.75rem); }
+
+  /* ---------------- 5. ABOUT ---------------- */
+  .about {
+    padding-block: clamp(2.25rem, 1.5rem + 3vw, 4.5rem) var(--band);
+    overflow-x: clip;
+  }
+  .about__grid {
+    display: grid;
+    gap: 1.5rem;
+  }
+  .about__title { max-width: 11.5em; }
+  .about__body {
+    display: grid;
+    gap: 1em;
+    max-width: 33rem;
+  }
+  .about__workshop {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    border-radius: 10px;
+  }
+  /* The two portraits hang off the bottom edge of the workshop photo, and the
+     quote sits with them: it is theirs, so they are its attribution. */
+  .about__us {
+    position: relative;
     display: flex;
     flex-wrap: wrap;
-    gap: 0.8rem;
-    justify-content: center;
-    margin-top: 1.9rem;
+    align-items: flex-start;
+    margin-top: -1.75rem;
+    padding-left: 0.75rem;
   }
+  .about__face {
+    flex: none;
+    width: 5.75rem;
+    height: auto;
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+    border: 5px solid var(--paper);
+    border-radius: 13px;
+    background: var(--paper);
+  }
+  .about__face--skyler { rotate: -3deg; }
+  .about__face--david {
+    rotate: 2.5deg;
+    margin: 0.4rem 0 0 -0.5rem;
+    object-position: 50% 18%;
+  }
+  .about__quote {
+    flex: 1 1 100%;
+    margin-top: 1.1rem;
+    font-family: var(--font-accent);
+    font-style: italic;
+    font-weight: 500;
+    font-size: 1.5rem;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+  }
+  .about__quote p { text-wrap: balance; }
+  .about__more {
+    justify-self: start;
+    font-size: 1.1em;
+  }
+
+  @media (min-width: 40rem) {
+    .about__us {
+      flex-wrap: nowrap;
+      padding-left: 4%;
+    }
+    .about__face { width: clamp(6.5rem, 21%, 8.75rem); }
+    .about__quote {
+      flex: 1 1 0;
+      margin: 2.75rem 0 0 1.75rem;
+      font-size: clamp(1.4rem, 1rem + 1.1vw, 1.875rem);
+    }
+  }
+  @media (min-width: 60rem) {
+    .about__grid {
+      grid-template-columns: minmax(0, 1.12fr) minmax(0, 1fr);
+      grid-template-rows: auto auto 1fr;
+      grid-template-areas:
+        'media title'
+        'media body'
+        'media more';
+      column-gap: clamp(3rem, 6vw, 6rem);
+      row-gap: 1.75rem;
+      align-items: start;
+    }
+    .about__title { grid-area: title; }
+    .about__body { grid-area: body; }
+    .about__media { grid-area: media; }
+    .about__more { grid-area: more; }
+  }
+
+  /* ---------------- 6. BRIDGE FINDER: one wide row ---------------- */
+  .finder {
+    background: var(--paper-deep);
+    padding-block: clamp(2.75rem, 2rem + 3vw, 4.5rem);
+  }
+  .finder__row {
+    display: grid;
+    gap: 1.1rem;
+  }
+  .finder__title { font-size: clamp(2.1rem, 1.5rem + 2.6vw, 3.5rem); }
+  .finder__line { max-width: 30rem; }
+  .finder__go { justify-self: start; }
+  @media (max-width: 30rem) {
+    .finder__go {
+      justify-self: stretch;
+      margin-top: 0.4rem;
+    }
+  }
+  @media (min-width: 60rem) {
+    .finder__row {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr) auto;
+      align-items: center;
+      gap: clamp(2rem, 4vw, 4rem);
+    }
+  }
+
+  /* ---------------- 7. FREE RESOURCES LINE ---------------- */
+  .library { padding-block: clamp(2.25rem, 1.75rem + 2.4vw, 4rem); }
+  .library__line {
+    font-family: var(--font-head);
+    font-weight: 700;
+    font-size: clamp(1.35rem, 1.05rem + 1.3vw, 2rem);
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+  }
+  .library__link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    min-height: 48px;
+    white-space: nowrap;
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 0.2em;
+  }
+  .library__link:hover { text-decoration-thickness: 3px; }
 </style>
