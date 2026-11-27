@@ -1,8 +1,11 @@
 # How to add a resource to joinskillbridge.com
 
-You can do all of this on the GitHub website. You don't need to install anything.
-Skyler gets a request when you finish. He clicks Merge and the site updates in about 20 seconds.
-If something is typed wrong, the site doesn't break. It just keeps the old version until it's fixed.
+**Easiest way:** open this repo in Claude Code and say "help me add a resource." It asks you a
+few questions, checks everything, and puts it live.
+
+To do it by hand on the GitHub website instead, follow the steps below. Each save goes live
+about 20 seconds later. If something is typed wrong, the site doesn't break. It just keeps the
+old version until it's fixed.
 
 ## 1. Upload the file
 
@@ -10,18 +13,17 @@ If something is typed wrong, the site doesn't break. It just keeps the old versi
 2. Click **Add file → Upload files** and drag your file in (PDF or Word).
 3. Before uploading, rename it in lowercase with dashes and no spaces, like
    `skillbridge-cold-email-template.docx`.
-4. At the bottom, choose **Create a new branch for this commit**. Name the branch after the
-   resource, like `add-cold-email`, then click **Propose changes**.
+4. At the bottom, leave **Commit directly to the main branch** selected and click
+   **Commit changes**.
 
 Its link will be `joinskillbridge.com/resources/<your-file-name>`.
 
 ## 2. Add the resource to the list
 
-1. On **your branch** (check the branch dropdown at the top left), open
-   `src/data/resources.json` and click the pencil to edit.
+1. Open `src/data/resources.json` and click the pencil to edit.
 2. Find the line `"resources": [`. Paste the template below on the line right after it.
 3. Fill in every value in quotes. Keep the quotes, and keep the comma after the closing `},`.
-4. Click **Commit changes** and stay on your branch.
+4. Click **Commit changes**, committing directly to main.
 
 ```json
     {
@@ -69,12 +71,10 @@ Its link will be `joinskillbridge.com/resources/<your-file-name>`.
 A keyword automatically gets its own DM page at `joinskillbridge.com/get/<keyword>`, for example
 `/get/cold`. That's the link to put in the CreatorFlow DM button.
 
-## 3. Send it to Skyler
+## 3. Check it's live
 
-1. GitHub shows a yellow bar that says **Compare & pull request**. Click it, then click
-   **Create pull request**.
-2. Text Skyler the link.
-3. Skyler merges it with **Create a merge commit**, not Squash. The site updates about 20 seconds later.
+About 30 seconds after you save, open `joinskillbridge.com/resources/<your-file-name>` and
+`joinskillbridge.com/resources`. If it's not there after a few minutes, text Skyler.
 
 To change a resource that's already up, follow the same steps but edit the file or its entry
 instead of adding a new one.

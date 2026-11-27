@@ -1,6 +1,6 @@
 ---
 name: add-resource
-description: Walk a SkillBridge teammate (usually David) through adding a free resource (a PDF or Word file) to joinskillbridge.com, from picking the file to opening a pull request Skyler can merge. Use when someone says they want to add, upload or put a resource, template, guide or file on the site, or update one that is already there.
+description: Walk a SkillBridge teammate (usually David) through adding a free resource (a PDF or Word file) to joinskillbridge.com, from picking the file to the page being live. Use when someone says they want to add, upload or put a resource, template, guide or file on the site, or update one that is already there.
 ---
 
 # Add a resource to joinskillbridge.com
@@ -35,7 +35,9 @@ Ask these questions one at a time:
 
 ## 3. Make the change
 
-1. `git checkout -b add-<short-name>`. Never commit to `main`, and never push to `main`.
+1. Work on `main` (you pulled it in step 1). Skyler has approved teammates pushing resource
+   changes straight to `main`: it goes live on joinskillbridge.com about 20 seconds after
+   the push, so step 4 has to pass first.
 2. Copy the file into `public/resources/` as `skillbridge-<short-name>.<ext>`, in lowercase
    with dashes. Never rename, move or delete anything else already in `public/`.
 3. Add an entry right after `"resources": [` in `src/data/resources.json`. Copy the shape of
@@ -57,18 +59,22 @@ Ask these questions one at a time:
 
 1. Run `npm install` if `node_modules` is missing, then `npm run resources:check` and
    `npm run build`. Fix whatever fails. If a check can't run on this computer (for example,
-   a missing browser), note that for the pull request and keep going.
+   a missing browser), say so in the commit message and keep going, as long as `build`
+   passed.
 2. Run `npm run dev`. Confirm that `/resources` shows the new item, that its download link
    returns the file, and that `/get/<keyword>` loads when there's a keyword. Stop the server.
 
-## 5. Send it to Skyler
+## 5. Put it live
 
-1. Commit only the new file, `src/data/resources.json` and anything the check regenerated
-   (`src/data/resource-stats.json`).
-2. Push the branch and open a pull request to `main` with `gh pr create`. Skyler has approved
-   pushing a branch and opening a pull request for this, so the "never push" rule in
-   CLAUDE.md doesn't block it. Never merge the pull request and never push `main`.
-3. Give them the pull request link, a one-line summary and this text to send Skyler:
-   "Added <title>. PR: <link>". Tell them the new page will be at
-   `joinskillbridge.com/get/<keyword>` once Skyler merges it, and that this is the link to put
-   in the CreatorFlow DM button.
+1. Push only if `resources:check` and `build` both passed. If either failed and you can't
+   fix it, don't push; tell them what's wrong in one sentence and to send it to Skyler.
+2. Commit only the new file, `src/data/resources.json` and anything the check regenerated
+   (`src/data/resource-stats.json`). Never commit other files, never force-push, and never
+   rewrite history.
+3. `git pull --rebase`, then `git push origin main`. The "never push" rule in CLAUDE.md
+   doesn't block this resource-only push, because Skyler approved it.
+4. Wait about 30 seconds, then check that the file URL and `/resources` (and `/get/<keyword>`
+   when there's one) return 200 on `https://www.joinskillbridge.com`. If they don't after
+   2 minutes, tell them to let Skyler know.
+5. Give them a one-line summary and the live links. If there's a keyword, the DM button link
+   for CreatorFlow is `https://www.joinskillbridge.com/get/<keyword>`.

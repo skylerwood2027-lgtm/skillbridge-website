@@ -16,8 +16,9 @@ branding for the site live here.
 - **Localhost only. Never push to GitHub until Skyler explicitly says so.** No
   deploys, no account creation, no domain purchase, no Vercel auth.
 - **Teammates adding a resource** (David): use the `add-resource` skill
-  (`.claude/skills/add-resource/SKILL.md`). It may push its own `add-*` branch
-  and open a pull request. It never pushes or merges `main`; Skyler merges.
+  (`.claude/skills/add-resource/SKILL.md`). Skyler approved resource-only pushes
+  straight to `main` (the repo is public, so Vercel deploys teammates' commits)
+  once `resources:check` and `build` pass. Any other change still needs Skyler.
 
 ## Brand (LOCKED — never change without Skyler's ok)
 
