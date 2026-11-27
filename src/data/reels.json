@@ -1,16 +1,16 @@
 {
   "_readme": "Real @realskillbridge Reels. Views are read from the @realskillbridge Reels grid on Instagram on the date in viewsAsOf (rounded down); show a count only where views is not null. Thumbnails in /public/reels are 9:16 (540x960). The homepage shows these in order, and the first one is the hero card.",
   "totals": {
-    "reelViews": "1.2M+",
-    "asOf": "2026-11-26",
-    "note": "Sum of views across all 50 Reels from the Instagram API on 2026-11-26 was 1,217,204; shown rounded down."
+    "reelViews": "1.4M+",
+    "asOf": "2026-11-27",
+    "note": "Sum of views across all 52 Reels from the Instagram API on 2026-11-27 was 1,423,269; shown rounded down."
   },
   "reels": [
     {
       "id": "certs-healthcare",
       "title": "Free certificates: healthcare",
-      "views": "517K",
-      "viewsAsOf": "2026-11-26",
+      "views": "582K",
+      "viewsAsOf": "2026-11-27",
       "url": "https://www.instagram.com/reel/DgMAtHSxg6m/",
       "thumb": "/reels/certs-healthcare.webp",
       "keyword": "CERTS"
@@ -18,28 +18,37 @@
     {
       "id": "certs",
       "title": "Free certificates: engineering",
-      "views": "165K",
-      "viewsAsOf": "2026-11-26",
+      "views": "183K",
+      "viewsAsOf": "2026-11-27",
       "url": "https://www.instagram.com/reel/DgJaJKjhXcc/",
       "thumb": "/reels/certs.webp",
       "keyword": "CERTS"
     },
     {
+      "id": "certs-business",
+      "title": "Free certificates: business",
+      "views": "142K",
+      "viewsAsOf": "2026-11-27",
+      "url": "https://www.instagram.com/reel/DgLVqwTBpw-/",
+      "thumb": "/reels/certs-business.webp",
+      "keyword": "CERTS"
+    },
+    {
       "id": "resume",
       "title": "The 10/10 high school résumé",
-      "views": "126K",
-      "viewsAsOf": "2026-11-26",
+      "views": "128K",
+      "viewsAsOf": "2026-11-27",
       "url": "https://www.instagram.com/reel/DgEV_iNpvl5/",
       "thumb": "/reels/resume.webp",
       "keyword": "RESUME"
     },
     {
-      "id": "certs-business",
-      "title": "Free certificates: business",
+      "id": "certs-computer-science",
+      "title": "Free certificates: computer science",
       "views": "122K",
-      "viewsAsOf": "2026-11-26",
-      "url": "https://www.instagram.com/reel/DgLVqwTBpw-/",
-      "thumb": "/reels/certs-business.webp",
+      "viewsAsOf": "2026-11-27",
+      "url": "https://www.instagram.com/reel/DgNfD3qBm15/",
+      "thumb": "/reels/certs-computer-science.webp",
       "keyword": "CERTS"
     },
     {
@@ -50,15 +59,6 @@
       "url": "https://www.instagram.com/reel/DZLdTZXyX2K/",
       "thumb": "/reels/linkedin-noob-pro.webp",
       "keyword": null
-    },
-    {
-      "id": "certs-computer-science",
-      "title": "Free certificates: computer science",
-      "views": "67K",
-      "viewsAsOf": "2026-11-26",
-      "url": "https://www.instagram.com/reel/DgNfD3qBm15/",
-      "thumb": "/reels/certs-computer-science.webp",
-      "keyword": "CERTS"
     },
     {
       "id": "top-flexes",
@@ -72,8 +72,8 @@
     {
       "id": "project",
       "title": "Create experience without a job",
-      "views": "2,924",
-      "viewsAsOf": "2026-11-26",
+      "views": "2,979",
+      "viewsAsOf": "2026-11-27",
       "url": "https://www.instagram.com/reel/DbT1-5wyrBv/",
       "thumb": "/reels/project.webp",
       "keyword": "PROJECT"
