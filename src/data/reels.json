@@ -1,43 +1,70 @@
 {
-  "_readme": "Real @realskillbridge Reels. Views are read from the @realskillbridge Reels grid on Instagram on the date in viewsAsOf (rounded down); show a count only where views is not null. Thumbnails in /public/reels are 9:16 (540x960).",
+  "_readme": "Real @realskillbridge Reels. Views are read from the @realskillbridge Reels grid on Instagram on the date in viewsAsOf (rounded down); show a count only where views is not null. Thumbnails in /public/reels are 9:16 (540x960). The homepage shows these in order, and the first one is the hero card.",
   "totals": {
-    "reelViews": "375K+",
-    "asOf": "2026-11-25",
-    "note": "Sum of plays across all 46 Reels on the grid on 2026-11-25 was 379,628; shown rounded down."
+    "reelViews": "1.2M+",
+    "asOf": "2026-11-26",
+    "note": "Sum of plays across all 50 Reels on the grid on 2026-11-26 was 1,205,788; shown rounded down."
   },
   "reels": [
     {
-      "id": "resume",
-      "title": "The 10/10 high school résumé",
-      "views": "121K",
-      "viewsAsOf": "2026-11-25",
-      "url": "https://www.instagram.com/reel/DgEV_iNpvl5/",
-      "thumb": "/reels/resume.webp",
-      "keyword": "RESUME"
+      "id": "certs-healthcare",
+      "title": "Free certificates: healthcare",
+      "views": "512K",
+      "viewsAsOf": "2026-11-26",
+      "url": "https://www.instagram.com/reel/DgMAtHSxg6m/",
+      "thumb": "/reels/certs-healthcare.webp",
+      "keyword": "CERTS"
     },
     {
       "id": "certs",
-      "title": "Free certificates for every career",
-      "views": "72K",
-      "viewsAsOf": "2026-11-25",
+      "title": "Free certificates: engineering",
+      "views": "164K",
+      "viewsAsOf": "2026-11-26",
       "url": "https://www.instagram.com/reel/DgJaJKjhXcc/",
       "thumb": "/reels/certs.webp",
       "keyword": "CERTS"
     },
     {
+      "id": "resume",
+      "title": "The 10/10 high school résumé",
+      "views": "126K",
+      "viewsAsOf": "2026-11-26",
+      "url": "https://www.instagram.com/reel/DgEV_iNpvl5/",
+      "thumb": "/reels/resume.webp",
+      "keyword": "RESUME"
+    },
+    {
+      "id": "certs-business",
+      "title": "Free certificates: business",
+      "views": "121K",
+      "viewsAsOf": "2026-11-26",
+      "url": "https://www.instagram.com/reel/DgLVqwTBpw-/",
+      "thumb": "/reels/certs-business.webp",
+      "keyword": "CERTS"
+    },
+    {
       "id": "linkedin-noob-pro",
       "title": "LinkedIn noob vs. LinkedIn pro",
-      "views": "66K",
-      "viewsAsOf": "2026-11-25",
+      "views": "68K",
+      "viewsAsOf": "2026-11-26",
       "url": "https://www.instagram.com/reel/DZLdTZXyX2K/",
       "thumb": "/reels/linkedin-noob-pro.webp",
       "keyword": null
     },
     {
+      "id": "certs-computer-science",
+      "title": "Free certificates: computer science",
+      "views": "65K",
+      "viewsAsOf": "2026-11-26",
+      "url": "https://www.instagram.com/reel/DgNfD3qBm15/",
+      "thumb": "/reels/certs-computer-science.webp",
+      "keyword": "CERTS"
+    },
+    {
       "id": "top-flexes",
       "title": "Top flexes as a high schooler",
       "views": "22K",
-      "viewsAsOf": "2026-11-25",
+      "viewsAsOf": "2026-11-26",
       "url": "https://www.instagram.com/reel/DZTj1suJ7Tn/",
       "thumb": "/reels/top-flexes.webp",
       "keyword": null
@@ -45,8 +72,8 @@
     {
       "id": "project",
       "title": "Create experience without a job",
-      "views": null,
-      "viewsAsOf": null,
+      "views": "2,919",
+      "viewsAsOf": "2026-11-26",
       "url": "https://www.instagram.com/reel/DbT1-5wyrBv/",
       "thumb": "/reels/project.webp",
       "keyword": "PROJECT"

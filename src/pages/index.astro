@@ -9,9 +9,16 @@ import story from '../data/ourStory.json';
 import catalog from '../data/resources.json';
 import { keywordNoun } from '../lib/keywords';
 
-const reels = reelData.reels;
-// The Reel that sits with the portraits in the hero.
-const lead = reels.find((r) => r.id === 'resume') ?? reels[0];
+// reels.json keeps every Reel the site links to (the /get pages use the older
+// ones too). The homepage shows the five most-viewed, and the top one sits with
+// the portraits in the hero.
+const viewCount = (v: string | null) =>
+  v ? parseFloat(v.replace(/,/g, '')) * ({ K: 1e3, M: 1e6 }[v.replace(/[\d.,+]/g, '')] ?? 1) : 0;
+const reels = [...reelData.reels]
+  .filter((r) => r.views)
+  .sort((a, b) => viewCount(b.views) - viewCount(a.views))
+  .slice(0, 5);
+const lead = reels[0];
 
 // The About heading is the Our Story headline, with its one serif word.
 const [headBefore, headAfter] = story.headline.split('LinkedIn');
