@@ -3,13 +3,13 @@
   "totals": {
     "reelViews": "1.2M+",
     "asOf": "2026-11-26",
-    "note": "Sum of plays across all 50 Reels on the grid on 2026-11-26 was 1,205,788; shown rounded down."
+    "note": "Sum of views across all 50 Reels from the Instagram API on 2026-11-26 was 1,217,204; shown rounded down."
   },
   "reels": [
     {
       "id": "certs-healthcare",
       "title": "Free certificates: healthcare",
-      "views": "512K",
+      "views": "517K",
       "viewsAsOf": "2026-11-26",
       "url": "https://www.instagram.com/reel/DgMAtHSxg6m/",
       "thumb": "/reels/certs-healthcare.webp",
@@ -18,7 +18,7 @@
     {
       "id": "certs",
       "title": "Free certificates: engineering",
-      "views": "164K",
+      "views": "165K",
       "viewsAsOf": "2026-11-26",
       "url": "https://www.instagram.com/reel/DgJaJKjhXcc/",
       "thumb": "/reels/certs.webp",
@@ -36,7 +36,7 @@
     {
       "id": "certs-business",
       "title": "Free certificates: business",
-      "views": "121K",
+      "views": "122K",
       "viewsAsOf": "2026-11-26",
       "url": "https://www.instagram.com/reel/DgLVqwTBpw-/",
       "thumb": "/reels/certs-business.webp",
@@ -54,7 +54,7 @@
     {
       "id": "certs-computer-science",
       "title": "Free certificates: computer science",
-      "views": "65K",
+      "views": "67K",
       "viewsAsOf": "2026-11-26",
       "url": "https://www.instagram.com/reel/DgNfD3qBm15/",
       "thumb": "/reels/certs-computer-science.webp",
@@ -72,7 +72,7 @@
     {
       "id": "project",
       "title": "Create experience without a job",
-      "views": "2,919",
+      "views": "2,924",
       "viewsAsOf": "2026-11-26",
       "url": "https://www.instagram.com/reel/DbT1-5wyrBv/",
       "thumb": "/reels/project.webp",
