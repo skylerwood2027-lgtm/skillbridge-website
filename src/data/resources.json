@@ -59,6 +59,45 @@
   ],
   "resources": [
     {
+      "id": "scholarships-if-your-gpa-isnt-a-4",
+      "slug": "scholarships-if-your-gpa-isnt-a-4",
+      "status": "published",
+      "title": "Scholarships If Your GPA Isn't a 4.0",
+      "description": "15 scholarships and contests for the 2026-27 school year, with the GPA rule, the award, and the deadline for each. Nine of them have no GPA requirement.",
+      "outcome": "You leave knowing which ones you qualify for and which deadline comes first.",
+      "category": "applying",
+      "format": "pdf",
+      "action": {
+        "label": "Download the list",
+        "url": "/resources/skillbridge-scholarships-if-your-gpa-isnt-a-4.pdf",
+        "download": true
+      },
+      "friction": [
+        "no-account"
+      ],
+      "source": {
+        "kind": "video-template",
+        "note": "Made by David for the \"Scholarships if your GPA isn't a 4.0\" Reel series (parts 1 to 5), Nov 2026. Every fact checked on the sponsor's official page on 2026-11-26."
+      },
+      "lastVerified": "2026-11-26",
+      "cta": {
+        "keyword": "APPLY",
+        "videoJobId": "scholarships-gpa-reel"
+      },
+      "featured": false,
+      "latest": true,
+      "group": "apply",
+      "bestFor": "Paying for college without a 4.0",
+      "searchTerms": [
+        "scholarships",
+        "low GPA scholarships",
+        "no GPA requirement",
+        "essay contests",
+        "paying for college",
+        "financial aid"
+      ]
+    },
+    {
       "id": "skillbridge-starter-toolkit",
       "slug": "skillbridge-starter-toolkit",
       "status": "published",
